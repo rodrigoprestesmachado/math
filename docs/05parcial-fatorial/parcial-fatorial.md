@@ -51,7 +51,7 @@ has_children: false
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" data-code="import pingouin as pg&#10;import pandas as pd&#10;&#10;df = pd.DataFrame({&#10;    &#x27;uso_chatbot&#x27;:   [3,7,2,9,5,11,4,8],&#10;    &#x27;aprendizagem&#x27;:  [55,70,50,82,63,88,58,76],&#10;    &#x27;conhec_previo&#x27;: [40,55,35,70,50,75,45,60]&#10;})&#10;&#10;r_bruta = pg.corr(df[&#x27;uso_chatbot&#x27;], df[&#x27;aprendizagem&#x27;])&#10;print(&quot;Pearson bruto:      r =&quot;, round(r_bruta[&#x27;r&#x27;].values[0], 3))&#10;&#10;r_parcial = pg.partial_corr(&#10;    data=df, x=&#x27;uso_chatbot&#x27;, y=&#x27;aprendizagem&#x27;, covar=&#x27;conhec_previo&#x27;&#10;)&#10;print(&quot;Pearson parcial:    r =&quot;, round(r_parcial[&#x27;r&#x27;].values[0], 3))" markdown="0">
+<div class="python-runner" data-code="aW1wb3J0IHBpbmdvdWluIGFzIHBnCmltcG9ydCBwYW5kYXMgYXMgcGQKCmRmID0gcGQuRGF0YUZyYW1lKHsKICAgICd1c29fY2hhdGJvdCc6ICAgWzMsNywyLDksNSwxMSw0LDhdLAogICAgJ2FwcmVuZGl6YWdlbSc6ICBbNTUsNzAsNTAsODIsNjMsODgsNTgsNzZdLAogICAgJ2NvbmhlY19wcmV2aW8nOiBbNDAsNTUsMzUsNzAsNTAsNzUsNDUsNjBdCn0pCgpyX2JydXRhID0gcGcuY29ycihkZlsndXNvX2NoYXRib3QnXSwgZGZbJ2FwcmVuZGl6YWdlbSddKQpwcmludCgiUGVhcnNvbiBicnV0bzogICAgICByID0iLCByb3VuZChyX2JydXRhWydyJ10udmFsdWVzWzBdLCAzKSkKCnJfcGFyY2lhbCA9IHBnLnBhcnRpYWxfY29ycigKICAgIGRhdGE9ZGYsIHg9J3Vzb19jaGF0Ym90JywgeT0nYXByZW5kaXphZ2VtJywgY292YXI9J2NvbmhlY19wcmV2aW8nCikKcHJpbnQoIlBlYXJzb24gcGFyY2lhbDogICAgciA9Iiwgcm91bmQocl9wYXJjaWFsWydyJ10udmFsdWVzWzBdLCAzKSk=" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>

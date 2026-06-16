@@ -47,7 +47,7 @@ Modelar dados com estrutura **hierárquica**: mensagens → sessões → estudan
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" data-code="import statsmodels.formula.api as smf&#10;import pandas as pd&#10;import numpy as np&#10;&#10;np.random.seed(42)&#10;n_est, n_ses = 20, 5&#10;&#10;df = pd.DataFrame({&#10;    &#x27;estudante&#x27;: np.repeat(range(n_est), n_ses),&#10;    &#x27;sessao&#x27;:    list(range(n_ses)) * n_est,&#10;    &#x27;turnos&#x27;:    np.random.poisson(6, n_est*n_ses),&#10;    &#x27;escore&#x27;:    np.random.normal(70, 10, n_est*n_ses)&#10;})&#10;df[&#x27;escore&#x27;] += df[&#x27;turnos&#x27;] * 1.5&#10;&#10;modelo = smf.mixedlm(&quot;escore ~ turnos&quot;, data=df, groups=df[&quot;estudante&quot;]).fit(reml=True)&#10;print(modelo.summary())" markdown="0">
+<div class="python-runner" data-code="aW1wb3J0IHN0YXRzbW9kZWxzLmZvcm11bGEuYXBpIGFzIHNtZgppbXBvcnQgcGFuZGFzIGFzIHBkCmltcG9ydCBudW1weSBhcyBucAoKbnAucmFuZG9tLnNlZWQoNDIpCm5fZXN0LCBuX3NlcyA9IDIwLCA1CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAnZXN0dWRhbnRlJzogbnAucmVwZWF0KHJhbmdlKG5fZXN0KSwgbl9zZXMpLAogICAgJ3Nlc3Nhbyc6ICAgIGxpc3QocmFuZ2Uobl9zZXMpKSAqIG5fZXN0LAogICAgJ3R1cm5vcyc6ICAgIG5wLnJhbmRvbS5wb2lzc29uKDYsIG5fZXN0Km5fc2VzKSwKICAgICdlc2NvcmUnOiAgICBucC5yYW5kb20ubm9ybWFsKDcwLCAxMCwgbl9lc3Qqbl9zZXMpCn0pCmRmWydlc2NvcmUnXSArPSBkZlsndHVybm9zJ10gKiAxLjUKCm1vZGVsbyA9IHNtZi5taXhlZGxtKCJlc2NvcmUgfiB0dXJub3MiLCBkYXRhPWRmLCBncm91cHM9ZGZbImVzdHVkYW50ZSJdKS5maXQocmVtbD1UcnVlKQpwcmludChtb2RlbG8uc3VtbWFyeSgpKQ==" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>

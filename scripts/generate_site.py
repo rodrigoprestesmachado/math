@@ -2,6 +2,7 @@
 """Gera páginas de conteúdo, slides e arquivos Jekyll para math.rpmhub.dev."""
 
 from pathlib import Path
+import base64
 import html
 import sys
 
@@ -43,20 +44,23 @@ def strip_html(text: str) -> str:
 # injeta o valor no textarea via .value após o DOM ser carregado.
 # ---------------------------------------------------------------------------
 
-def code_to_data_attr(code: str) -> str:
-    """Codifica o código Python para uso seguro num atributo HTML data-code."""
-    # html.escape(quote=True) escapa &, <, >, " e ' — seguro para atributo "..."
-    # Depois codifica \n como &#10; (o browser decodifica ao ler via JS)
-    return html.escape(code, quote=True).replace('\n', '&#10;')
+def code_to_b64(code: str) -> str:
+    """Codifica o código Python em base64 UTF-8.
+
+    Base64 usa apenas A-Z, a-z, 0-9, +, /, = — nenhum caractere especial HTML
+    ou Markdown, zero risco de processamento indevido por Kramdown/Jekyll.
+    O JavaScript decodifica com atob() + TextDecoder para suportar UTF-8.
+    """
+    return base64.b64encode(code.encode('utf-8')).decode('ascii')
 
 
 def python_runner_block(topic: dict) -> str:
     """Retorna o bloco HTML do runner para inserção no .md."""
     context = topic.get('python_context', '')
     ctx_line = f"\n{context}\n" if context else ""
-    data_code = code_to_data_attr(topic['python_code'])
+    b64 = code_to_b64(topic['python_code'])
     return f"""{ctx_line}
-<div class="python-runner" data-code="{data_code}" markdown="0">
+<div class="python-runner" data-code="{b64}" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>

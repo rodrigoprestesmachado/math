@@ -48,7 +48,7 @@ Compara a **média** de uma variável numérica entre **exatamente dois grupos**
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" data-code="import pingouin as pg&#10;from scipy.stats import shapiro, levene&#10;&#10;feedback     = [72,85,78,90,68,82,76,88]&#10;sem_feedback = [60,65,70,58,63,72,55,67]&#10;&#10;_, p_n1 = shapiro(feedback);     print(f&quot;Shapiro G1: p={p_n1:.3f}&quot;)&#10;_, p_n2 = shapiro(sem_feedback);  print(f&quot;Shapiro G2: p={p_n2:.3f}&quot;)&#10;_, p_lv = levene(feedback, sem_feedback); print(f&quot;Levene:     p={p_lv:.3f}&quot;)&#10;&#10;res = pg.ttest(feedback, sem_feedback, paired=False, correction=&#x27;auto&#x27;)&#10;print(res[[&#x27;T&#x27;, &#x27;dof&#x27;, &#x27;p-val&#x27;, &#x27;cohen-d&#x27;, &#x27;power&#x27;]])" markdown="0">
+<div class="python-runner" data-code="aW1wb3J0IHBpbmdvdWluIGFzIHBnCmZyb20gc2NpcHkuc3RhdHMgaW1wb3J0IHNoYXBpcm8sIGxldmVuZQoKZmVlZGJhY2sgICAgID0gWzcyLDg1LDc4LDkwLDY4LDgyLDc2LDg4XQpzZW1fZmVlZGJhY2sgPSBbNjAsNjUsNzAsNTgsNjMsNzIsNTUsNjddCgpfLCBwX24xID0gc2hhcGlybyhmZWVkYmFjayk7ICAgICBwcmludChmIlNoYXBpcm8gRzE6IHA9e3BfbjE6LjNmfSIpCl8sIHBfbjIgPSBzaGFwaXJvKHNlbV9mZWVkYmFjayk7ICBwcmludChmIlNoYXBpcm8gRzI6IHA9e3BfbjI6LjNmfSIpCl8sIHBfbHYgPSBsZXZlbmUoZmVlZGJhY2ssIHNlbV9mZWVkYmFjayk7IHByaW50KGYiTGV2ZW5lOiAgICAgcD17cF9sdjouM2Z9IikKCnJlcyA9IHBnLnR0ZXN0KGZlZWRiYWNrLCBzZW1fZmVlZGJhY2ssIHBhaXJlZD1GYWxzZSwgY29ycmVjdGlvbj0nYXV0bycpCnByaW50KHJlc1tbJ1QnLCAnZG9mJywgJ3AtdmFsJywgJ2NvaGVuLWQnLCAncG93ZXInXV0p" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>

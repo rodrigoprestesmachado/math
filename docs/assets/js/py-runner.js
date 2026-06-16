@@ -142,14 +142,25 @@ def _get_output():
             .replace(/>/g, '&gt;');
   }
 
+  // Decodifica base64 UTF-8 → string JS (suporta acentos, ×, etc.)
+  function decodeB64(str) {
+    try {
+      var bytes = Uint8Array.from(atob(str), function (c) { return c.charCodeAt(0); });
+      return new TextDecoder().decode(bytes);
+    } catch (e) {
+      // fallback para navegadores muito antigos
+      return decodeURIComponent(escape(atob(str)));
+    }
+  }
+
   function attachHandlers() {
     document.querySelectorAll('.python-runner').forEach(function (runner) {
       var ta  = runner.querySelector('.code-input');
       var btn = runner.querySelector('.run-btn');
 
-      // Restaura o código do atributo data-code (o browser decodifica &#10; → \n)
+      // O código está em base64 no data-code — decodifica e popula o textarea
       if (ta && runner.hasAttribute('data-code')) {
-        ta.value = runner.getAttribute('data-code');
+        ta.value = decodeB64(runner.getAttribute('data-code'));
         runner.removeAttribute('data-code');
       }
 

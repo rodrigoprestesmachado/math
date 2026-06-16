@@ -52,7 +52,7 @@ Compara a **distribuição de postos** entre dois grupos sem assumir normalidade
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" data-code="import pingouin as pg&#10;from scipy.stats import wilcoxon&#10;&#10;grupo_a = [3,5,4,6,7,4,5]&#10;grupo_b = [2,3,1,4,3,2,3]&#10;&#10;res_mw = pg.mwu(grupo_a, grupo_b, alternative=&#x27;two-sided&#x27;)&#10;print(&quot;Mann-Whitney:&quot;)&#10;print(res_mw[[&#x27;U-val&#x27;, &#x27;p-val&#x27;, &#x27;RBC&#x27;, &#x27;CLES&#x27;]])&#10;&#10;pre  = [3,5,4,6,4,3]&#10;pos  = [5,6,6,7,6,5]&#10;stat, p_w = wilcoxon(pre, pos, alternative=&#x27;two-sided&#x27;)&#10;print(f&quot;\nWilcoxon: W = {stat:.0f}, p = {p_w:.4f}&quot;)" markdown="0">
+<div class="python-runner" data-code="aW1wb3J0IHBpbmdvdWluIGFzIHBnCmZyb20gc2NpcHkuc3RhdHMgaW1wb3J0IHdpbGNveG9uCgpncnVwb19hID0gWzMsNSw0LDYsNyw0LDVdCmdydXBvX2IgPSBbMiwzLDEsNCwzLDIsM10KCnJlc19tdyA9IHBnLm13dShncnVwb19hLCBncnVwb19iLCBhbHRlcm5hdGl2ZT0ndHdvLXNpZGVkJykKcHJpbnQoIk1hbm4tV2hpdG5leToiKQpwcmludChyZXNfbXdbWydVLXZhbCcsICdwLXZhbCcsICdSQkMnLCAnQ0xFUyddXSkKCnByZSAgPSBbMyw1LDQsNiw0LDNdCnBvcyAgPSBbNSw2LDYsNyw2LDVdCnN0YXQsIHBfdyA9IHdpbGNveG9uKHByZSwgcG9zLCBhbHRlcm5hdGl2ZT0ndHdvLXNpZGVkJykKcHJpbnQoZiJcbldpbGNveG9uOiBXID0ge3N0YXQ6LjBmfSwgcCA9IHtwX3c6LjRmfSIp" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
