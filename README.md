@@ -15,8 +15,7 @@ docs/
 │   ├── css/math.css      # Tema visual
 │   └── js/py-runner.js   # Execução Python via Pyodide
 └── NNtopico/
-    ├── topico.md         # Página Jekyll (slides + links)
-    ├── content.html      # Conteúdo completo + código executável
+    ├── topico.md         # Página Jekyll (conteúdo didático + código executável)
     └── slides/
         ├── index.html    # Apresentação Reveal.js
         └── slides.md

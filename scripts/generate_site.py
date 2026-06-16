@@ -71,21 +71,6 @@ def python_runner_block(topic: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
-# content.html — redireciona para o .md principal (mantido por compatibilidade)
-# ---------------------------------------------------------------------------
-
-def content_html(topic: dict) -> str:
-    """Redireciona links antigos para a página principal do tópico."""
-    back = topic['dir'][2:] + '.html'
-    return f"""---
-layout: null
----
-<meta http-equiv="refresh" content="0; url={back}">
-<p>Redirecionando... <a href="{back}">Clique aqui</a></p>
-"""
-
-
-# ---------------------------------------------------------------------------
 # jekyll_md — .md principal com todo o conteúdo didático
 # ---------------------------------------------------------------------------
 
@@ -327,7 +312,7 @@ def materiais_html() -> str:
   </div>
   <div class="section" style="padding:12px 22px">
     <a href="{topic['dir']}/{md_fname}" style="color:#90c0ff;margin-right:16px">📖 Conteúdo</a>
-    <a href="{topic['dir']}/content.html" style="color:#90e090;margin-right:16px">🐍 Código Python</a>
+    <a href="{topic['dir']}/{md_fname}" style="color:#90e090;margin-right:16px">🐍 Código Python</a>
     <a href="{topic['dir']}/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
   </div>
 </div>""")
@@ -497,7 +482,6 @@ def main():
 
         fname = topic["dir"][2:] + ".md"           # e.g. pearson.md
         (tdir / fname).write_text(jekyll_md(topic), encoding="utf-8")
-        (tdir / "content.html").write_text(content_html(topic), encoding="utf-8")
 
         sdir = tdir / "slides"
         sdir.mkdir(exist_ok=True)
