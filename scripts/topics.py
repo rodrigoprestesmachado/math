@@ -66,7 +66,7 @@ print(f"r = {r:.3f}, p = {p:.4f}")''',
         "nav_order": 5,
         "bloco": 1,
         "title": "Correlação de Spearman e Kendall",
-        "subtitle": "scipy.stats.spearmanr · scipy.stats.kendalltau · pingouin.corr()",
+        "subtitle": "scipy.stats.spearmanr · scipy.stats.kendalltau",
         "metaphor_label": "Imagine isso…",
         "metaphor": (
             'Em vez de medir a velocidade exata de cada atleta, você registra a <strong>posição deles na corrida</strong>: '
@@ -86,22 +86,38 @@ print(f"r = {r:.3f}, p = {p:.4f}")''',
             '❌ Não diferencia relações lineares de curvilíneas — só detecta monotonicidade.',
         ],
         "python_code": '''import pandas as pd
+import numpy as np
 from scipy import stats
-import pingouin as pg
 
 df = pd.DataFrame({
     'satisfacao': [2,4,1,5,3,5,4,2,3,5],
     'sessoes':    [3,8,1,12,5,11,9,2,4,13]
 })
 
+# Spearman
 rho, p_s = stats.spearmanr(df['satisfacao'], df['sessoes'])
 print(f"Spearman ρ = {rho:.3f}, p = {p_s:.4f}")
 
+# Kendall
 tau, p_k = stats.kendalltau(df['satisfacao'], df['sessoes'])
 print(f"Kendall  τ = {tau:.3f}, p = {p_k:.4f}")
 
-res = pg.corr(df['satisfacao'], df['sessoes'], method='spearman')
-print(res[['n', 'r', 'CI95%', 'p-val', 'power']])''',
+# IC 95% para ρ via transformação de Fisher
+n = len(df)
+z  = np.arctanh(rho)
+se = 1.0 / np.sqrt(n - 3)
+ci_lo, ci_hi = np.tanh(z - 1.96*se), np.tanh(z + 1.96*se)
+print(f"\nn={n}, IC 95% = [{ci_lo:.2f}, {ci_hi:.2f}]")
+
+# Visualização dos postos
+df['rank_sat'] = df['satisfacao'].rank()
+df['rank_ses'] = df['sessoes'].rank()
+import matplotlib.pyplot as plt
+df.plot.scatter(x='rank_sat', y='rank_ses', color='#c792ea',
+                title='Postos: Satisfação × Sessões')
+plt.xlabel('Posto – satisfação')
+plt.ylabel('Posto – sessões')
+plt.show()''',
         "refs": [
             ("seminal", 'Spearman, C. (1904). The proof and measurement of association between two things. <em>American Journal of Psychology, 15</em>(1), 72–101.'),
             ("didático", 'Field, A. (2024). <em>Discovering Statistics Using IBM SPSS Statistics</em> (6ª ed.). SAGE. Cap. 8.'),

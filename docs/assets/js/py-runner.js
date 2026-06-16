@@ -42,11 +42,17 @@
     ]);
 
     var micropip = pyodide.pyimport('micropip');
-    try { await micropip.install('pingouin'); }
-    catch (e) { console.warn('pingouin install warning:', e); }
+    try {
+      // Instala dependências puras do pingouin primeiro, depois o pingouin
+      await micropip.install(['tabulate', 'pandas_flavor', 'pingouin']);
+    } catch (e) { console.warn('pingouin install warning:', e); }
 
     await pyodide.runPythonAsync(`
-import sys, io
+import sys, io, warnings, os
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+warnings.filterwarnings('ignore', category=FutureWarning)
+# Desativa o update-check do pingouin (faz requisição de rede que falha no browser)
+os.environ['PINGOUIN_DISABLE_UPDATE_CHECK'] = '1'
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

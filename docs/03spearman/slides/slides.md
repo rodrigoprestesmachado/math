@@ -6,7 +6,7 @@
 
 🔗 Bloco 1 — Associação
 
-<p class="small">scipy.stats.spearmanr · scipy.stats.kendalltau · pingouin.corr()</p>
+<p class="small">scipy.stats.spearmanr · scipy.stats.kendalltau</p>
 
 ---
 
@@ -37,22 +37,30 @@ Exemplo: *a satisfação do estudante com o chatbot (escala 1–5) está associa
 
 ```python
 import pandas as pd
+import numpy as np
 from scipy import stats
-import pingouin as pg
 
 df = pd.DataFrame({
     'satisfacao': [2,4,1,5,3,5,4,2,3,5],
     'sessoes':    [3,8,1,12,5,11,9,2,4,13]
 })
 
+# Spearman
 rho, p_s = stats.spearmanr(df['satisfacao'], df['sessoes'])
 print(f"Spearman ρ = {rho:.3f}, p = {p_s:.4f}")
 
+# Kendall
 tau, p_k = stats.kendalltau(df['satisfacao'], df['sessoes'])
 print(f"Kendall  τ = {tau:.3f}, p = {p_k:.4f}")
 
-res = pg.corr(df['satisfacao'], df['sessoes'], method='spearman')
-print(res[['n', 'r', 'CI95%', 'p-val', 'power']])
+# IC 95% para ρ via transformação de Fisher
+n = len(df)
+z  = np.arctanh(rho)
+se = 1.0 / np.sqrt(n - 3)
+ci_lo, ci_hi = np.tanh(z - 1.96*se), np.tanh(z + 1.96*se)
+print(f"
+n={n}, IC 95% = [{
+...
 ```
 
 <div class="destaque">
