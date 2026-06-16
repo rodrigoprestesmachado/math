@@ -51,27 +51,12 @@ has_children: false
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pingouin as pg&#10;import pandas as pd&#10;&#10;df = pd.DataFrame({&#10;    &#x27;uso_chatbot&#x27;:   [3,7,2,9,5,11,4,8],&#10;    &#x27;aprendizagem&#x27;:  [55,70,50,82,63,88,58,76],&#10;    &#x27;conhec_previo&#x27;: [40,55,35,70,50,75,45,60]&#10;})&#10;&#10;r_bruta = pg.corr(df[&#x27;uso_chatbot&#x27;], df[&#x27;aprendizagem&#x27;])&#10;print(&quot;Pearson bruto:      r =&quot;, round(r_bruta[&#x27;r&#x27;].values[0], 3))&#10;&#10;r_parcial = pg.partial_corr(&#10;    data=df, x=&#x27;uso_chatbot&#x27;, y=&#x27;aprendizagem&#x27;, covar=&#x27;conhec_previo&#x27;&#10;)&#10;print(&quot;Pearson parcial:    r =&quot;, round(r_parcial[&#x27;r&#x27;].values[0], 3))" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pingouin as pg
-import pandas as pd
-
-df = pd.DataFrame({
-    'uso_chatbot':   [3,7,2,9,5,11,4,8],
-    'aprendizagem':  [55,70,50,82,63,88,58,76],
-    'conhec_previo': [40,55,35,70,50,75,45,60]
-})
-
-r_bruta = pg.corr(df['uso_chatbot'], df['aprendizagem'])
-print("Pearson bruto:      r =", round(r_bruta['r'].values[0], 3))
-
-r_parcial = pg.partial_corr(
-    data=df, x='uso_chatbot', y='aprendizagem', covar='conhec_previo'
-)
-print("Pearson parcial:    r =", round(r_parcial['r'].values[0], 3))</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

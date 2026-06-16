@@ -11,12 +11,12 @@
   loadingEl.textContent = '⏳ Carregando Python (Pyodide)… ~30 s na primeira vez';
   document.body.appendChild(loadingEl);
 
-  // Carrega o script do Pyodide CDN apenas quando necessário
+  // Carrega o script do Pyodide CDN apenas quando o usuário clica Executar
   function loadPyodideScript() {
     if (window.loadPyodide) return Promise.resolve();
     return new Promise(function (resolve, reject) {
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+      var s  = document.createElement('script');
+      s.src  = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
       s.onload  = resolve;
       s.onerror = function () { reject(new Error('Falha ao carregar Pyodide CDN')); };
       document.head.appendChild(s);
@@ -143,12 +143,24 @@ def _get_output():
   }
 
   function attachHandlers() {
-    document.querySelectorAll('.python-runner .run-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () { runCode(btn); });
+    document.querySelectorAll('.python-runner').forEach(function (runner) {
+      var ta  = runner.querySelector('.code-input');
+      var btn = runner.querySelector('.run-btn');
+
+      // Restaura o código do atributo data-code (o browser decodifica &#10; → \n)
+      if (ta && runner.hasAttribute('data-code')) {
+        ta.value = runner.getAttribute('data-code');
+        runner.removeAttribute('data-code');
+      }
+
+      if (btn) {
+        btn.addEventListener('click', function () { runCode(btn); });
+      }
     });
   }
 
-  // Funciona tanto quando o script carrega no <head defer> quanto inline no body
+  // Funciona quando o script carrega via <head defer> (readyState = 'interactive')
+  // ou quando é injetado no body (readyState = 'complete')
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', attachHandlers);
   } else {

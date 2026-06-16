@@ -47,33 +47,12 @@ Modelar desfechos **categóricos**: binária (engajou/não) ou ordinal (baixo/m�
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import statsmodels.api as sm&#10;import pandas as pd&#10;import numpy as np&#10;from sklearn.metrics import roc_auc_score&#10;&#10;df = pd.DataFrame({&#10;    &#x27;engajou&#x27;:     [1,0,1,1,0,1,0,1,0,1,0,1],&#10;    &#x27;uso_chatbot&#x27;: [8,2,9,7,3,10,1,8,4,9,2,11],&#10;    &#x27;metacognicao&#x27;:[65,40,70,68,38,75,35,72,42,78,33,80]&#10;})&#10;&#10;X = sm.add_constant(df[[&#x27;uso_chatbot&#x27;, &#x27;metacognicao&#x27;]])&#10;modelo = sm.Logit(df[&#x27;engajou&#x27;], X).fit(disp=0)&#10;print(modelo.summary())&#10;&#10;OR = np.exp(modelo.params)&#10;print(&quot;\nOdds Ratios:&quot;)&#10;print(OR.round(3))&#10;&#10;y_pred = modelo.predict(X)&#10;auc = roc_auc_score(df[&#x27;engajou&#x27;], y_pred)&#10;print(f&quot;\nAUC = {auc:.3f}&quot;)" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import statsmodels.api as sm
-import pandas as pd
-import numpy as np
-from sklearn.metrics import roc_auc_score
-
-df = pd.DataFrame({
-    'engajou':     [1,0,1,1,0,1,0,1,0,1,0,1],
-    'uso_chatbot': [8,2,9,7,3,10,1,8,4,9,2,11],
-    'metacognicao':[65,40,70,68,38,75,35,72,42,78,33,80]
-})
-
-X = sm.add_constant(df[['uso_chatbot', 'metacognicao']])
-modelo = sm.Logit(df['engajou'], X).fit(disp=0)
-print(modelo.summary())
-
-OR = np.exp(modelo.params)
-print("\nOdds Ratios:")
-print(OR.round(3))
-
-y_pred = modelo.predict(X)
-auc = roc_auc_score(df['engajou'], y_pred)
-print(f"\nAUC = {auc:.3f}")</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

@@ -48,23 +48,12 @@ Compara a **média** de uma variável numérica entre **exatamente dois grupos**
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pingouin as pg&#10;from scipy.stats import shapiro, levene&#10;&#10;feedback     = [72,85,78,90,68,82,76,88]&#10;sem_feedback = [60,65,70,58,63,72,55,67]&#10;&#10;_, p_n1 = shapiro(feedback);     print(f&quot;Shapiro G1: p={p_n1:.3f}&quot;)&#10;_, p_n2 = shapiro(sem_feedback);  print(f&quot;Shapiro G2: p={p_n2:.3f}&quot;)&#10;_, p_lv = levene(feedback, sem_feedback); print(f&quot;Levene:     p={p_lv:.3f}&quot;)&#10;&#10;res = pg.ttest(feedback, sem_feedback, paired=False, correction=&#x27;auto&#x27;)&#10;print(res[[&#x27;T&#x27;, &#x27;dof&#x27;, &#x27;p-val&#x27;, &#x27;cohen-d&#x27;, &#x27;power&#x27;]])" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pingouin as pg
-from scipy.stats import shapiro, levene
-
-feedback     = [72,85,78,90,68,82,76,88]
-sem_feedback = [60,65,70,58,63,72,55,67]
-
-_, p_n1 = shapiro(feedback);     print(f"Shapiro G1: p={p_n1:.3f}")
-_, p_n2 = shapiro(sem_feedback);  print(f"Shapiro G2: p={p_n2:.3f}")
-_, p_lv = levene(feedback, sem_feedback); print(f"Levene:     p={p_lv:.3f}")
-
-res = pg.ttest(feedback, sem_feedback, paired=False, correction='auto')
-print(res[['T', 'dof', 'p-val', 'cohen-d', 'power']])</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

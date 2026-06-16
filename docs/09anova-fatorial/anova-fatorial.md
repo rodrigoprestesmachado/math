@@ -49,29 +49,12 @@ has_children: false
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pingouin as pg&#10;import pandas as pd&#10;&#10;df_rm = pd.DataFrame({&#10;    &#x27;sujeito&#x27;: list(range(8)) * 3,&#10;    &#x27;momento&#x27;: [&#x27;pre&#x27;]*8 + [&#x27;durante&#x27;]*8 + [&#x27;pos&#x27;]*8,&#10;    &#x27;escore&#x27;:  [50,55,48,60,52,58,45,53,&#10;                62,68,59,72,65,70,57,64,&#10;                75,80,70,85,78,83,68,76]&#10;})&#10;&#10;rm = pg.rm_anova(data=df_rm, dv=&#x27;escore&#x27;, within=&#x27;momento&#x27;,&#10;                 subject=&#x27;sujeito&#x27;, correction=True)&#10;print(rm[[&#x27;Source&#x27;,&#x27;F&#x27;,&#x27;p-unc&#x27;,&#x27;p-GG-corr&#x27;,&#x27;ng2&#x27;]])&#10;&#10;ph = pg.pairwise_tests(data=df_rm, dv=&#x27;escore&#x27;, within=&#x27;momento&#x27;,&#10;                       subject=&#x27;sujeito&#x27;, padjust=&#x27;bonf&#x27;)&#10;print(ph[[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;T&#x27;,&#x27;p-corr&#x27;,&#x27;cohen-d&#x27;]])" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pingouin as pg
-import pandas as pd
-
-df_rm = pd.DataFrame({
-    'sujeito': list(range(8)) * 3,
-    'momento': ['pre']*8 + ['durante']*8 + ['pos']*8,
-    'escore':  [50,55,48,60,52,58,45,53,
-                62,68,59,72,65,70,57,64,
-                75,80,70,85,78,83,68,76]
-})
-
-rm = pg.rm_anova(data=df_rm, dv='escore', within='momento',
-                 subject='sujeito', correction=True)
-print(rm[['Source','F','p-unc','p-GG-corr','ng2']])
-
-ph = pg.pairwise_tests(data=df_rm, dv='escore', within='momento',
-                       subject='sujeito', padjust='bonf')
-print(ph[['A','B','T','p-corr','cohen-d']])</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

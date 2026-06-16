@@ -50,28 +50,12 @@ Exemplo: *a satisfação do estudante com o chatbot (escala 1–5) está associa
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pandas as pd&#10;from scipy import stats&#10;import pingouin as pg&#10;&#10;df = pd.DataFrame({&#10;    &#x27;satisfacao&#x27;: [2,4,1,5,3,5,4,2,3,5],&#10;    &#x27;sessoes&#x27;:    [3,8,1,12,5,11,9,2,4,13]&#10;})&#10;&#10;rho, p_s = stats.spearmanr(df[&#x27;satisfacao&#x27;], df[&#x27;sessoes&#x27;])&#10;print(f&quot;Spearman ρ = {rho:.3f}, p = {p_s:.4f}&quot;)&#10;&#10;tau, p_k = stats.kendalltau(df[&#x27;satisfacao&#x27;], df[&#x27;sessoes&#x27;])&#10;print(f&quot;Kendall  τ = {tau:.3f}, p = {p_k:.4f}&quot;)&#10;&#10;res = pg.corr(df[&#x27;satisfacao&#x27;], df[&#x27;sessoes&#x27;], method=&#x27;spearman&#x27;)&#10;print(res[[&#x27;n&#x27;, &#x27;r&#x27;, &#x27;CI95%&#x27;, &#x27;p-val&#x27;, &#x27;power&#x27;]])" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pandas as pd
-from scipy import stats
-import pingouin as pg
-
-df = pd.DataFrame({
-    'satisfacao': [2,4,1,5,3,5,4,2,3,5],
-    'sessoes':    [3,8,1,12,5,11,9,2,4,13]
-})
-
-rho, p_s = stats.spearmanr(df['satisfacao'], df['sessoes'])
-print(f"Spearman ρ = {rho:.3f}, p = {p_s:.4f}")
-
-tau, p_k = stats.kendalltau(df['satisfacao'], df['sessoes'])
-print(f"Kendall  τ = {tau:.3f}, p = {p_k:.4f}")
-
-res = pg.corr(df['satisfacao'], df['sessoes'], method='spearman')
-print(res[['n', 'r', 'CI95%', 'p-val', 'power']])</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

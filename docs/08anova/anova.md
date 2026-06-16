@@ -50,32 +50,12 @@ Compara médias (ANOVA) ou distribuições de postos (Kruskal-Wallis) entre **tr
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pingouin as pg&#10;import pandas as pd&#10;from scipy.stats import kruskal&#10;&#10;df = pd.DataFrame({&#10;    &#x27;perguntas&#x27;: [3,4,2,5, 7,8,6,9, 12,14,11,13],&#10;    &#x27;perfil&#x27;:    [&#x27;passivo&#x27;]*4 + [&#x27;ativo&#x27;]*4 + [&#x27;intensivo&#x27;]*4&#10;})&#10;&#10;aov = pg.anova(data=df, dv=&#x27;perguntas&#x27;, between=&#x27;perfil&#x27;, detailed=True)&#10;print(aov[[&#x27;Source&#x27;,&#x27;F&#x27;,&#x27;p-unc&#x27;,&#x27;np2&#x27;]])&#10;&#10;ph = pg.pairwise_tukey(data=df, dv=&#x27;perguntas&#x27;, between=&#x27;perfil&#x27;)&#10;print(ph[[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;diff&#x27;,&#x27;p-tukey&#x27;,&#x27;hedges&#x27;]])&#10;&#10;H, p_k = kruskal(&#10;    df[df.perfil==&#x27;passivo&#x27;].perguntas,&#10;    df[df.perfil==&#x27;ativo&#x27;].perguntas,&#10;    df[df.perfil==&#x27;intensivo&#x27;].perguntas&#10;)&#10;print(f&quot;\nKruskal-Wallis: H = {H:.3f}, p = {p_k:.4f}&quot;)" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pingouin as pg
-import pandas as pd
-from scipy.stats import kruskal
-
-df = pd.DataFrame({
-    'perguntas': [3,4,2,5, 7,8,6,9, 12,14,11,13],
-    'perfil':    ['passivo']*4 + ['ativo']*4 + ['intensivo']*4
-})
-
-aov = pg.anova(data=df, dv='perguntas', between='perfil', detailed=True)
-print(aov[['Source','F','p-unc','np2']])
-
-ph = pg.pairwise_tukey(data=df, dv='perguntas', between='perfil')
-print(ph[['A','B','diff','p-tukey','hedges']])
-
-H, p_k = kruskal(
-    df[df.perfil=='passivo'].perguntas,
-    df[df.perfil=='ativo'].perguntas,
-    df[df.perfil=='intensivo'].perguntas
-)
-print(f"\nKruskal-Wallis: H = {H:.3f}, p = {p_k:.4f}")</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

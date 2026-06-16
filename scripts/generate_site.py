@@ -36,20 +36,32 @@ def strip_html(text: str) -> str:
 
 # ---------------------------------------------------------------------------
 # Bloco HTML do runner Python para embutir no .md
-# O CSS vem de runner.css (via head_custom.html), não precisa de <style> inline.
+#
+# IMPORTANTE: NÃO colocar o código dentro do <textarea> — o Kramdown colapsa
+# as quebras de linha mesmo com markdown="0". Em vez disso, o código é
+# armazenado no atributo data-code (com \n como &#10;) e o py-runner.js
+# injeta o valor no textarea via .value após o DOM ser carregado.
 # ---------------------------------------------------------------------------
+
+def code_to_data_attr(code: str) -> str:
+    """Codifica o código Python para uso seguro num atributo HTML data-code."""
+    # html.escape(quote=True) escapa &, <, >, " e ' — seguro para atributo "..."
+    # Depois codifica \n como &#10; (o browser decodifica ao ler via JS)
+    return html.escape(code, quote=True).replace('\n', '&#10;')
+
 
 def python_runner_block(topic: dict) -> str:
     """Retorna o bloco HTML do runner para inserção no .md."""
     context = topic.get('python_context', '')
     ctx_line = f"\n{context}\n" if context else ""
+    data_code = code_to_data_attr(topic['python_code'])
     return f"""{ctx_line}
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="{data_code}" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">{esc(topic['python_code'])}</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>"""
 

@@ -47,28 +47,12 @@ Modelar dados com estrutura **hierárquica**: mensagens → sessões → estudan
 ## 🐍 Exemplo Python
 
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import statsmodels.formula.api as smf&#10;import pandas as pd&#10;import numpy as np&#10;&#10;np.random.seed(42)&#10;n_est, n_ses = 20, 5&#10;&#10;df = pd.DataFrame({&#10;    &#x27;estudante&#x27;: np.repeat(range(n_est), n_ses),&#10;    &#x27;sessao&#x27;:    list(range(n_ses)) * n_est,&#10;    &#x27;turnos&#x27;:    np.random.poisson(6, n_est*n_ses),&#10;    &#x27;escore&#x27;:    np.random.normal(70, 10, n_est*n_ses)&#10;})&#10;df[&#x27;escore&#x27;] += df[&#x27;turnos&#x27;] * 1.5&#10;&#10;modelo = smf.mixedlm(&quot;escore ~ turnos&quot;, data=df, groups=df[&quot;estudante&quot;]).fit(reml=True)&#10;print(modelo.summary())" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-n_est, n_ses = 20, 5
-
-df = pd.DataFrame({
-    'estudante': np.repeat(range(n_est), n_ses),
-    'sessao':    list(range(n_ses)) * n_est,
-    'turnos':    np.random.poisson(6, n_est*n_ses),
-    'escore':    np.random.normal(70, 10, n_est*n_ses)
-})
-df['escore'] += df['turnos'] * 1.5
-
-modelo = smf.mixedlm("escore ~ turnos", data=df, groups=df["estudante"]).fit(reml=True)
-print(modelo.summary())</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 

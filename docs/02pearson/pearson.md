@@ -56,28 +56,12 @@ Em dados conversacionais: *quanto maior o número de turnos em uma sessão, maio
 
 Contexto: verificar se o número de turnos por sessão se associa ao escore de compreensão.
 
-<div class="python-runner" markdown="0">
+<div class="python-runner" data-code="import pandas as pd&#10;from scipy import stats&#10;import matplotlib.pyplot as plt&#10;&#10;df = pd.DataFrame({&#10;    &#x27;turnos&#x27;:      [4,7,3,9,5,11,6,8,2,10],&#10;    &#x27;escore_comp&#x27;: [52,71,48,80,60,85,66,75,40,82]&#10;})&#10;&#10;# Passo 1: sempre visualize antes&#10;df.plot.scatter(x=&#x27;turnos&#x27;, y=&#x27;escore_comp&#x27;, color=&#x27;#c792ea&#x27;,&#10;               title=&#x27;Turnos × Escore de Compreensão&#x27;)&#10;plt.show()&#10;&#10;# Passo 2: calcular&#10;r, p = stats.pearsonr(df[&#x27;turnos&#x27;], df[&#x27;escore_comp&#x27;])&#10;print(f&quot;r = {r:.3f}, p = {p:.4f}&quot;)" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
-  <textarea class="code-input" spellcheck="false">import pandas as pd
-from scipy import stats
-import matplotlib.pyplot as plt
-
-df = pd.DataFrame({
-    'turnos':      [4,7,3,9,5,11,6,8,2,10],
-    'escore_comp': [52,71,48,80,60,85,66,75,40,82]
-})
-
-# Passo 1: sempre visualize antes
-df.plot.scatter(x='turnos', y='escore_comp', color='#c792ea',
-               title='Turnos × Escore de Compreensão')
-plt.show()
-
-# Passo 2: calcular
-r, p = stats.pearsonr(df['turnos'], df['escore_comp'])
-print(f"r = {r:.3f}, p = {p:.4f}")</textarea>
+  <textarea class="code-input" spellcheck="false"></textarea>
   <pre class="code-output"></pre>
 </div>
 
