@@ -19,6 +19,7 @@ Pense em dois atletas correndo numa pista lado a lado. Quando um acelera, o outr
 ## 🎯 Para que serve
 
 Mede a **força** e a **direção** de uma relação *linear* entre duas variáveis numéricas contínuas. O coeficiente *r* vai de −1 a +1.
+
 Em dados conversacionais: *quanto maior o número de turnos em uma sessão, maior o escore de compreensão do estudante?*
 
 ---
@@ -55,7 +56,7 @@ print(f"r = {r:.3f}, p = {p:.4f}")
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -70,6 +71,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../pearson.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

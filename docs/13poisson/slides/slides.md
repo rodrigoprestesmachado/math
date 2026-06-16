@@ -52,11 +52,12 @@ print(f"Média={media:.2f}  Variância={var:.2f}  Índice={var/media:.2f}")
 mod_p  = smf.poisson('perguntas ~ metacognicao + tempo_sessao', data=df).fit(disp=0)
 mod_nb = smf.negativebinomial('perguntas ~ metacognicao + tempo_sessao', data=df).fit(disp=0)
 
-print(f"AI...
+print(f"AI
+...
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -71,6 +72,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../poisson.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

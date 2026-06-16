@@ -59,7 +59,7 @@ print(f"\nAUC = {auc:.3f}")
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -74,6 +74,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../regressao-logistica.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

@@ -12,122 +12,272 @@ DOCS = Path(__file__).resolve().parent.parent / "docs"
 ASSETS = DOCS / "assets"
 
 
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
 def esc(text: str) -> str:
+    """Escapes HTML entities for inserção em atributos/conteúdo HTML."""
     return html.escape(text, quote=False)
 
 
-def ul_items(items: list[str]) -> str:
-    return "<ul>\n" + "\n".join(f"        <li>{item}</li>" for item in items) + "\n      </ul>"
+def strip_html(text: str) -> str:
+    """Converte tags HTML simples para equivalentes Markdown."""
+    pairs = [
+        ('<strong>', '**'), ('</strong>', '**'),
+        ('<em>', '*'),      ('</em>',     '*'),
+        ('<br><br>', '\n\n'), ('<br>', '  \n'),
+        ('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'),
+    ]
+    for old, new in pairs:
+        text = text.replace(old, new)
+    return text
 
 
-def ref_list(refs: list[tuple]) -> str:
-    lines = []
-    for tag, text in refs:
-        lines.append(f'        <li><span class="ref-tag">{esc(tag)}</span>{text}</li>')
-    return "<ul class=\"ref-list\">\n" + "\n".join(lines) + "\n      </ul>"
+# ---------------------------------------------------------------------------
+# CSS embutido no content.html — combina com o tema just-the-docs
+# ---------------------------------------------------------------------------
+
+RUNNER_CSS = """\
+.python-runner {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e1e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.python-runner .toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #f5f6fa;
+  border-bottom: 1px solid #e6e1e8;
+  font-size: 0.78rem;
+  color: #5c5962;
+}
+.python-runner .run-btn {
+  background: #7253ed;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.python-runner .run-btn:hover { background: #5e41d0; }
+.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
+.python-runner textarea.code-input {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  padding: 1rem;
+  margin: 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  resize: vertical;
+  outline: none;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.python-runner .code-output {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e6e1e8;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.78rem;
+  color: #1a6a1a;
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #f6fff6;
+}
+.python-runner .code-output.visible { display: block; }
+.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
+.python-runner .code-output img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  display: block;
+}
+.py-loading {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 1px solid #7253ed;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #5c5962;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.py-loading.visible { display: block; }"""
 
 
-def python_runner(code: str) -> str:
-    return f"""      <div class="python-runner">
-        <div class="toolbar">
-          <span>🐍 Python — executável no navegador (Pyodide)</span>
-          <button type="button" class="run-btn">▶ Executar</button>
-        </div>
-        <textarea class="code-input" spellcheck="false">{esc(code)}</textarea>
-        <pre class="code-output"></pre>
-      </div>"""
-
+# ---------------------------------------------------------------------------
+# content.html — página Jekyll, só o runner Python
+# ---------------------------------------------------------------------------
 
 def content_html(topic: dict) -> str:
-    bloco = BLOCOS[topic["bloco"]]
-    tip = ""
-    if topic.get("tip"):
-        tip = f'      <div class="tip">{topic["tip"]}</div>\n'
+    """Página Jekyll com layout do site, contendo apenas o runner Python."""
+    context = topic.get('python_context', '')
+    context_block = f"\n{context}\n" if context else ""
+    back_fname = topic['dir'][2:] + '.html'   # e.g. 02pearson -> pearson.html
 
-    py_ctx = ""
-    if topic.get("python_context"):
-        py_ctx = f'      <p>{topic["python_context"]}</p>\n'
+    return f"""---
+layout: default
+title: "{esc(topic['title'])} — Código Python"
+nav_exclude: true
+---
 
-    return f"""<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enc. {topic['num']} — {esc(topic['title'])}</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
+## 🐍 Enc. {topic['num']} — {topic['title']}
+{context_block}
+<style>
+{RUNNER_CSS}
+</style>
 
-<header>
-  <h1>Enc. {topic['num']} — {topic['title']}</h1>
-  <p>{topic['subtitle']}</p>
-  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
-</header>
-
-<div class="bloco-title {bloco['class']}">{bloco['emoji']} Bloco {topic['bloco']} — {bloco['name']}</div>
-
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">{topic['num']}</div>
-    <div><h2>{topic['title']}</h2><p>{topic['subtitle']}</p></div>
+<div class="python-runner">
+  <div class="toolbar">
+    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
   </div>
-
-  <div class="section">
-    <div class="section-label lbl-meta">🍊 Metáfora</div>
-    <div class="metaphor">
-      <span class="metaphor-label">{topic.get('metaphor_label', 'Imagine isso…')}</span>
-      {topic['metaphor']}
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Para que serve</div>
-    {''.join(f'<p>{p}</p>' for p in topic['serve'])}
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
-    {ul_items(topic['quando'])}
-{tip}  </div>
-
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Exemplo Python</div>
-{py_ctx}{python_runner(topic['python_code'])}
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-ref">📚 Referências</div>
-    {ref_list(topic['refs'])}
-  </div>
+  <textarea class="code-input" spellcheck="false">{esc(topic['python_code'])}</textarea>
+  <pre class="code-output"></pre>
 </div>
 
-<footer class="page-footer">
-  <a href="slides/index.html">📊 Ver slides</a> ·
-  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</footer>
+[← Voltar ao conteúdo]({back_fname})
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="../assets/js/py-runner.js"></script>
-</body>
-</html>
+<script src="/assets/js/py-runner.js"></script>
 """
 
+
+# ---------------------------------------------------------------------------
+# jekyll_md — .md principal com todo o conteúdo didático
+# ---------------------------------------------------------------------------
+
+def jekyll_md(topic: dict) -> str:
+    """Gera o .md Jekyll com metáfora, serve, quando usar, refs e link para o runner."""
+    bloco = BLOCOS[topic["bloco"]]
+
+    metaphor_label = topic.get('metaphor_label', 'Imagine isso…')
+    metaphor_text  = strip_html(topic['metaphor'])
+
+    serve_paras = "\n\n".join(strip_html(p) for p in topic['serve'])
+
+    quando_items = "\n".join(f"- {strip_html(item)}" for item in topic['quando'])
+
+    tip_block = ""
+    if topic.get('tip'):
+        tip_block = f"\n{{: .highlight }}\n> {strip_html(topic['tip'])}\n"
+
+    context = topic.get('python_context', '')
+    python_context_line = f"\n{context}\n" if context else ""
+
+    ref_rows = "\n".join(
+        f"| **{tag}** | {strip_html(text)} |"
+        for tag, text in topic['refs']
+    )
+
+    # Kramdown class attributes usam { } — escapar do f-string com {{ }}
+    fname = topic['dir'][2:] + '.html'   # back link de content.html -> aqui
+
+    return f"""---
+layout: default
+title: {topic['title']}
+nav_order: {topic['nav_order']}
+parent: Encontros
+has_children: false
+---
+
+# Enc. {topic['num']} — {topic['title']}
+
+`{topic['subtitle']}`
+{{: .fs-5 .fw-300 }}
+
+---
+
+## 🍊 Metáfora
+
+> **{metaphor_label}**
+>
+> {metaphor_text}
+
+---
+
+## 🎯 Para que serve
+
+{serve_paras}
+
+---
+
+## 📋 Quando usar
+
+{quando_items}
+{tip_block}
+---
+
+## 🐍 Exemplo Python
+{python_context_line}
+[▶ Abrir código executável](content.html){{: .btn .btn-primary }}
+
+---
+
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/{topic['dir']}/slides/index.html#/" title="{topic['title']}" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
+## 📚 Referências
+
+| | |
+|:--|:--|
+{ref_rows}
+
+---
+
+<center>
+<a href="https://rpmhub.dev" target="_blank"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" border="0"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
+</center>
+"""
+
+
+# ---------------------------------------------------------------------------
+# Slides Reveal.js
+# ---------------------------------------------------------------------------
 
 def slides_md(topic: dict) -> str:
     bloco = BLOCOS[topic["bloco"]]
     quando = "\n".join(f"- {item}" for item in topic["quando"][:4])
-    refs = "\n".join(f"- **{tag}:** {text.replace('<em>', '*').replace('</em>', '*')}" for tag, text in topic["refs"][:3])
+    refs = "\n".join(
+        f"- **{tag}:** {text.replace('<em>', '*').replace('</em>', '*')}"
+        for tag, text in topic["refs"][:3]
+    )
     metaphor = (
         topic["metaphor"]
         .replace("<strong>", "**").replace("</strong>", "**")
         .replace("<em>", "*").replace("</em>", "*")
         .replace("<br><br>", "\n\n")
     )
-    serve_text = chr(10).join(topic["serve"]).replace("<strong>", "**").replace("</strong>", "**").replace("<em>", "*").replace("</em>", "*")
+    serve_text = (
+        "\n\n".join(topic["serve"])
+        .replace("<strong>", "**").replace("</strong>", "**")
+        .replace("<em>", "*").replace("</em>", "*")
+    )
     code_preview = topic["python_code"][:600]
     if len(topic["python_code"]) > 600:
-        code_preview += "..."
+        code_preview += "\n..."
 
     return f"""<!-- .slide: class="title-slide" -->
 
@@ -166,7 +316,7 @@ def slides_md(topic: dict) -> str:
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -179,45 +329,15 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../{topic['dir'][2:]}.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)
 """
 
 
-def jekyll_md(topic: dict) -> str:
-    slug = topic["dir"]
-    title = topic["title"]
-    return f"""---
-layout: default
-title: {title}
-nav_order: {topic['nav_order']}
-parent: Encontros
-has_children: false
----
-
-# Enc. {topic['num']} — {title}
-
-<p>{topic['subtitle']}</p>
-
-## Slides
-
-<center>
-<iframe src="https://math.rpmhub.dev/{slug}/slides/index.html#/" title="{title}" width="90%" height="500" style="border:none;"></iframe>
-</center>
-
-## Conteúdo interativo
-
-O material completo com metáforas, referências e **código Python executável** no navegador:
-
-<p><a href="https://math.rpmhub.dev/{slug}/content.html" class="btn btn-primary">Abrir conteúdo interativo →</a></p>
-
-<center>
-<a href="https://rpmhub.dev" target="_blank"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" border="0"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
-</center>
-"""
-
+# ---------------------------------------------------------------------------
+# Shell dos slides Reveal.js
+# ---------------------------------------------------------------------------
 
 SLIDES_SHELL = '''<!DOCTYPE html>
 <html lang="pt-BR">
@@ -260,8 +380,11 @@ SLIDES_SHELL = '''<!DOCTYPE html>
 '''
 
 
+# ---------------------------------------------------------------------------
+# materiais.html — visão geral (standalone, sem Jekyll)
+# ---------------------------------------------------------------------------
+
 def materiais_html() -> str:
-    """Página única com todos os tópicos (visão geral)."""
     cards = []
     current_bloco = None
     for topic in TOPICS:
@@ -272,20 +395,23 @@ def materiais_html() -> str:
                 f'<div id="{bloco["id"]}" class="bloco-title {bloco["class"]}">'
                 f'{bloco["emoji"]} Bloco {topic["bloco"]} — {bloco["name"]}</div>'
             )
+        md_fname = topic['dir'][2:] + '.html'
         cards.append(f"""<div class="card">
   <div class="card-header">
     <div class="enc-num">{topic['num']}</div>
-    <div><h2><a href="{topic['dir']}/content.html" style="color:inherit;text-decoration:none">{topic['title']}</a></h2>
+    <div><h2><a href="{topic['dir']}/{md_fname}" style="color:inherit;text-decoration:none">{topic['title']}</a></h2>
     <p>{topic['subtitle']}</p></div>
   </div>
   <div class="section" style="padding:12px 22px">
-    <a href="{topic['dir']}/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="{topic['dir']}/{md_fname}" style="color:#90c0ff;margin-right:16px">📖 Conteúdo</a>
+    <a href="{topic['dir']}/content.html" style="color:#90e090;margin-right:16px">🐍 Código Python</a>
     <a href="{topic['dir']}/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
   </div>
 </div>""")
 
     nav = "\n".join(
-        f'    <a href="#{b["id"]}" class="nav-{b["class"]}">{b["emoji"]} Bloco {n} — {b["name"]} ({b["range"]})</a>'
+        f'    <a href="#{b["id"]}" class="nav-{b["class"]}">'
+        f'{b["emoji"]} Bloco {n} — {b["name"]} ({b["range"]})</a>'
         for n, b in BLOCOS.items()
     )
 
@@ -313,55 +439,66 @@ def materiais_html() -> str:
 </html>"""
 
 
-def intro_content() -> str:
-    return """<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introdução — Análise de Dados Conversacionais</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
-<header>
-  <h1>Análise de Dados Conversacionais</h1>
-  <p>Disciplina de mestrado · Estatística aplicada a logs de chatbots e interações educacionais</p>
-  <a class="back-link" href="../materiais.html">← Ver todos os materiais</a>
-</header>
+# ---------------------------------------------------------------------------
+# Introdução (Enc. 1) — sem código Python
+# ---------------------------------------------------------------------------
 
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">1</div>
-    <div><h2>Introdução ao curso</h2><p>Objetivos · Estrutura · Ferramentas</p></div>
-  </div>
+def intro_jekyll() -> str:
+    return """---
+layout: default
+title: Introdução
+nav_order: 3
+parent: Encontros
+has_children: false
+---
 
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Objetivo</div>
-    <p>Este curso apresenta métodos estatísticos para analisar <strong>dados conversacionais</strong> em contextos educacionais: logs de chatbots, turnos de diálogo, escores de compreensão, perfis de uso e desfechos de aprendizagem.</p>
-  </div>
+# Enc. 1 — Análise de Dados Conversacionais
 
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Estrutura — 3 blocos</div>
-    <ul>
-      <li><strong>Bloco 1 — Associação (Enc. 2–5):</strong> correlações, qui-quadrado, análise fatorial</li>
-      <li><strong>Bloco 2 — Comparação (Enc. 6–10):</strong> testes t, não-paramétricos, ANOVA, modelos mistos</li>
-      <li><strong>Bloco 3 — Predição (Enc. 11–13):</strong> regressão linear, logística e de contagem</li>
-    </ul>
-  </div>
+`Objetivos · Estrutura do curso · Ferramentas Python`
+{: .fs-5 .fw-300 }
 
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Ferramentas Python</div>
-    <p><code>pandas</code>, <code>scipy</code>, <code>pingouin</code>, <code>statsmodels</code>, <code>scikit-learn</code>, <code>matplotlib</code></p>
-    <div class="tip"><strong>Código executável:</strong> cada encontro inclui exemplos que rodam direto no navegador via <a href="https://pyodide.org" style="color:#90c0ff">Pyodide</a> — sem instalar Python.</div>
-  </div>
-</div>
+---
 
-<footer class="page-footer">
-  <a href="../materiais.html">📚 Todos os materiais</a> ·
-  <a href="slides/index.html">📊 Slides</a>
-</footer>
-</body>
-</html>"""
+## 🎯 Objetivo
+
+Este curso apresenta métodos estatísticos para analisar **dados conversacionais** em contextos educacionais:
+logs de chatbots, turnos de diálogo, escores de compreensão, perfis de uso e desfechos de aprendizagem.
+
+---
+
+## 📋 Estrutura — 3 blocos
+
+| Bloco | Encontros | Foco |
+|:------|:----------|:-----|
+| 🔗 1 — Associação | 2 a 5 | Correlações, qui-quadrado, análise fatorial |
+| ⚖️ 2 — Comparação | 6 a 10 | Testes t, não-paramétricos, ANOVA, LMM |
+| 📈 3 — Predição | 11 a 13 | Regressão linear, logística e de contagem |
+
+Cada encontro inclui **slides** e **código Python executável** no navegador (sem instalar nada).
+
+---
+
+## 🐍 Ferramentas Python
+
+`pandas` · `scipy` · `pingouin` · `statsmodels` · `scikit-learn` · `matplotlib`
+
+Os exemplos rodam diretamente no navegador via [Pyodide](https://pyodide.org). Clique em **▶ Executar** em qualquer encontro — na primeira execução o Python carrega em ~30 s.
+
+---
+
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
+<center>
+<a href="https://rpmhub.dev" target="_blank"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" border="0"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
+</center>
+"""
 
 
 def intro_slides_md() -> str:
@@ -409,50 +546,18 @@ Exemplos <strong>executáveis no navegador</strong> (Pyodide) — sem instalar P
 
 ## Materiais
 
-[materiais.html](https://math.rpmhub.dev/materiais.html)
-
-[math.rpmhub.dev](https://math.rpmhub.dev)
+[math.rpmhub.dev/materiais.html](https://math.rpmhub.dev/materiais.html)
 """
 
 
-def intro_jekyll() -> str:
-    return """---
-layout: default
-title: Introdução
-nav_order: 3
-parent: Encontros
-has_children: false
----
-
-# Introdução
-
-Disciplina de mestrado sobre **análise estatística de dados conversacionais** em contextos educacionais com chatbots e sistemas de IA.
-
-## Slides
-
-<center>
-<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
-</center>
-
-## Conteúdo
-
-<p><a href="https://math.rpmhub.dev/01introducao/content.html">Abrir conteúdo →</a></p>
-
-<p><a href="https://math.rpmhub.dev/materiais.html">Ver todos os 13 encontros →</a></p>
-
-<center>
-<a href="https://rpmhub.dev" target="_blank"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" border="0"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
-</center>
-"""
-
+# ---------------------------------------------------------------------------
+# main
+# ---------------------------------------------------------------------------
 
 def main():
-    # Slides CSS (purple theme for reveal.js)
-    # Intro
+    # Introdução (sem Python runner)
     intro_dir = DOCS / "01introducao"
     intro_dir.mkdir(parents=True, exist_ok=True)
-    (intro_dir / "content.html").write_text(intro_content(), encoding="utf-8")
     (intro_dir / "introducao.md").write_text(intro_jekyll(), encoding="utf-8")
     slides_dir = intro_dir / "slides"
     slides_dir.mkdir(exist_ok=True)
@@ -460,18 +565,17 @@ def main():
     (slides_dir / "index.html").write_text(
         SLIDES_SHELL.format(title="Introdução"), encoding="utf-8"
     )
+    print("  ✓ 01introducao")
 
-    # Topics
+    # Tópicos 2–13
     for topic in TOPICS:
         tdir = DOCS / topic["dir"]
         tdir.mkdir(parents=True, exist_ok=True)
-        (tdir / "content.html").write_text(content_html(topic), encoding="utf-8")
-        slug = topic["dir"].split("-", 1)[-1] if "-" in topic["dir"] else topic["dir"]
-        md_name = slug + ".md" if not topic["dir"].startswith("0") else topic["dir"][2:] + ".md"
-        # use dir suffix as filename: 02pearson -> pearson.md
-        parts = topic["dir"]
-        fname = parts[2:] + ".md"  # remove leading number prefix like 02
+
+        fname = topic["dir"][2:] + ".md"           # e.g. pearson.md
         (tdir / fname).write_text(jekyll_md(topic), encoding="utf-8")
+        (tdir / "content.html").write_text(content_html(topic), encoding="utf-8")
+
         sdir = tdir / "slides"
         sdir.mkdir(exist_ok=True)
         (sdir / "slides.md").write_text(slides_md(topic), encoding="utf-8")
@@ -480,7 +584,7 @@ def main():
         )
         print(f"  ✓ {topic['dir']}")
 
-    # Overview page
+    # Visão geral standalone
     (DOCS / "materiais.html").write_text(materiais_html(), encoding="utf-8")
     print("  ✓ materiais.html")
     print(f"\nGerados {len(TOPICS)} tópicos + introdução em {DOCS}")

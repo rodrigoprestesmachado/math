@@ -45,12 +45,11 @@ sys.stdout = _stdout
 sys.stderr = _stderr
 _figures = []
 
-_orig_show = plt.show
 def _capture_show(*args, **kwargs):
     fig = plt.gcf()
     if fig.get_axes():
         buf = io.BytesIO()
-        fig.savefig(buf, format='png', bbox_inches='tight', facecolor='#0d0220')
+        fig.savefig(buf, format='png', bbox_inches='tight', facecolor='white')
         import base64
         _figures.append(base64.b64encode(buf.getvalue()).decode())
         plt.close(fig)
@@ -123,9 +122,16 @@ def _get_output():
 
   window.runPythonCode = runCode;
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // Handles both cases: script runs before or after DOMContentLoaded
+  function attachHandlers() {
     document.querySelectorAll('.python-runner .run-btn').forEach(btn => {
       btn.addEventListener('click', () => runCode(btn));
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachHandlers);
+  } else {
+    attachHandlers();
+  }
 })();

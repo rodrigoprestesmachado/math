@@ -49,7 +49,7 @@ print(res[['T', 'dof', 'p-val', 'cohen-d', 'power']])
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -64,6 +64,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../teste-t.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

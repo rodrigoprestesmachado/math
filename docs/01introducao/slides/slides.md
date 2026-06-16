@@ -42,6 +42,4 @@ Exemplos <strong>executáveis no navegador</strong> (Pyodide) — sem instalar P
 
 ## Materiais
 
-[materiais.html](https://math.rpmhub.dev/materiais.html)
-
-[math.rpmhub.dev](https://math.rpmhub.dev)
+[math.rpmhub.dev/materiais.html](https://math.rpmhub.dev/materiais.html)

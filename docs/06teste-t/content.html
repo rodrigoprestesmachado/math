@@ -1,59 +1,100 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enc. 6 — Teste t (independente e pareado)</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
+---
+layout: default
+title: "Teste t (independente e pareado) — Código Python"
+nav_exclude: true
+---
 
-<header>
-  <h1>Enc. 6 — Teste t (independente e pareado)</h1>
-  <p>pingouin.ttest() · scipy.stats.ttest_ind · ttest_rel</p>
-  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
-</header>
+## 🐍 Enc. 6 — Teste t (independente e pareado)
 
-<div class="bloco-title b2">⚖️ Bloco 2 — Comparação</div>
+<style>
+.python-runner {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e1e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.python-runner .toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #f5f6fa;
+  border-bottom: 1px solid #e6e1e8;
+  font-size: 0.78rem;
+  color: #5c5962;
+}
+.python-runner .run-btn {
+  background: #7253ed;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.python-runner .run-btn:hover { background: #5e41d0; }
+.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
+.python-runner textarea.code-input {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  padding: 1rem;
+  margin: 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  resize: vertical;
+  outline: none;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.python-runner .code-output {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e6e1e8;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.78rem;
+  color: #1a6a1a;
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #f6fff6;
+}
+.python-runner .code-output.visible { display: block; }
+.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
+.python-runner .code-output img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  display: block;
+}
+.py-loading {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 1px solid #7253ed;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #5c5962;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.py-loading.visible { display: block; }
+</style>
 
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">6</div>
-    <div><h2>Teste t (independente e pareado)</h2><p>pingouin.ttest() · scipy.stats.ttest_ind · ttest_rel</p></div>
+<div class="python-runner">
+  <div class="toolbar">
+    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
   </div>
-
-  <div class="section">
-    <div class="section-label lbl-meta">🍊 Metáfora</div>
-    <div class="metaphor">
-      <span class="metaphor-label">Imagine isso…</span>
-      Duas balanças: escores com feedback vs. sem feedback. O teste t pergunta se a diferença é grande o suficiente para não ser mero acaso. O <strong>Cohen's d</strong> mede o quanto as distribuições se separam. O <strong>t pareado</strong> mede a mudança nas <em>mesmas</em> pessoas antes e depois.
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Para que serve</div>
-    <p>Compara a <strong>média</strong> de uma variável numérica entre <strong>exatamente dois grupos</strong>.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
-    <ul>
-        <li>✅ Variável dependente contínua e exatamente dois grupos.</li>
-        <li>✅ Verificar normalidade (Shapiro-Wilk) e homocedasticidade (Levene).</li>
-        <li>✅ Se Levene rejeitar → usar Welch (padrão no scipy).</li>
-        <li>❌ Se normalidade violada com n pequeno → Mann-Whitney.</li>
-        <li>⚠️ Sempre reporte Cohen's d além do p-valor.</li>
-      </ul>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Exemplo Python</div>
-      <div class="python-runner">
-        <div class="toolbar">
-          <span>🐍 Python — executável no navegador (Pyodide)</span>
-          <button type="button" class="run-btn">▶ Executar</button>
-        </div>
-        <textarea class="code-input" spellcheck="false">import pingouin as pg
+  <textarea class="code-input" spellcheck="false">import pingouin as pg
 from scipy.stats import shapiro, levene
 
 feedback     = [72,85,78,90,68,82,76,88]
@@ -65,28 +106,10 @@ _, p_lv = levene(feedback, sem_feedback); print(f"Levene:     p={p_lv:.3f}")
 
 res = pg.ttest(feedback, sem_feedback, paired=False, correction='auto')
 print(res[['T', 'dof', 'p-val', 'cohen-d', 'power']])</textarea>
-        <pre class="code-output"></pre>
-      </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-ref">📚 Referências</div>
-    <ul class="ref-list">
-        <li><span class="ref-tag">seminal</span>Student [Gosset, W. S.] (1908). The probable error of a mean. <em>Biometrika, 6</em>(1), 1–25.</li>
-        <li><span class="ref-tag">tamanho efeito</span>Cohen, J. (1988). <em>Statistical Power Analysis</em>. Cap. 2.</li>
-        <li><span class="ref-tag">didático</span>Field, A. (2024). <em>Discovering Statistics</em>. Cap. 10.</li>
-        <li><span class="ref-tag">crítico</span>Sullivan, G. M., & Feinn, R. (2012). Using effect size. <em>Journal of Graduate Medical Education, 4</em>(3), 279–282.</li>
-      </ul>
-  </div>
+  <pre class="code-output"></pre>
 </div>
 
-<footer class="page-footer">
-  <a href="slides/index.html">📊 Ver slides</a> ·
-  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</footer>
+[← Voltar ao conteúdo](teste-t.html)
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="../assets/js/py-runner.js"></script>
-</body>
-</html>
+<script src="/assets/js/py-runner.js"></script>

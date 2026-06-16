@@ -53,11 +53,12 @@ print(rm[['Source','F','p-unc','p-GG-corr','ng2']])
 
 ph = pg.pairwise_tests(data=df_rm, dv='escore', within='momento',
                        subject='sujeito', padjust='bonf')
-print(ph[['A','B','T','p-cor...
+print(ph[['A','B','T','p-cor
+...
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -72,6 +73,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../anova-fatorial.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

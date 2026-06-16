@@ -8,19 +8,58 @@ has_children: false
 
 # Enc. 10 — Modelos Lineares Mistos (LMM)
 
-<p>statsmodels.formula.api.mixedlm · pingouin.mixed_anova()</p>
+`statsmodels.formula.api.mixedlm · pingouin.mixed_anova()`
+{: .fs-5 .fw-300 }
 
-## Slides
+---
+
+## 🍊 Metáfora
+
+> **Imagine isso…**
+>
+> Dados aninhados (mensagens em sessões, sessões em estudantes) violam independência. LMM tem **efeitos fixos** (o efeito na população) e **efeitos aleatórios** (variabilidade de cada estudante/turma). Cada sujeito ganha seu próprio ponto de partida.
+
+---
+
+## 🎯 Para que serve
+
+Modelar dados com estrutura **hierárquica**: mensagens → sessões → estudantes → turmas.
+
+---
+
+## 📋 Quando usar
+
+- ✅ Observações aninhadas em grupos.
+- ✅ Dados longitudinais com faltantes ou grupos desiguais.
+- ✅ Quando ANOVA MR não converge.
+- ❌ Comece com modelos simples (só intercepto aleatório).
+
+---
+
+## 🐍 Exemplo Python
+
+[▶ Abrir código executável](content.html){: .btn .btn-primary }
+
+---
+
+## 📊 Slides
 
 <center>
 <iframe src="https://math.rpmhub.dev/10lmm/slides/index.html#/" title="Modelos Lineares Mistos (LMM)" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-## Conteúdo interativo
+---
 
-O material completo com metáforas, referências e **código Python executável** no navegador:
+## 📚 Referências
 
-<p><a href="https://math.rpmhub.dev/10lmm/content.html" class="btn btn-primary">Abrir conteúdo interativo →</a></p>
+| | |
+|:--|:--|
+| **referência** | Gelman, A., & Hill, J. (2007). *Data Analysis Using Regression and Multilevel Models*. |
+| **acessível** | Winter, B. (2019). *Statistics for Linguists*. Routledge. |
+| **educação** | Raudenbush, S. W., & Bryk, A. S. (2002). *Hierarchical Linear Models* (2ª ed.). |
+| **python** | Seabold, S., & Perktold, J. (2010). Statsmodels. *SciPy Proceedings*. |
+
+---
 
 <center>
 <a href="https://rpmhub.dev" target="_blank"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" border="0"></a><br/>

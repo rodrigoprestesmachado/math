@@ -54,11 +54,12 @@ H, p_k = kruskal(
     df[df.perfil=='ativo'].perguntas,
     df[df.perfil=='intensivo'].perguntas
 )
-print(f"\nKruskal-Wa...
+print(f"\nKruskal-Wa
+...
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -73,6 +74,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../anova.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

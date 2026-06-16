@@ -19,6 +19,7 @@ Em vez de medir a velocidade exata de cada atleta, você registra a **posição 
 ## 🎯 Para que serve
 
 Alternativas **não-paramétricas** a Pearson. Medem relações *monotônicas*. Ideais para dados ordinais como escalas Likert.
+
 Exemplo: *a satisfação do estudante com o chatbot (escala 1–5) está associada à quantidade de sessões voluntárias?*
 
 ---
@@ -55,7 +56,7 @@ print(res[['n', 'r', 'CI95%', 'p-val', 'power']])
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -70,6 +71,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../spearman.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

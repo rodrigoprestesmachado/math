@@ -19,6 +19,7 @@ Em vez de comparar médias, junta todos numa fila ordenada e verifica se um grup
 ## 🎯 Para que serve
 
 Compara a **distribuição de postos** entre dois grupos sem assumir normalidade.
+
 **Mann-Whitney U**: independentes. **Wilcoxon signed-rank**: pareadas.
 
 ---
@@ -52,7 +53,7 @@ print(f"\nWilcoxon: W = {stat:.0f}, p = {p_w:.4f}")
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -67,6 +68,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../mann-whitney.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

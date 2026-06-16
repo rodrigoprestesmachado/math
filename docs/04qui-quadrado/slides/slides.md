@@ -19,6 +19,7 @@ Imagine um cardápio com três pratos (factual, conceitual, procedimental) e tr�
 ## 🎯 Para que serve
 
 Testa se duas variáveis **categóricas** são independentes. O **p-valor do χ²** indica significância; o **V de Cramér** quantifica a força.
+
 Exemplo: *o tipo de pergunta ao chatbot varia conforme o perfil de uso do estudante?*
 
 ---
@@ -57,7 +58,7 @@ print(f"V de Cramér = {V:.3f}  → efeito {efeito}")
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página de conteúdo — clique em <strong>▶ Executar</strong>.
+Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -72,6 +73,6 @@ Código <strong>executável</strong> na página de conteúdo — clique em <stro
 
 ## 🔗 Materiais
 
-[Conteúdo completo + código executável](../content.html)
+[Conteúdo completo + código executável](../qui-quadrado.html)
 
 [math.rpmhub.dev](https://math.rpmhub.dev)

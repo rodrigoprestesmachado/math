@@ -1,59 +1,100 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enc. 4 — Qui-quadrado e V de Cramér</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
+---
+layout: default
+title: "Qui-quadrado e V de Cramér — Código Python"
+nav_exclude: true
+---
 
-<header>
-  <h1>Enc. 4 — Qui-quadrado e V de Cramér</h1>
-  <p>scipy.stats.chi2_contingency · cálculo manual de V</p>
-  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
-</header>
+## 🐍 Enc. 4 — Qui-quadrado e V de Cramér
 
-<div class="bloco-title b1">🔗 Bloco 1 — Associação</div>
+<style>
+.python-runner {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e1e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.python-runner .toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #f5f6fa;
+  border-bottom: 1px solid #e6e1e8;
+  font-size: 0.78rem;
+  color: #5c5962;
+}
+.python-runner .run-btn {
+  background: #7253ed;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.python-runner .run-btn:hover { background: #5e41d0; }
+.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
+.python-runner textarea.code-input {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  padding: 1rem;
+  margin: 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  resize: vertical;
+  outline: none;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.python-runner .code-output {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e6e1e8;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.78rem;
+  color: #1a6a1a;
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #f6fff6;
+}
+.python-runner .code-output.visible { display: block; }
+.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
+.python-runner .code-output img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  display: block;
+}
+.py-loading {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 1px solid #7253ed;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #5c5962;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.py-loading.visible { display: block; }
+</style>
 
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">4</div>
-    <div><h2>Qui-quadrado e V de Cramér</h2><p>scipy.stats.chi2_contingency · cálculo manual de V</p></div>
+<div class="python-runner">
+  <div class="toolbar">
+    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
   </div>
-
-  <div class="section">
-    <div class="section-label lbl-meta">🍊 Metáfora</div>
-    <div class="metaphor">
-      <span class="metaphor-label">Imagine isso…</span>
-      Imagine um cardápio com três pratos (factual, conceitual, procedimental) e três tipos de clientes. O qui-quadrado compara o <em>observado</em> com o <em>esperado</em> se não houvesse relação. O <strong>V de Cramér</strong> quantifica a força dessa associação, livre do tamanho amostral.
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Para que serve</div>
-    <p>Testa se duas variáveis <strong>categóricas</strong> são independentes. O <strong>p-valor do χ²</strong> indica significância; o <strong>V de Cramér</strong> quantifica a força.</p><p>Exemplo: <em>o tipo de pergunta ao chatbot varia conforme o perfil de uso do estudante?</em></p>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
-    <ul>
-        <li>✅ Ambas as variáveis são <strong>categóricas nominais</strong>.</li>
-        <li>✅ Frequência esperada ≥ 5 em pelo menos 80% das células (senão, Fisher exato).</li>
-        <li>❌ Não use com variáveis ordinais — Spearman é mais adequado.</li>
-        <li>❌ Nunca interpretar apenas o p-valor: sempre reporte V de Cramér.</li>
-      </ul>
-      <div class="tip"><strong>V de Cramér:</strong> pequeno ≈ 0.10 · médio ≈ 0.30 · grande ≈ 0.50</div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Exemplo Python</div>
-      <div class="python-runner">
-        <div class="toolbar">
-          <span>🐍 Python — executável no navegador (Pyodide)</span>
-          <button type="button" class="run-btn">▶ Executar</button>
-        </div>
-        <textarea class="code-input" spellcheck="false">import pandas as pd
+  <textarea class="code-input" spellcheck="false">import pandas as pd
 import numpy as np
 from scipy.stats import chi2_contingency
 
@@ -72,28 +113,10 @@ k = min(tabela.shape) - 1
 V = np.sqrt(chi2 / (n * k))
 efeito = 'pequeno' if V &lt; .3 else 'médio' if V &lt; .5 else 'grande'
 print(f"V de Cramér = {V:.3f}  → efeito {efeito}")</textarea>
-        <pre class="code-output"></pre>
-      </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-ref">📚 Referências</div>
-    <ul class="ref-list">
-        <li><span class="ref-tag">seminal</span>Cramér, H. (1946). <em>Mathematical Methods of Statistics</em>. Princeton University Press.</li>
-        <li><span class="ref-tag">didático</span>Agresti, A. (2013). <em>Categorical Data Analysis</em> (3ª ed.). Wiley.</li>
-        <li><span class="ref-tag">tamanho efeito</span>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2ª ed.). Cap. 7.</li>
-        <li><span class="ref-tag">crítico</span>Kim, H. Y. (2017). Chi-squared test and Fisher's exact test. <em>Restorative Dentistry & Endodontics, 42</em>(2), 152–155.</li>
-      </ul>
-  </div>
+  <pre class="code-output"></pre>
 </div>
 
-<footer class="page-footer">
-  <a href="slides/index.html">📊 Ver slides</a> ·
-  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</footer>
+[← Voltar ao conteúdo](qui-quadrado.html)
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="../assets/js/py-runner.js"></script>
-</body>
-</html>
+<script src="/assets/js/py-runner.js"></script>

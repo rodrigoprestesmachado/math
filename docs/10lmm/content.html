@@ -1,58 +1,100 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enc. 10 — Modelos Lineares Mistos (LMM)</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
+---
+layout: default
+title: "Modelos Lineares Mistos (LMM) — Código Python"
+nav_exclude: true
+---
 
-<header>
-  <h1>Enc. 10 — Modelos Lineares Mistos (LMM)</h1>
-  <p>statsmodels.formula.api.mixedlm · pingouin.mixed_anova()</p>
-  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
-</header>
+## 🐍 Enc. 10 — Modelos Lineares Mistos (LMM)
 
-<div class="bloco-title b2">⚖️ Bloco 2 — Comparação</div>
+<style>
+.python-runner {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e1e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.python-runner .toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #f5f6fa;
+  border-bottom: 1px solid #e6e1e8;
+  font-size: 0.78rem;
+  color: #5c5962;
+}
+.python-runner .run-btn {
+  background: #7253ed;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.python-runner .run-btn:hover { background: #5e41d0; }
+.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
+.python-runner textarea.code-input {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  padding: 1rem;
+  margin: 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  resize: vertical;
+  outline: none;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.python-runner .code-output {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e6e1e8;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.78rem;
+  color: #1a6a1a;
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #f6fff6;
+}
+.python-runner .code-output.visible { display: block; }
+.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
+.python-runner .code-output img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  display: block;
+}
+.py-loading {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 1px solid #7253ed;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #5c5962;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.py-loading.visible { display: block; }
+</style>
 
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">10</div>
-    <div><h2>Modelos Lineares Mistos (LMM)</h2><p>statsmodels.formula.api.mixedlm · pingouin.mixed_anova()</p></div>
+<div class="python-runner">
+  <div class="toolbar">
+    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
   </div>
-
-  <div class="section">
-    <div class="section-label lbl-meta">🍊 Metáfora</div>
-    <div class="metaphor">
-      <span class="metaphor-label">Imagine isso…</span>
-      Dados aninhados (mensagens em sessões, sessões em estudantes) violam independência. LMM tem <strong>efeitos fixos</strong> (o efeito na população) e <strong>efeitos aleatórios</strong> (variabilidade de cada estudante/turma). Cada sujeito ganha seu próprio ponto de partida.
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Para que serve</div>
-    <p>Modelar dados com estrutura <strong>hierárquica</strong>: mensagens → sessões → estudantes → turmas.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
-    <ul>
-        <li>✅ Observações aninhadas em grupos.</li>
-        <li>✅ Dados longitudinais com faltantes ou grupos desiguais.</li>
-        <li>✅ Quando ANOVA MR não converge.</li>
-        <li>❌ Comece com modelos simples (só intercepto aleatório).</li>
-      </ul>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Exemplo Python</div>
-      <div class="python-runner">
-        <div class="toolbar">
-          <span>🐍 Python — executável no navegador (Pyodide)</span>
-          <button type="button" class="run-btn">▶ Executar</button>
-        </div>
-        <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
+  <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
 import pandas as pd
 import numpy as np
 
@@ -69,28 +111,10 @@ df['escore'] += df['turnos'] * 1.5
 
 modelo = smf.mixedlm("escore ~ turnos", data=df, groups=df["estudante"]).fit(reml=True)
 print(modelo.summary())</textarea>
-        <pre class="code-output"></pre>
-      </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-ref">📚 Referências</div>
-    <ul class="ref-list">
-        <li><span class="ref-tag">referência</span>Gelman, A., & Hill, J. (2007). <em>Data Analysis Using Regression and Multilevel Models</em>.</li>
-        <li><span class="ref-tag">acessível</span>Winter, B. (2019). <em>Statistics for Linguists</em>. Routledge.</li>
-        <li><span class="ref-tag">educação</span>Raudenbush, S. W., & Bryk, A. S. (2002). <em>Hierarchical Linear Models</em> (2ª ed.).</li>
-        <li><span class="ref-tag">python</span>Seabold, S., & Perktold, J. (2010). Statsmodels. <em>SciPy Proceedings</em>.</li>
-      </ul>
-  </div>
+  <pre class="code-output"></pre>
 </div>
 
-<footer class="page-footer">
-  <a href="slides/index.html">📊 Ver slides</a> ·
-  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</footer>
+[← Voltar ao conteúdo](lmm.html)
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="../assets/js/py-runner.js"></script>
-</body>
-</html>
+<script src="/assets/js/py-runner.js"></script>

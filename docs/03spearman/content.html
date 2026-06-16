@@ -1,59 +1,100 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enc. 3 — Correlação de Spearman e Kendall</title>
-<link rel="stylesheet" href="../assets/css/math.css">
-</head>
-<body>
+---
+layout: default
+title: "Correlação de Spearman e Kendall — Código Python"
+nav_exclude: true
+---
 
-<header>
-  <h1>Enc. 3 — Correlação de Spearman e Kendall</h1>
-  <p>scipy.stats.spearmanr · scipy.stats.kendalltau · pingouin.corr()</p>
-  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
-</header>
+## 🐍 Enc. 3 — Correlação de Spearman e Kendall
 
-<div class="bloco-title b1">🔗 Bloco 1 — Associação</div>
+<style>
+.python-runner {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e1e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.python-runner .toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #f5f6fa;
+  border-bottom: 1px solid #e6e1e8;
+  font-size: 0.78rem;
+  color: #5c5962;
+}
+.python-runner .run-btn {
+  background: #7253ed;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.python-runner .run-btn:hover { background: #5e41d0; }
+.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
+.python-runner textarea.code-input {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  padding: 1rem;
+  margin: 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border: none;
+  resize: vertical;
+  outline: none;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.python-runner .code-output {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e6e1e8;
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 0.78rem;
+  color: #1a6a1a;
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #f6fff6;
+}
+.python-runner .code-output.visible { display: block; }
+.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
+.python-runner .code-output img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  display: block;
+}
+.py-loading {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 1px solid #7253ed;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #5c5962;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.py-loading.visible { display: block; }
+</style>
 
-<div class="card">
-  <div class="card-header">
-    <div class="enc-num">3</div>
-    <div><h2>Correlação de Spearman e Kendall</h2><p>scipy.stats.spearmanr · scipy.stats.kendalltau · pingouin.corr()</p></div>
+<div class="python-runner">
+  <div class="toolbar">
+    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
   </div>
-
-  <div class="section">
-    <div class="section-label lbl-meta">🍊 Metáfora</div>
-    <div class="metaphor">
-      <span class="metaphor-label">Imagine isso…</span>
-      Em vez de medir a velocidade exata de cada atleta, você registra a <strong>posição deles na corrida</strong>: 1º, 2º, 3º… Spearman e Kendall trocam os valores originais pelos seus <em>postos</em> (rankings). <strong>Kendall</strong> é mais conservador: conta quantos pares estão na ordem certa versus errada — útil quando há muitos empates.
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-serve">🎯 Para que serve</div>
-    <p>Alternativas <strong>não-paramétricas</strong> a Pearson. Medem relações <em>monotônicas</em>. Ideais para dados ordinais como escalas Likert.</p><p>Exemplo: <em>a satisfação do estudante com o chatbot (escala 1–5) está associada à quantidade de sessões voluntárias?</em></p>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
-    <ul>
-        <li>✅ Uma ou ambas as variáveis são <strong>ordinais</strong> (Likert).</li>
-        <li>✅ Os dados violam normalidade (Shapiro-Wilk: p &lt; .05).</li>
-        <li>✅ Há outliers que não devem ser removidos.</li>
-        <li>✅ Use <strong>Kendall</strong> com n &lt; 30 ou muitos empates.</li>
-        <li>❌ Não diferencia relações lineares de curvilíneas — só detecta monotonicidade.</li>
-      </ul>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-python">🐍 Exemplo Python</div>
-      <div class="python-runner">
-        <div class="toolbar">
-          <span>🐍 Python — executável no navegador (Pyodide)</span>
-          <button type="button" class="run-btn">▶ Executar</button>
-        </div>
-        <textarea class="code-input" spellcheck="false">import pandas as pd
+  <textarea class="code-input" spellcheck="false">import pandas as pd
 from scipy import stats
 import pingouin as pg
 
@@ -70,28 +111,10 @@ print(f"Kendall  τ = {tau:.3f}, p = {p_k:.4f}")
 
 res = pg.corr(df['satisfacao'], df['sessoes'], method='spearman')
 print(res[['n', 'r', 'CI95%', 'p-val', 'power']])</textarea>
-        <pre class="code-output"></pre>
-      </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label lbl-ref">📚 Referências</div>
-    <ul class="ref-list">
-        <li><span class="ref-tag">seminal</span>Spearman, C. (1904). The proof and measurement of association between two things. <em>American Journal of Psychology, 15</em>(1), 72–101.</li>
-        <li><span class="ref-tag">didático</span>Field, A. (2024). <em>Discovering Statistics Using IBM SPSS Statistics</em> (6ª ed.). SAGE. Cap. 8.</li>
-        <li><span class="ref-tag">python</span>Vallat, R. (2018). Pingouin: statistics in Python. <em>Journal of Open Source Software, 3</em>(31), 1026.</li>
-        <li><span class="ref-tag">aplicado</span>Norman, G. (2010). Likert scales, levels of measurement and the "laws" of statistics. <em>Advances in Health Sciences Education, 15</em>, 625–632.</li>
-      </ul>
-  </div>
+  <pre class="code-output"></pre>
 </div>
 
-<footer class="page-footer">
-  <a href="slides/index.html">📊 Ver slides</a> ·
-  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
-  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</footer>
+[← Voltar ao conteúdo](spearman.html)
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="../assets/js/py-runner.js"></script>
-</body>
-</html>
+<script src="/assets/js/py-runner.js"></script>
