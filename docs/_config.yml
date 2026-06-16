@@ -1,13 +1,11 @@
 remote_theme: pmarsceill/just-the-docs
 
-title: Análise de Dados Conversacionais
+title: Math
 description: Materiais didáticos de estatística para dados conversacionais em educação — código Python executável, slides e referências.
 
 favicon_ico: "/imgs/favicon.png"
 
 aux_links:
-  "Materiais":
-    - "https://math.rpmhub.dev/materiais.html"
   "Github":
     - "https://github.com/rodrigoprestesmachado/math"
 
