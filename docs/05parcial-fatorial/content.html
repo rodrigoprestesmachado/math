@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 5 — Correlação Parcial e Análise Fatorial</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 5 — Correlação Parcial e Análise Fatorial</h1>
+  <p>pingouin.partial_corr() · factor_analyzer</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b1">🔗 Bloco 1 — Associação</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">5</div>
+    <div><h2>Correlação Parcial e Análise Fatorial</h2><p>pingouin.partial_corr() · factor_analyzer</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Duas metáforas, um encontro</span>
+      <strong>Correlação parcial — o filtro de ruído:</strong> como usar um equalizador para <em>silenciar o baixo</em> e ouvir a guitarra — remove o efeito de uma variável de confusão.<br><br><strong>Análise Fatorial — o organizador de gavetas:</strong> agrupa variáveis que se movem juntas em fatores latentes interpretáveis (ex.: "metacognição").
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p><strong>Correlação parcial:</strong> isola a relação entre X e Y removendo o efeito de uma terceira variável.</p><p><strong>EFA:</strong> reduz muitas variáveis correlacionadas a poucos fatores latentes. Valida instrumentos.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ <strong>Parcial:</strong> quando há variável de confusão (ex.: conhecimento prévio).</li>
+        <li>✅ <strong>EFA:</strong> quando há ≥ 5 variáveis correlacionadas e suspeita-se de construtos latentes.</li>
+        <li>✅ <strong>EFA:</strong> n ≥ 100; regra de 10 sujeitos por item.</li>
+        <li>❌ EFA não é para predição — use regressão.</li>
+      </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import pingouin as pg
+import pandas as pd
+
+df = pd.DataFrame({
+    'uso_chatbot':   [3,7,2,9,5,11,4,8],
+    'aprendizagem':  [55,70,50,82,63,88,58,76],
+    'conhec_previo': [40,55,35,70,50,75,45,60]
+})
+
+r_bruta = pg.corr(df['uso_chatbot'], df['aprendizagem'])
+print("Pearson bruto:      r =", round(r_bruta['r'].values[0], 3))
+
+r_parcial = pg.partial_corr(
+    data=df, x='uso_chatbot', y='aprendizagem', covar='conhec_previo'
+)
+print("Pearson parcial:    r =", round(r_parcial['r'].values[0], 3))</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">didático</span>Tabachnick, B. G., & Fidell, L. S. (2019). <em>Using Multivariate Statistics</em> (7ª ed.). Cap. 13.</li>
+        <li><span class="ref-tag">aplicado</span>Costello, A. B., & Osborne, J. W. (2005). Best practices in exploratory factor analysis. <em>Practical Assessment, Research & Evaluation, 10</em>(7).</li>
+        <li><span class="ref-tag">python</span>Biggs, J. (2023). <em>factor_analyzer</em> package documentation.</li>
+        <li><span class="ref-tag">conceitual</span>MacCallum, R. C. (2009). Factor analysis. In <em>The SAGE Handbook of Quantitative Methods in Psychology</em>.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>

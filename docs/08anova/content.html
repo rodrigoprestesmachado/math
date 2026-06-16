@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 8 — ANOVA de uma via e Kruskal-Wallis</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 8 — ANOVA de uma via e Kruskal-Wallis</h1>
+  <p>pingouin.anova() · scipy.stats.kruskal · scikit_posthocs</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b2">⚖️ Bloco 2 — Comparação</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">8</div>
+    <div><h2>ANOVA de uma via e Kruskal-Wallis</h2><p>pingouin.anova() · scipy.stats.kruskal · scikit_posthocs</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Imagine isso…</span>
+      Vários testes t acumulam erro (quase 15% com 3 comparações). ANOVA faz uma só pergunta: <em>há pelo menos um grupo diferente?</em> Compara variação <em>entre</em> vs. <em>dentro</em> dos grupos. Se F for significativo, o <strong>pós-hoc de Tukey</strong> indica onde.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p>Compara médias (ANOVA) ou distribuições de postos (Kruskal-Wallis) entre <strong>três ou mais grupos</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ Comparar ≥ 3 grupos independentes.</li>
+        <li>✅ <strong>ANOVA:</strong> dados normais e variâncias homogêneas. Reporte η².</li>
+        <li>✅ <strong>Kruskal-Wallis:</strong> dados ordinais ou não-normais. Pós-hoc: Dunn.</li>
+        <li>❌ ANOVA significativa sem pós-hoc não diz onde está a diferença.</li>
+      </ul>
+      <div class="tip"><strong>Eta-quadrado (η²):</strong> pequeno = 0.01 · médio = 0.06 · grande = 0.14</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import pingouin as pg
+import pandas as pd
+from scipy.stats import kruskal
+
+df = pd.DataFrame({
+    'perguntas': [3,4,2,5, 7,8,6,9, 12,14,11,13],
+    'perfil':    ['passivo']*4 + ['ativo']*4 + ['intensivo']*4
+})
+
+aov = pg.anova(data=df, dv='perguntas', between='perfil', detailed=True)
+print(aov[['Source','F','p-unc','np2']])
+
+ph = pg.pairwise_tukey(data=df, dv='perguntas', between='perfil')
+print(ph[['A','B','diff','p-tukey','hedges']])
+
+H, p_k = kruskal(
+    df[df.perfil=='passivo'].perguntas,
+    df[df.perfil=='ativo'].perguntas,
+    df[df.perfil=='intensivo'].perguntas
+)
+print(f"\nKruskal-Wallis: H = {H:.3f}, p = {p_k:.4f}")</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">seminal</span>Fisher, R. A. (1925). <em>Statistical Methods for Research Workers</em>.</li>
+        <li><span class="ref-tag">seminal</span>Kruskal, W. H., & Wallis, W. A. (1952). <em>Journal of the American Statistical Association, 47</em>(260), 583–621.</li>
+        <li><span class="ref-tag">didático</span>Field, A. (2024). <em>Discovering Statistics</em>. Caps. 12–13.</li>
+        <li><span class="ref-tag">python</span>Pohlert, T. (2014). PMCMR package — lógica do pós-hoc de Dunn.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>

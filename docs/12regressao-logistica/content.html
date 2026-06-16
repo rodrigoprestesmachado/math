@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 12 — Regressão Logística (binária e ordinal)</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 12 — Regressão Logística (binária e ordinal)</h1>
+  <p>statsmodels Logit() · mord · sklearn ROC/AUC</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b3">📈 Bloco 3 — Predição</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">12</div>
+    <div><h2>Regressão Logística (binária e ordinal)</h2><p>statsmodels Logit() · mord · sklearn ROC/AUC</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Imagine isso…</span>
+      Para prever <em>engajou ou não engajou</em>, a logística usa uma sigmoid que espreme valores em [0, 1] — probabilidade. Coeficientes como <strong>odds ratios</strong>: OR = 2 significa chances dobradas. A <strong>curva ROC</strong> mede a qualidade do modelo (AUC).
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p>Modelar desfechos <strong>categóricos</strong>: binária (engajou/não) ou ordinal (baixo/médio/alto).</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ <strong>Binária:</strong> duas categorias mutuamente exclusivas.</li>
+        <li>✅ <strong>Ordinal:</strong> 3+ categorias ordenadas.</li>
+        <li>✅ AUC &gt; 0.70 aceitável · &gt; 0.80 bom · &gt; 0.90 excelente.</li>
+        <li>❌ Não use regressão linear para desfecho binário.</li>
+      </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import statsmodels.api as sm
+import pandas as pd
+import numpy as np
+from sklearn.metrics import roc_auc_score
+
+df = pd.DataFrame({
+    'engajou':     [1,0,1,1,0,1,0,1,0,1,0,1],
+    'uso_chatbot': [8,2,9,7,3,10,1,8,4,9,2,11],
+    'metacognicao':[65,40,70,68,38,75,35,72,42,78,33,80]
+})
+
+X = sm.add_constant(df[['uso_chatbot', 'metacognicao']])
+modelo = sm.Logit(df['engajou'], X).fit(disp=0)
+print(modelo.summary())
+
+OR = np.exp(modelo.params)
+print("\nOdds Ratios:")
+print(OR.round(3))
+
+y_pred = modelo.predict(X)
+auc = roc_auc_score(df['engajou'], y_pred)
+print(f"\nAUC = {auc:.3f}")</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">referência</span>Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). <em>Applied Logistic Regression</em> (3ª ed.).</li>
+        <li><span class="ref-tag">didático</span>Field, A. (2024). <em>Discovering Statistics</em>. Cap. 20.</li>
+        <li><span class="ref-tag">ROC</span>Fawcett, T. (2006). An introduction to ROC analysis. <em>Pattern Recognition Letters, 27</em>(8), 861–874.</li>
+        <li><span class="ref-tag">ordinal</span>McCullagh, P. (1980). Regression models for ordinal data. <em>JRSS B, 42</em>(2), 109–142.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>

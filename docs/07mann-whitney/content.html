@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 7 — Mann-Whitney e Wilcoxon</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 7 — Mann-Whitney e Wilcoxon</h1>
+  <p>scipy.stats.mannwhitneyu · wilcoxon · pingouin.mwu()</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b2">⚖️ Bloco 2 — Comparação</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">7</div>
+    <div><h2>Mann-Whitney e Wilcoxon</h2><p>scipy.stats.mannwhitneyu · wilcoxon · pingouin.mwu()</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Imagine isso…</span>
+      Em vez de comparar médias, junta todos numa fila ordenada e verifica se um grupo tende a ocupar posições mais altas. Não importa <em>quanto</em> mais alto — só <em>que é mais alto</em>.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p>Compara a <strong>distribuição de postos</strong> entre dois grupos sem assumir normalidade.</p><p><strong>Mann-Whitney U</strong>: independentes. <strong>Wilcoxon signed-rank</strong>: pareadas.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ Dados ordinais (Likert) ou numéricos que violam normalidade.</li>
+        <li>✅ Amostras pequenas (n &lt; 30).</li>
+        <li>✅ Outliers que não devem ser removidos.</li>
+        <li>❌ Não testa diferença de médias — testa diferença de distribuições.</li>
+      </ul>
+      <div class="tip"><strong>Tamanho de efeito r:</strong> r = Z / √N. Pequeno ≥ 0.10 · médio ≥ 0.30 · grande ≥ 0.50.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import pingouin as pg
+from scipy.stats import wilcoxon
+
+grupo_a = [3,5,4,6,7,4,5]
+grupo_b = [2,3,1,4,3,2,3]
+
+res_mw = pg.mwu(grupo_a, grupo_b, alternative='two-sided')
+print("Mann-Whitney:")
+print(res_mw[['U-val', 'p-val', 'RBC', 'CLES']])
+
+pre  = [3,5,4,6,4,3]
+pos  = [5,6,6,7,6,5]
+stat, p_w = wilcoxon(pre, pos, alternative='two-sided')
+print(f"\nWilcoxon: W = {stat:.0f}, p = {p_w:.4f}")</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">seminal</span>Mann, H. B., & Whitney, D. R. (1947). <em>Annals of Mathematical Statistics, 18</em>(1), 50–60.</li>
+        <li><span class="ref-tag">seminal</span>Wilcoxon, F. (1945). <em>Biometrics Bulletin, 1</em>(6), 80–83.</li>
+        <li><span class="ref-tag">didático</span>Field, A. (2024). <em>Discovering Statistics</em>. Cap. 7.</li>
+        <li><span class="ref-tag">efeito</span>Kerby, D. S. (2014). The simple difference formula. <em>Comprehensive Psychology, 3</em>.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>

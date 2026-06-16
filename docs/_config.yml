@@ -1,0 +1,14 @@
+remote_theme: pmarsceill/just-the-docs
+
+title: Análise de Dados Conversacionais
+description: Materiais didáticos de estatística para dados conversacionais em educação — código Python executável, slides e referências.
+
+favicon_ico: "/imgs/favicon.png"
+
+aux_links:
+  "Materiais":
+    - "https://math.rpmhub.dev/materiais.html"
+  "Github":
+    - "https://github.com/rodrigoprestesmachado/math"
+
+footer_content: "Copyright &copy; 2026 <a href='https://rpmhub.dev'>RPM Hub</a>. Distributed by <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY-4.0 license</a>."

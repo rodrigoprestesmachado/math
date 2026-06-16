@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 13 — Regressão de Poisson e Binomial Negativa</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 13 — Regressão de Poisson e Binomial Negativa</h1>
+  <p>statsmodels poisson() · negativebinomial()</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b3">📈 Bloco 3 — Predição</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">13</div>
+    <div><h2>Regressão de Poisson e Binomial Negativa</h2><p>statsmodels poisson() · negativebinomial()</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Imagine isso…</span>
+      Contagens (perguntas ao chatbot) são inteiras e nunca negativas. Poisson modela a taxa de eventos. Se a variância explode (superdispersão), a <strong>Binomial Negativa</strong> adiciona folga extra.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p>Modelar desfechos de <strong>contagem</strong>: turnos, perguntas, mensagens. Poisson para equidispersão; BN para superdispersão.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ Desfecho são contagens inteiras não-negativas.</li>
+        <li>✅ <strong>Poisson:</strong> variância/média ≈ 1.</li>
+        <li>✅ <strong>BN:</strong> índice de dispersão &gt; 1.5.</li>
+        <li>✅ Comparar via AIC: menor = melhor.</li>
+        <li>❌ Não use regressão linear para contagens.</li>
+      </ul>
+      <div class="tip"><strong>Interpretar coeficientes:</strong> exp(coef) = Risk Ratio. RR = 1.3 → 30% mais eventos por unidade.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
+import pandas as pd
+import numpy as np
+
+np.random.seed(7)
+n = 80
+df = pd.DataFrame({
+    'perguntas':    np.random.negative_binomial(2, 0.3, n),
+    'metacognicao': np.random.normal(60, 10, n),
+    'tempo_sessao': np.random.normal(20, 5, n)
+})
+
+media, var = df.perguntas.mean(), df.perguntas.var()
+print(f"Média={media:.2f}  Variância={var:.2f}  Índice={var/media:.2f}")
+
+mod_p  = smf.poisson('perguntas ~ metacognicao + tempo_sessao', data=df).fit(disp=0)
+mod_nb = smf.negativebinomial('perguntas ~ metacognicao + tempo_sessao', data=df).fit(disp=0)
+
+print(f"AIC Poisson = {mod_p.aic:.1f}")
+print(f"AIC BN      = {mod_nb.aic:.1f}")
+
+print("\nRisk Ratios (BN):")
+print(np.exp(mod_nb.params).round(3))</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">referência</span>Cameron, A. C., & Trivedi, P. K. (2013). <em>Regression Analysis of Count Data</em> (2ª ed.).</li>
+        <li><span class="ref-tag">didático</span>Hilbe, J. M. (2011). <em>Negative Binomial Regression</em> (2ª ed.).</li>
+        <li><span class="ref-tag">comparação</span>Ver Hoef, J. M., & Boveng, P. L. (2007). Quasi-Poisson vs. negative binomial. <em>Ecology, 88</em>(11), 2766–2772.</li>
+        <li><span class="ref-tag">educação</span>Coxe, S., West, S. G., & Aiken, L. S. (2009). The analysis of count data. <em>Journal of Personality Assessment, 91</em>(2), 121–136.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>

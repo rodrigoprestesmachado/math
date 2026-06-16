@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materiais Didáticos — Análise de Dados Conversacionais</title>
+<link rel="stylesheet" href="assets/css/math.css">
+</head>
+<body>
+<header>
+  <h1>Materiais Didáticos — Análise de Dados Conversacionais</h1>
+  <p>Disciplina de mestrado · 13 encontros · Metáforas · Exemplos · Código Python executável · Referências</p>
+  <div class="bloco-nav">
+    <a href="#bloco1" class="nav-b1">🔗 Bloco 1 — Associação (Enc. 2–5)</a>
+    <a href="#bloco2" class="nav-b2">⚖️ Bloco 2 — Comparação (Enc. 6–10)</a>
+    <a href="#bloco3" class="nav-b3">📈 Bloco 3 — Predição (Enc. 11–13)</a>
+  </div>
+</header>
+<div id="bloco1" class="bloco-title b1">🔗 Bloco 1 — Associação</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">2</div>
+    <div><h2><a href="02pearson/content.html" style="color:inherit;text-decoration:none">Correlação de Pearson</a></h2>
+    <p>scipy.stats.pearsonr · pandas DataFrame.corr(method='pearson')</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="02pearson/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="02pearson/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">3</div>
+    <div><h2><a href="03spearman/content.html" style="color:inherit;text-decoration:none">Correlação de Spearman e Kendall</a></h2>
+    <p>scipy.stats.spearmanr · scipy.stats.kendalltau · pingouin.corr()</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="03spearman/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="03spearman/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">4</div>
+    <div><h2><a href="04qui-quadrado/content.html" style="color:inherit;text-decoration:none">Qui-quadrado e V de Cramér</a></h2>
+    <p>scipy.stats.chi2_contingency · cálculo manual de V</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="04qui-quadrado/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="04qui-quadrado/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">5</div>
+    <div><h2><a href="05parcial-fatorial/content.html" style="color:inherit;text-decoration:none">Correlação Parcial e Análise Fatorial</a></h2>
+    <p>pingouin.partial_corr() · factor_analyzer</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="05parcial-fatorial/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="05parcial-fatorial/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div id="bloco2" class="bloco-title b2">⚖️ Bloco 2 — Comparação</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">6</div>
+    <div><h2><a href="06teste-t/content.html" style="color:inherit;text-decoration:none">Teste t (independente e pareado)</a></h2>
+    <p>pingouin.ttest() · scipy.stats.ttest_ind · ttest_rel</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="06teste-t/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="06teste-t/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">7</div>
+    <div><h2><a href="07mann-whitney/content.html" style="color:inherit;text-decoration:none">Mann-Whitney e Wilcoxon</a></h2>
+    <p>scipy.stats.mannwhitneyu · wilcoxon · pingouin.mwu()</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="07mann-whitney/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="07mann-whitney/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">8</div>
+    <div><h2><a href="08anova/content.html" style="color:inherit;text-decoration:none">ANOVA de uma via e Kruskal-Wallis</a></h2>
+    <p>pingouin.anova() · scipy.stats.kruskal · scikit_posthocs</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="08anova/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="08anova/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">9</div>
+    <div><h2><a href="09anova-fatorial/content.html" style="color:inherit;text-decoration:none">ANOVA Fatorial e Medidas Repetidas</a></h2>
+    <p>pingouin.anova() · pingouin.rm_anova() · statsmodels AnovaRM</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="09anova-fatorial/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="09anova-fatorial/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">10</div>
+    <div><h2><a href="10lmm/content.html" style="color:inherit;text-decoration:none">Modelos Lineares Mistos (LMM)</a></h2>
+    <p>statsmodels.formula.api.mixedlm · pingouin.mixed_anova()</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="10lmm/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="10lmm/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div id="bloco3" class="bloco-title b3">📈 Bloco 3 — Predição</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">11</div>
+    <div><h2><a href="11regressao-linear/content.html" style="color:inherit;text-decoration:none">Regressão Linear (simples e múltipla)</a></h2>
+    <p>statsmodels.formula.api.ols() · sklearn LinearRegression</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="11regressao-linear/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="11regressao-linear/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">12</div>
+    <div><h2><a href="12regressao-logistica/content.html" style="color:inherit;text-decoration:none">Regressão Logística (binária e ordinal)</a></h2>
+    <p>statsmodels Logit() · mord · sklearn ROC/AUC</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="12regressao-logistica/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="12regressao-logistica/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div><div class="card">
+  <div class="card-header">
+    <div class="enc-num">13</div>
+    <div><h2><a href="13poisson/content.html" style="color:inherit;text-decoration:none">Regressão de Poisson e Binomial Negativa</a></h2>
+    <p>statsmodels poisson() · negativebinomial()</p></div>
+  </div>
+  <div class="section" style="padding:12px 22px">
+    <a href="13poisson/content.html" style="color:#90c0ff;margin-right:16px">📖 Conteúdo + código</a>
+    <a href="13poisson/slides/index.html" style="color:#d4b8f5">📊 Slides</a>
+  </div>
+</div>
+<footer class="page-footer">
+  <a href="index.html">Documentação Jekyll</a> · <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+</body>
+</html>

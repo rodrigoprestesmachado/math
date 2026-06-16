@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enc. 11 — Regressão Linear (simples e múltipla)</title>
+<link rel="stylesheet" href="../assets/css/math.css">
+</head>
+<body>
+
+<header>
+  <h1>Enc. 11 — Regressão Linear (simples e múltipla)</h1>
+  <p>statsmodels.formula.api.ols() · sklearn LinearRegression</p>
+  <a class="back-link" href="../materiais.html">← Voltar aos materiais</a>
+</header>
+
+<div class="bloco-title b3">📈 Bloco 3 — Predição</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="enc-num">11</div>
+    <div><h2>Regressão Linear (simples e múltipla)</h2><p>statsmodels.formula.api.ols() · sklearn LinearRegression</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-meta">🍊 Metáfora</div>
+    <div class="metaphor">
+      <span class="metaphor-label">Imagine isso…</span>
+      A regressão traça a <em>linha reta que erra menos</em> para todos os pontos. A múltipla adiciona dimensões: cada coeficiente é o efeito <em>único</em> da variável, mantendo as outras constantes.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-serve">🎯 Para que serve</div>
+    <p>Modelar e predizer um desfecho <strong>numérico contínuo</strong> a partir de preditores.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-quando">📋 Quando usar — e quando NÃO usar</div>
+    <ul>
+        <li>✅ Desfecho numérico contínuo.</li>
+        <li>✅ Relação linear entre preditores e desfecho.</li>
+        <li>✅ Resíduos normais e homocedásticos.</li>
+        <li>✅ VIF &gt; 5 indica multicolinearidade.</li>
+        <li>❌ Para inferência científica use statsmodels; para ML use sklearn.</li>
+      </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-python">🐍 Exemplo Python</div>
+      <div class="python-runner">
+        <div class="toolbar">
+          <span>🐍 Python — executável no navegador (Pyodide)</span>
+          <button type="button" class="run-btn">▶ Executar</button>
+        </div>
+        <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
+import pandas as pd
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+df = pd.DataFrame({
+    'escore_final':  [72,85,60,90,68,78,82,55,88,74],
+    'uso_chatbot':   [5,9,3,12,4,7,10,2,11,6],
+    'metacognicao':  [60,72,55,80,58,68,75,50,78,65],
+    'letramento_ia': [40,55,35,65,42,52,60,30,62,48]
+})
+
+modelo = smf.ols('escore_final ~ uso_chatbot + metacognicao + letramento_ia', data=df).fit()
+print(modelo.summary())
+
+X = df[['uso_chatbot','metacognicao','letramento_ia']]
+vif = pd.DataFrame({
+    'variável': X.columns,
+    'VIF': [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+})
+print(vif)</textarea>
+        <pre class="code-output"></pre>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label lbl-ref">📚 Referências</div>
+    <ul class="ref-list">
+        <li><span class="ref-tag">referência</span>Hair, J. F., et al. (2019). <em>Multivariate Data Analysis</em> (8ª ed.). Cap. 4.</li>
+        <li><span class="ref-tag">didático</span>James, G., et al. (2023). <em>An Introduction to Statistical Learning</em> (2ª ed.). Cap. 3.</li>
+        <li><span class="ref-tag">VIF</span>O'Brien, R. M. (2007). A caution regarding rules of thumb for VIF. <em>Quality & Quantity, 41</em>, 673–690.</li>
+        <li><span class="ref-tag">python</span>McKinney, W. (2022). <em>Python for Data Analysis</em>.</li>
+      </ul>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="slides/index.html">📊 Ver slides</a> ·
+  <a href="https://math.rpmhub.dev">math.rpmhub.dev</a> ·
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="../assets/js/py-runner.js"></script>
+</body>
+</html>
