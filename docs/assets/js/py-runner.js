@@ -1,31 +1,49 @@
 (function () {
-  let pyodide = null;
-  let pyodideReady = false;
+  'use strict';
+
+  let pyodide        = null;
+  let pyodideReady   = false;
   let pyodideLoading = false;
 
+  // Toast de progresso
   const loadingEl = document.createElement('div');
   loadingEl.className = 'py-loading';
-  loadingEl.textContent = '⏳ Carregando Python (Pyodide)… primeira execução pode levar ~30s';
+  loadingEl.textContent = '⏳ Carregando Python (Pyodide)… ~30 s na primeira vez';
   document.body.appendChild(loadingEl);
+
+  // Carrega o script do Pyodide CDN apenas quando necessário
+  function loadPyodideScript() {
+    if (window.loadPyodide) return Promise.resolve();
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+      s.onload  = resolve;
+      s.onerror = function () { reject(new Error('Falha ao carregar Pyodide CDN')); };
+      document.head.appendChild(s);
+    });
+  }
 
   async function initPyodide() {
     if (pyodideReady) return pyodide;
     if (pyodideLoading) {
-      while (!pyodideReady) await new Promise(r => setTimeout(r, 200));
+      while (!pyodideReady) {
+        await new Promise(function (r) { setTimeout(r, 200); });
+      }
       return pyodide;
     }
     pyodideLoading = true;
     loadingEl.classList.add('visible');
 
-    pyodide = await loadPyodide();
-    await pyodide.loadPackage(['micropip', 'numpy', 'pandas', 'matplotlib', 'scipy', 'statsmodels', 'scikit-learn']);
+    await loadPyodideScript();
+    pyodide = await window.loadPyodide();
+    await pyodide.loadPackage([
+      'micropip', 'numpy', 'pandas',
+      'matplotlib', 'scipy', 'statsmodels', 'scikit-learn'
+    ]);
 
-    const micropip = pyodide.pyimport('micropip');
-    try {
-      await micropip.install('pingouin');
-    } catch (e) {
-      console.warn('pingouin install warning:', e);
-    }
+    var micropip = pyodide.pyimport('micropip');
+    try { await micropip.install('pingouin'); }
+    catch (e) { console.warn('pingouin install warning:', e); }
 
     await pyodide.runPythonAsync(`
 import sys, io
@@ -33,19 +51,18 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-class _OutCapture(io.StringIO):
+class _Capture(io.StringIO):
     def write(self, s):
-        if s.strip():
-            super().write(s)
+        super().write(s)
         return len(s)
 
-_stdout = _OutCapture()
-_stderr = _OutCapture()
+_stdout = _Capture()
+_stderr = _Capture()
 sys.stdout = _stdout
 sys.stderr = _stderr
-_figures = []
+_figures  = []
 
-def _capture_show(*args, **kwargs):
+def _capture_show(*a, **kw):
     fig = plt.gcf()
     if fig.get_axes():
         buf = io.BytesIO()
@@ -53,54 +70,60 @@ def _capture_show(*args, **kwargs):
         import base64
         _figures.append(base64.b64encode(buf.getvalue()).decode())
         plt.close(fig)
+
 plt.show = _capture_show
 
-def _reset_capture():
+def _reset():
     global _stdout, _stderr, _figures
-    _stdout = _OutCapture()
-    _stderr = _OutCapture()
+    _stdout = _Capture()
+    _stderr = _Capture()
     sys.stdout = _stdout
     sys.stderr = _stderr
-    _figures = []
+    _figures  = []
 
 def _get_output():
-  out = _stdout.getvalue()
-  err = _stderr.getvalue()
-  figs = list(_figures)
-  _reset_capture()
-  return out, err, figs
+    out  = _stdout.getvalue()
+    err  = _stderr.getvalue()
+    figs = list(_figures)
+    _reset()
+    return out, err, figs
 `);
 
-    pyodideReady = true;
+    pyodideReady   = true;
     pyodideLoading = false;
     loadingEl.classList.remove('visible');
     return pyodide;
   }
 
   async function runCode(btn) {
-    const runner = btn.closest('.python-runner');
-    const code = runner.querySelector('.code-input').value;
-    const output = runner.querySelector('.code-output');
+    var runner = btn.closest('.python-runner');
+    var ta     = runner.querySelector('.code-input');
+    var output = runner.querySelector('.code-output');
+    var code   = ta.value;
+
     btn.disabled = true;
     output.classList.add('visible');
     output.classList.remove('error');
     output.textContent = 'Executando…';
 
     try {
-      const py = await initPyodide();
-      await py.runPythonAsync('_reset_capture()');
+      var py = await initPyodide();
+      await py.runPythonAsync('_reset()');
       await py.runPythonAsync(code);
-      const result = await py.runPythonAsync('_get_output()');
-      const [stdout, stderr, figures] = result.toJs();
+      var result  = await py.runPythonAsync('_get_output()');
+      var parts   = result.toJs();
+      var stdout  = parts[0];
+      var stderr  = parts[1];
+      var figures = parts[2];
 
-      let html = '';
-      if (stdout) html += escapeHtml(stdout);
-      if (stderr) html += (html ? '\n' : '') + escapeHtml(stderr);
+      var html = '';
+      if (stdout) html += esc(stdout);
+      if (stderr) html += (html ? '\n' : '') + esc(stderr);
       if (!html && figures.length === 0) html = '(sem saída)';
 
       output.innerHTML = html;
-      figures.forEach(b64 => {
-        const img = document.createElement('img');
+      figures.forEach(function (b64) {
+        var img = document.createElement('img');
         img.src = 'data:image/png;base64,' + b64;
         img.alt = 'Gráfico matplotlib';
         output.appendChild(img);
@@ -113,22 +136,19 @@ def _get_output():
     }
   }
 
-  function escapeHtml(text) {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+  function esc(t) {
+    return t.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
   }
 
-  window.runPythonCode = runCode;
-
-  // Handles both cases: script runs before or after DOMContentLoaded
   function attachHandlers() {
-    document.querySelectorAll('.python-runner .run-btn').forEach(btn => {
-      btn.addEventListener('click', () => runCode(btn));
+    document.querySelectorAll('.python-runner .run-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () { runCode(btn); });
     });
   }
 
+  // Funciona tanto quando o script carrega no <head defer> quanto inline no body
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', attachHandlers);
   } else {

@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/05parcial-fatorial/slides/index.html#/" title="Correlação Parcial e Análise Fatorial" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Duas metáforas, um encontro**
@@ -42,15 +50,30 @@ has_children: false
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pingouin as pg
+import pandas as pd
 
-## 📊 Slides
+df = pd.DataFrame({
+    'uso_chatbot':   [3,7,2,9,5,11,4,8],
+    'aprendizagem':  [55,70,50,82,63,88,58,76],
+    'conhec_previo': [40,55,35,70,50,75,45,60]
+})
 
-<center>
-<iframe src="https://math.rpmhub.dev/05parcial-fatorial/slides/index.html#/" title="Correlação Parcial e Análise Fatorial" width="90%" height="500" style="border:none;"></iframe>
-</center>
+r_bruta = pg.corr(df['uso_chatbot'], df['aprendizagem'])
+print("Pearson bruto:      r =", round(r_bruta['r'].values[0], 3))
+
+r_parcial = pg.partial_corr(
+    data=df, x='uso_chatbot', y='aprendizagem', covar='conhec_previo'
+)
+print("Pearson parcial:    r =", round(r_parcial['r'].values[0], 3))</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

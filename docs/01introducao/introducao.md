@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🎯 Objetivo
 
 Este curso apresenta métodos estatísticos para analisar **dados conversacionais** em contextos educacionais:
@@ -28,7 +36,7 @@ logs de chatbots, turnos de diálogo, escores de compreensão, perfis de uso e d
 | ⚖️ 2 — Comparação | 6 a 10 | Testes t, não-paramétricos, ANOVA, LMM |
 | 📈 3 — Predição | 11 a 13 | Regressão linear, logística e de contagem |
 
-Cada encontro inclui **slides** e **código Python executável** no navegador (sem instalar nada).
+Cada encontro inclui **slides** e **código Python executável** direto na página.
 
 ---
 
@@ -36,15 +44,7 @@ Cada encontro inclui **slides** e **código Python executável** no navegador (s
 
 `pandas` · `scipy` · `pingouin` · `statsmodels` · `scikit-learn` · `matplotlib`
 
-Os exemplos rodam diretamente no navegador via [Pyodide](https://pyodide.org). Clique em **▶ Executar** em qualquer encontro — na primeira execução o Python carrega em ~30 s.
-
----
-
-## 📊 Slides
-
-<center>
-<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
-</center>
+Os exemplos rodam no navegador via [Pyodide](https://pyodide.org) — sem instalar Python. Clique em **▶ Executar** em qualquer encontro. Na primeira execução o runtime Python carrega em ~30 s.
 
 ---
 

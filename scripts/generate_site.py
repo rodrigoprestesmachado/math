@@ -35,127 +35,37 @@ def strip_html(text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# CSS embutido no content.html — combina com o tema just-the-docs
+# Bloco HTML do runner Python para embutir no .md
+# O CSS vem de runner.css (via head_custom.html), não precisa de <style> inline.
 # ---------------------------------------------------------------------------
 
-RUNNER_CSS = """\
-.python-runner {
-  margin: 1.5rem 0;
-  border: 1px solid #e6e1e8;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.python-runner .toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.55rem 1rem;
-  background: #f5f6fa;
-  border-bottom: 1px solid #e6e1e8;
-  font-size: 0.78rem;
-  color: #5c5962;
-}
-.python-runner .run-btn {
-  background: #7253ed;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 16px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-}
-.python-runner .run-btn:hover { background: #5e41d0; }
-.python-runner .run-btn:disabled { opacity: 0.5; cursor: wait; }
-.python-runner textarea.code-input {
-  display: block;
-  width: 100%;
-  min-height: 240px;
-  padding: 1rem;
-  margin: 0;
-  background: #1e1e2e;
-  color: #cdd6f4;
-  border: none;
-  resize: vertical;
-  outline: none;
-  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
-  font-size: 0.82rem;
-  line-height: 1.6;
-  tab-size: 4;
-}
-.python-runner .code-output {
-  display: none;
-  padding: 0.75rem 1rem;
-  border-top: 1px solid #e6e1e8;
-  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
-  font-size: 0.78rem;
-  color: #1a6a1a;
-  white-space: pre-wrap;
-  max-height: 420px;
-  overflow-y: auto;
-  background: #f6fff6;
-}
-.python-runner .code-output.visible { display: block; }
-.python-runner .code-output.error   { color: #c62828; background: #fff6f6; }
-.python-runner .code-output img {
-  max-width: 100%;
-  margin-top: 0.5rem;
-  border-radius: 4px;
-  display: block;
-}
-.py-loading {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: #fff;
-  border: 1px solid #7253ed;
-  border-radius: 6px;
-  padding: 0.55rem 1rem;
-  font-size: 0.78rem;
-  color: #5c5962;
-  z-index: 1000;
-  display: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-.py-loading.visible { display: block; }"""
-
-
-# ---------------------------------------------------------------------------
-# content.html — página Jekyll, só o runner Python
-# ---------------------------------------------------------------------------
-
-def content_html(topic: dict) -> str:
-    """Página Jekyll com layout do site, contendo apenas o runner Python."""
+def python_runner_block(topic: dict) -> str:
+    """Retorna o bloco HTML do runner para inserção no .md."""
     context = topic.get('python_context', '')
-    context_block = f"\n{context}\n" if context else ""
-    back_fname = topic['dir'][2:] + '.html'   # e.g. 02pearson -> pearson.html
-
-    return f"""---
-layout: default
-title: "{esc(topic['title'])} — Código Python"
-nav_exclude: true
----
-
-## 🐍 Enc. {topic['num']} — {topic['title']}
-{context_block}
-<style>
-{RUNNER_CSS}
-</style>
-
-<div class="python-runner">
-  <div class="toolbar">
-    <span>🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    ctx_line = f"\n{context}\n" if context else ""
+    return f"""{ctx_line}
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
   </div>
   <textarea class="code-input" spellcheck="false">{esc(topic['python_code'])}</textarea>
   <pre class="code-output"></pre>
-</div>
+</div>"""
 
-[← Voltar ao conteúdo]({back_fname})
 
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script src="/assets/js/py-runner.js"></script>
+# ---------------------------------------------------------------------------
+# content.html — redireciona para o .md principal (mantido por compatibilidade)
+# ---------------------------------------------------------------------------
+
+def content_html(topic: dict) -> str:
+    """Redireciona links antigos para a página principal do tópico."""
+    back = topic['dir'][2:] + '.html'
+    return f"""---
+layout: null
+---
+<meta http-equiv="refresh" content="0; url={back}">
+<p>Redirecionando... <a href="{back}">Clique aqui</a></p>
 """
 
 
@@ -164,7 +74,7 @@ nav_exclude: true
 # ---------------------------------------------------------------------------
 
 def jekyll_md(topic: dict) -> str:
-    """Gera o .md Jekyll com metáfora, serve, quando usar, refs e link para o runner."""
+    """Gera o .md completo: slides no topo, todo conteúdo didático e runner Python."""
     bloco = BLOCOS[topic["bloco"]]
 
     metaphor_label = topic.get('metaphor_label', 'Imagine isso…')
@@ -178,17 +88,14 @@ def jekyll_md(topic: dict) -> str:
     if topic.get('tip'):
         tip_block = f"\n{{: .highlight }}\n> {strip_html(topic['tip'])}\n"
 
-    context = topic.get('python_context', '')
-    python_context_line = f"\n{context}\n" if context else ""
-
     ref_rows = "\n".join(
         f"| **{tag}** | {strip_html(text)} |"
         for tag, text in topic['refs']
     )
 
-    # Kramdown class attributes usam { } — escapar do f-string com {{ }}
-    fname = topic['dir'][2:] + '.html'   # back link de content.html -> aqui
+    runner = python_runner_block(topic)
 
+    # Kramdown class attributes usam { } — escapar do f-string com {{ }}
     return f"""---
 layout: default
 title: {topic['title']}
@@ -201,6 +108,14 @@ has_children: false
 
 `{topic['subtitle']}`
 {{: .fs-5 .fw-300 }}
+
+---
+
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/{topic['dir']}/slides/index.html#/" title="{topic['title']}" width="90%" height="500" style="border:none;"></iframe>
+</center>
 
 ---
 
@@ -225,16 +140,8 @@ has_children: false
 ---
 
 ## 🐍 Exemplo Python
-{python_context_line}
-[▶ Abrir código executável](content.html){{: .btn .btn-primary }}
 
----
-
-## 📊 Slides
-
-<center>
-<iframe src="https://math.rpmhub.dev/{topic['dir']}/slides/index.html#/" title="{topic['title']}" width="90%" height="500" style="border:none;"></iframe>
-</center>
+{runner}
 
 ---
 
@@ -459,6 +366,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🎯 Objetivo
 
 Este curso apresenta métodos estatísticos para analisar **dados conversacionais** em contextos educacionais:
@@ -474,7 +389,7 @@ logs de chatbots, turnos de diálogo, escores de compreensão, perfis de uso e d
 | ⚖️ 2 — Comparação | 6 a 10 | Testes t, não-paramétricos, ANOVA, LMM |
 | 📈 3 — Predição | 11 a 13 | Regressão linear, logística e de contagem |
 
-Cada encontro inclui **slides** e **código Python executável** no navegador (sem instalar nada).
+Cada encontro inclui **slides** e **código Python executável** direto na página.
 
 ---
 
@@ -482,15 +397,7 @@ Cada encontro inclui **slides** e **código Python executável** no navegador (s
 
 `pandas` · `scipy` · `pingouin` · `statsmodels` · `scikit-learn` · `matplotlib`
 
-Os exemplos rodam diretamente no navegador via [Pyodide](https://pyodide.org). Clique em **▶ Executar** em qualquer encontro — na primeira execução o Python carrega em ~30 s.
-
----
-
-## 📊 Slides
-
-<center>
-<iframe src="https://math.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
-</center>
+Os exemplos rodam no navegador via [Pyodide](https://pyodide.org) — sem instalar Python. Clique em **▶ Executar** em qualquer encontro. Na primeira execução o runtime Python carrega em ~30 s.
 
 ---
 

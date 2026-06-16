@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/02pearson/slides/index.html#/" title="Correlação de Pearson" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -45,17 +53,33 @@ Em dados conversacionais: *quanto maior o número de turnos em uma sessão, maio
 
 ## 🐍 Exemplo Python
 
+
 Contexto: verificar se o número de turnos por sessão se associa ao escore de compreensão.
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pandas as pd
+from scipy import stats
+import matplotlib.pyplot as plt
 
----
+df = pd.DataFrame({
+    'turnos':      [4,7,3,9,5,11,6,8,2,10],
+    'escore_comp': [52,71,48,80,60,85,66,75,40,82]
+})
 
-## 📊 Slides
+# Passo 1: sempre visualize antes
+df.plot.scatter(x='turnos', y='escore_comp', color='#c792ea',
+               title='Turnos × Escore de Compreensão')
+plt.show()
 
-<center>
-<iframe src="https://math.rpmhub.dev/02pearson/slides/index.html#/" title="Correlação de Pearson" width="90%" height="500" style="border:none;"></iframe>
-</center>
+# Passo 2: calcular
+r, p = stats.pearsonr(df['turnos'], df['escore_comp'])
+print(f"r = {r:.3f}, p = {p:.4f}")</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/03spearman/slides/index.html#/" title="Correlação de Spearman e Kendall" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -41,15 +49,31 @@ Exemplo: *a satisfação do estudante com o chatbot (escala 1–5) está associa
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pandas as pd
+from scipy import stats
+import pingouin as pg
 
-## 📊 Slides
+df = pd.DataFrame({
+    'satisfacao': [2,4,1,5,3,5,4,2,3,5],
+    'sessoes':    [3,8,1,12,5,11,9,2,4,13]
+})
 
-<center>
-<iframe src="https://math.rpmhub.dev/03spearman/slides/index.html#/" title="Correlação de Spearman e Kendall" width="90%" height="500" style="border:none;"></iframe>
-</center>
+rho, p_s = stats.spearmanr(df['satisfacao'], df['sessoes'])
+print(f"Spearman ρ = {rho:.3f}, p = {p_s:.4f}")
+
+tau, p_k = stats.kendalltau(df['satisfacao'], df['sessoes'])
+print(f"Kendall  τ = {tau:.3f}, p = {p_k:.4f}")
+
+res = pg.corr(df['satisfacao'], df['sessoes'], method='spearman')
+print(res[['n', 'r', 'CI95%', 'p-val', 'power']])</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/09anova-fatorial/slides/index.html#/" title="ANOVA Fatorial e Medidas Repetidas" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Duas variações do mesmo instrumento**
@@ -40,15 +48,32 @@ has_children: false
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pingouin as pg
+import pandas as pd
 
-## 📊 Slides
+df_rm = pd.DataFrame({
+    'sujeito': list(range(8)) * 3,
+    'momento': ['pre']*8 + ['durante']*8 + ['pos']*8,
+    'escore':  [50,55,48,60,52,58,45,53,
+                62,68,59,72,65,70,57,64,
+                75,80,70,85,78,83,68,76]
+})
 
-<center>
-<iframe src="https://math.rpmhub.dev/09anova-fatorial/slides/index.html#/" title="ANOVA Fatorial e Medidas Repetidas" width="90%" height="500" style="border:none;"></iframe>
-</center>
+rm = pg.rm_anova(data=df_rm, dv='escore', within='momento',
+                 subject='sujeito', correction=True)
+print(rm[['Source','F','p-unc','p-GG-corr','ng2']])
+
+ph = pg.pairwise_tests(data=df_rm, dv='escore', within='momento',
+                       subject='sujeito', padjust='bonf')
+print(ph[['A','B','T','p-corr','cohen-d']])</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

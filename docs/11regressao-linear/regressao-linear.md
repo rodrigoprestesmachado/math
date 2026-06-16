@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/11regressao-linear/slides/index.html#/" title="Regressão Linear (simples e múltipla)" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -39,15 +47,34 @@ Modelar e predizer um desfecho **numérico contínuo** a partir de preditores.
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import statsmodels.formula.api as smf
+import pandas as pd
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 
-## 📊 Slides
+df = pd.DataFrame({
+    'escore_final':  [72,85,60,90,68,78,82,55,88,74],
+    'uso_chatbot':   [5,9,3,12,4,7,10,2,11,6],
+    'metacognicao':  [60,72,55,80,58,68,75,50,78,65],
+    'letramento_ia': [40,55,35,65,42,52,60,30,62,48]
+})
 
-<center>
-<iframe src="https://math.rpmhub.dev/11regressao-linear/slides/index.html#/" title="Regressão Linear (simples e múltipla)" width="90%" height="500" style="border:none;"></iframe>
-</center>
+modelo = smf.ols('escore_final ~ uso_chatbot + metacognicao + letramento_ia', data=df).fit()
+print(modelo.summary())
+
+X = df[['uso_chatbot','metacognicao','letramento_ia']]
+vif = pd.DataFrame({
+    'variável': X.columns,
+    'VIF': [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+})
+print(vif)</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

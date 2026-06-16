@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/12regressao-logistica/slides/index.html#/" title="Regressão Logística (binária e ordinal)" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -38,15 +46,36 @@ Modelar desfechos **categóricos**: binária (engajou/não) ou ordinal (baixo/m�
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import statsmodels.api as sm
+import pandas as pd
+import numpy as np
+from sklearn.metrics import roc_auc_score
 
-## 📊 Slides
+df = pd.DataFrame({
+    'engajou':     [1,0,1,1,0,1,0,1,0,1,0,1],
+    'uso_chatbot': [8,2,9,7,3,10,1,8,4,9,2,11],
+    'metacognicao':[65,40,70,68,38,75,35,72,42,78,33,80]
+})
 
-<center>
-<iframe src="https://math.rpmhub.dev/12regressao-logistica/slides/index.html#/" title="Regressão Logística (binária e ordinal)" width="90%" height="500" style="border:none;"></iframe>
-</center>
+X = sm.add_constant(df[['uso_chatbot', 'metacognicao']])
+modelo = sm.Logit(df['engajou'], X).fit(disp=0)
+print(modelo.summary())
+
+OR = np.exp(modelo.params)
+print("\nOdds Ratios:")
+print(OR.round(3))
+
+y_pred = modelo.predict(X)
+auc = roc_auc_score(df['engajou'], y_pred)
+print(f"\nAUC = {auc:.3f}")</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/07mann-whitney/slides/index.html#/" title="Mann-Whitney e Wilcoxon" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -43,15 +51,28 @@ Compara a **distribuição de postos** entre dois grupos sem assumir normalidade
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pingouin as pg
+from scipy.stats import wilcoxon
 
-## 📊 Slides
+grupo_a = [3,5,4,6,7,4,5]
+grupo_b = [2,3,1,4,3,2,3]
 
-<center>
-<iframe src="https://math.rpmhub.dev/07mann-whitney/slides/index.html#/" title="Mann-Whitney e Wilcoxon" width="90%" height="500" style="border:none;"></iframe>
-</center>
+res_mw = pg.mwu(grupo_a, grupo_b, alternative='two-sided')
+print("Mann-Whitney:")
+print(res_mw[['U-val', 'p-val', 'RBC', 'CLES']])
+
+pre  = [3,5,4,6,4,3]
+pos  = [5,6,6,7,6,5]
+stat, p_w = wilcoxon(pre, pos, alternative='two-sided')
+print(f"\nWilcoxon: W = {stat:.0f}, p = {p_w:.4f}")</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 

@@ -13,6 +13,14 @@ has_children: false
 
 ---
 
+## 📊 Slides
+
+<center>
+<iframe src="https://math.rpmhub.dev/04qui-quadrado/slides/index.html#/" title="Qui-quadrado e V de Cramér" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
+---
+
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -43,15 +51,33 @@ Exemplo: *o tipo de pergunta ao chatbot varia conforme o perfil de uso do estuda
 
 ## 🐍 Exemplo Python
 
-[▶ Abrir código executável](content.html){: .btn .btn-primary }
 
----
+<div class="python-runner" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false">import pandas as pd
+import numpy as np
+from scipy.stats import chi2_contingency
 
-## 📊 Slides
+tabela = pd.DataFrame(
+    [[30,15,10],[20,25,18],[10,20,35]],
+    index   = ['factual','conceitual','procedimental'],
+    columns = ['passivo','ativo','intensivo']
+)
+print(tabela, "\n")
 
-<center>
-<iframe src="https://math.rpmhub.dev/04qui-quadrado/slides/index.html#/" title="Qui-quadrado e V de Cramér" width="90%" height="500" style="border:none;"></iframe>
-</center>
+chi2, p, gl, esperadas = chi2_contingency(tabela)
+print(f"χ² = {chi2:.3f}  gl = {gl}  p = {p:.4f}")
+
+n = tabela.values.sum()
+k = min(tabela.shape) - 1
+V = np.sqrt(chi2 / (n * k))
+efeito = 'pequeno' if V &lt; .3 else 'médio' if V &lt; .5 else 'grande'
+print(f"V de Cramér = {V:.3f}  → efeito {efeito}")</textarea>
+  <pre class="code-output"></pre>
+</div>
 
 ---
 
