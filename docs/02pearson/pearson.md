@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Correlação de Pearson
-nav_order: 4
-parent: Encontros
+nav_order: 2
+parent: Associação
 has_children: false
 ---
 
-# Enc. 2 — Correlação de Pearson
+# Enc. 2: Correlação de Pearson
 
-`scipy.stats.pearsonr · pandas DataFrame.corr(method='pearson')`
+Relação linear entre variáveis contínuas · coeficiente *r*
 {: .fs-5 .fw-300 }
 
 ---
@@ -25,15 +25,23 @@ has_children: false
 
 > **Imagine isso…**
 >
-> Pense em dois atletas correndo numa pista lado a lado. Quando um acelera, o outro também acelera na mesma proporção; quando um desacelera, o outro acompanha. Isso é **r = +1**: movem-se em perfeita sincronia na mesma direção. Se um acelera e o outro desacelera exatamente na mesma medida, temos **r = −1**. Se cada um faz o que quer, independentemente do outro, **r ≈ 0**.
+> Dois atletas correm lado a lado numa pista. Quando um acelera, o outro acelera na mesma proporção; quando freia, o outro freia também. Isso é **r = +1**: movimento em perfeita sincronia, na mesma direção. Se um acelera enquanto o outro freia (na mesma medida), temos **r = −1**. Se cada um corre no seu ritmo, sem seguir o outro, **r ≈ 0**.
 >
-> Pearson mede essa sincronia — mas *apenas quando a pista é reta*. Se a relação for curva (por exemplo, muito poucos turnos *e* muitos turnos levam a escores baixos), Pearson pode subestimar ou mascarar o padrão.
+> Pearson quantifica essa sincronia, mas *só enquanto a pista for reta*. Em relações curvas (por exemplo, poucos turnos *e* muitos turnos levam a escores baixos), o coeficiente pode subestimar ou ocultar o padrão.
 
 ---
 
 ## 🎯 Para que serve
 
 Mede a **força** e a **direção** de uma relação *linear* entre duas variáveis numéricas contínuas. O coeficiente *r* vai de −1 a +1.
+
+{: .highlight }
+> **O que é relação linear?** Ao plotar X × Y, os pontos tendem a se alinhar numa linha reta: cada aumento de X produz, em média, um acréscimo (ou decréscimo) **constante** em Y, como em Y = a + bX.
+>
+> **Por quê Pearson exige isso?** O *r* mede o quanto esses pontos se aproximam de uma reta. Em relações curvilíneas, trechos em que Y sobe e trechos em que Y desce se **cancelam**, e *r* pode ficar perto de zero mesmo quando o padrão é visível no gráfico. Por isso confira sempre o scatter plot antes de calcular.
+
+{: .highlight }
+> **Scatter plot (gráfico de dispersão):** cada par de valores (X, Y) vira um ponto no plano. Antes de calcular Pearson, plote sempre as duas variáveis juntas: a nuvem de pontos mostra se a relação é linear, curvilínea ou inexistente, o que o número *r* sozinho não revela.
 
 Em termos de hipótese:
 
@@ -42,7 +50,7 @@ Em termos de hipótese:
 | **H₀** | Não há relação linear entre as variáveis (r = 0 na população). |
 | **H₁** | Existe relação linear (r ≠ 0). |
 
-Em dados conversacionais, a pergunta típica é: *quanto maior o número de turnos em uma sessão, maior o escore de compreensão do estudante?* Pearson responde se os pontos tendem a subir numa linha reta — não se um causa o outro.
+Em dados conversacionais, um **turno** é cada intervenção no diálogo, por exemplo uma mensagem do estudante ou do chatbot. A pergunta típica é: *quanto maior o número de turnos em uma sessão, maior o escore de compreensão do estudante?* Pearson responde se os pontos tendem a subir numa linha reta, não se um causa o outro.
 
 ---
 
@@ -50,15 +58,15 @@ Em dados conversacionais, a pergunta típica é: *quanto maior o número de turn
 
 | Valor de *r* | Direção | Interpretação intuitiva |
 |:-------------|:--------|:------------------------|
-| **+1** | positiva | Quanto mais X, mais Y — em linha reta perfeita. |
+| **+1** | positiva | Quanto mais X, mais Y, em linha reta perfeita. |
 | **0** | nenhuma | X e Y variam de forma independente (linearmente). |
-| **−1** | negativa | Quanto mais X, menos Y — em linha reta perfeita. |
+| **−1** | negativa | Quanto mais X, menos Y, em linha reta perfeita. |
 | **entre 0 e ±1** | parcial | Há tendência, mas com dispersão em torno da reta. |
 
 O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **força** da relação linear.
 
 {: .highlight }
-> **Convenção de Cohen (1988) para o tamanho do efeito:** \|r\| < 0,10 negligível · 0,10–0,29 pequeno · 0,30–0,49 médio · ≥ 0,50 grande
+> **Convenção de Cohen (1988) para o tamanho do efeito:** \|r\| < 0,10 negligível · 0,10 a 0,29 pequeno · 0,30 a 0,49 médio · ≥ 0,50 grande
 
 ---
 
@@ -67,25 +75,41 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 **Use Pearson quando:**
 
 - ✅ Ambas as variáveis são **contínuas** e numéricas (turnos, escores, tempo em segundos).
-- ✅ A relação esperada é **linear** — sempre confira com um scatter plot antes de calcular.
-- ✅ Cada variável segue aproximadamente distribuição normal (teste de Shapiro-Wilk).
+- ✅ A relação esperada é **linear**; confira sempre com um scatter plot antes de calcular.
+- ✅ Cada variável segue aproximadamente distribuição normal (teste de Shapiro Wilk).
+
+**Exemplos em logs educacionais (learning analytics):**
+
+- *Turnos por sessão × escore de compreensão:* sessões com mais interações tendem a ter escores maiores?
+- *Tempo ativo no chatbot × nota na avaliação:* quem permanece mais tempo na plataforma obtém notas mais altas?
+- *Número de mensagens × acertos em exercícios:* mais mensagens trocadas se associam a mais respostas certas?
+- *Latência média de resposta × tempo total de sessão:* respostas mais rápidas acompanham sessões mais longas?
+- *Sessões concluídas por semana × desempenho acumulado:* frequência de uso se correlaciona com progresso ao longo do curso?
 
 **Evite Pearson quando:**
 
 - ❌ Os dados são **ordinais** (escala Likert) → use [Spearman](../03spearman/spearman.html).
-- ❌ Há **outliers extremos** — um único ponto pode distorcer *r*.
+- ❌ Há **outliers extremos**: um único ponto pode distorcer *r*.
 - ❌ A nuvem de pontos é claramente **curvilínea** → Pearson não captura bem o padrão.
-- ❌ Você quer afirmar **causalidade** — correlação só descreve associação.
+- ❌ Você quer afirmar **causalidade**: correlação só descreve associação.
+
+**Quando evitar em logs educacionais (learning analytics):**
+
+- *Satisfação com o chatbot (Likert 1 a 5) × número de sessões:* variável ordinal → use [Spearman](../03spearman/spearman.html).
+- *Turnos por sessão × escore com ponto ideal no meio:* sessões com **poucos turnos** (desengajamento, abandono rápido) e sessões com **muitos turnos** (confusão, divagação ou dificuldade excessiva) podem ter escores baixos; o melhor desempenho costuma ficar em um intervalo intermediário. No scatter plot, a nuvem forma uma curva (∩), não uma reta. Pearson pode retornar *r* ≈ 0 mesmo com padrão visível, porque trechos opostos se cancelam.
+- *Um único estudante com centenas de mensagens × tempo de sessão:* outlier extremo pode inflar ou distorcer *r*.
+- *Uso do chatbot × nota final para inferir causalidade:* mais tempo na plataforma não prova que o chatbot produziu o aprendizado.
+- *Tempo de sessão com distribuição fortemente assimétrica (cauda longa):* normalidade comprometida → considere Spearman ou transformação dos dados.
 
 ---
 
 ## 🪜 Passo a passo na prática
 
-1. **Visualize** — plote X × Y. A nuvem sobe, desce ou é um emaranhado?
-2. **Verifique pressupostos** — normalidade univariada (Shapiro-Wilk) e ausência de outliers gritantes.
-3. **Calcule** — `stats.pearsonr(x, y)` ou `df.corr(method='pearson')`.
-4. **Interprete** — leia *r* (direção e força) e *p* (evidência contra H₀).
-5. **Reporte** — informe *r*, *p*, *n* e, se possível, o scatter plot no artigo ou relatório.
+1. **Visualize:** plote X × Y. A nuvem sobe, desce ou é um emaranhado?
+2. **Verifique pressupostos:** normalidade univariada (Shapiro Wilk) e ausência de outliers gritantes.
+3. **Calcule:** `stats.pearsonr(x, y)` ou `df.corr(method='pearson')`.
+4. **Interprete:** leia *r* (direção e força) e *p* (evidência contra H₀).
+5. **Reporte:** informe *r*, *p*, *n* e, se possível, o scatter plot no artigo ou relatório.
 
 ---
 
@@ -98,7 +122,7 @@ Suponha que o código abaixo retorne `r = 0.87, p = 0.0003` com *n* = 10 sessõe
 - **Cohen** → \|0,87\| ≥ 0,50 → tamanho de efeito **grande** (embora com *n* pequeno a estimativa seja instável).
 
 {: .highlight }
-> **Correlação ≠ causalidade.** Mais turnos podem acompanhar maior compreensão — ou estudantes mais engajados simplesmente conversam mais *e* aprendem mais. Outras variáveis (motivação, dificuldade da tarefa) podem explicar ambos.
+> **Correlação ≠ causalidade.** Mais turnos podem acompanhar maior compreensão, ou estudantes mais engajados simplesmente conversam mais *e* aprendem mais. Outras variáveis (motivação, dificuldade da tarefa) podem explicar ambos.
 
 ---
 
@@ -126,7 +150,14 @@ O código segue o passo a passo: primeiro o gráfico, depois o cálculo. Execute
 | **clássico** | Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Lawrence Erlbaum. |
 | **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8. |
 | **python** | McKinney, W. (2022). *Python for Data Analysis* (3ª ed.). O'Reilly. Cap. 13. |
-| **artigo** | Mukaka, M. M. (2012). A guide to appropriate use of correlation coefficient in medical research. *Malawi Medical Journal, 24*(3), 69–71. |
+| **artigo** | Mukaka, M. M. (2012). A guide to appropriate use of correlation coefficient in medical research. *Malawi Medical Journal, 24*(3), 69 a 71. |
+| **web (PT)** | [Peixoto, *Introdução à Ciência de Dados*: Correlação](https://gcpeixoto.github.io/ICD/ipynb/12-correlacao.html). Scatter plots, interpretação de *r*, Pearson vs relações não lineares, `pearsonr()`. |
+| **web (PT)** | [Matos, *Estatística + R*: Correlação entre variáveis](https://ana-mat-br.github.io/correla%C3%A7%C3%A3o-entre-vari%C3%A1veis.html). Gráficos de dispersão, matriz de correlação, quando usar Pearson e Spearman. |
+| **web (EN)** | [OpenStax, *Introductory Statistics 2e*: cap. 12.2 e 12.3](https://openstax.org/books/introductory-statistics-2e/pages/12-2-scatter-plots). Scatter plots e coeficiente de correlação, gratuito, com exemplos educacionais. |
+| **web (EN)** | [Khan Academy: Correlation coefficient review](https://www.khanacademy.org/math/statistics-probability/describing-relationships-quantitative-data/scatterplots-and-correlation/a/correlation-coefficient-review). Interpretação visual de *r* e exercícios de associação gráfico × coeficiente. |
+| **simulador** | [R Psychologist: Understanding Correlations](https://rpsychologist.com/correlation/). Ajuste *r* com slider, arraste pontos e observe o efeito de outliers na nuvem. |
+| **simulador** | [Art of Stat: Scatterplots & Correlation](https://istats.shinyapps.io/Association_Quantitative/). Mova ou remova pontos, sobreponha reta de tendência e teste a robustez de *r*. |
+| **simulador** | [Art of Stat: Guess the Correlation](https://istats.shinyapps.io/guesscorr/). Treine estimar *r* a partir de scatter plots gerados aleatoriamente. |
 
 ---
 

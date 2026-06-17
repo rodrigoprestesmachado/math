@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Regressão Logística (binária e ordinal)
-nav_order: 14
-parent: Encontros
+nav_order: 2
+parent: Predição
 has_children: false
 ---
 

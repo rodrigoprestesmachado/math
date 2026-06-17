@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Regressão de Poisson e Binomial Negativa
-nav_order: 15
-parent: Encontros
+nav_order: 3
+parent: Predição
 has_children: false
 ---
 

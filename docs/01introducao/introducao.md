@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Introdução
-nav_order: 3
-parent: Encontros
+nav_order: 1
+parent: Associação
 has_children: false
 ---
 

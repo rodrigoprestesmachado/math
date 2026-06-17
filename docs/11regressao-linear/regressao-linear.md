@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Regressão Linear (simples e múltipla)
-nav_order: 13
-parent: Encontros
+nav_order: 1
+parent: Predição
 has_children: false
 ---
 

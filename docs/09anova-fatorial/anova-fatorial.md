@@ -1,8 +1,8 @@
 ---
 layout: default
 title: ANOVA Fatorial e Medidas Repetidas
-nav_order: 11
-parent: Encontros
+nav_order: 4
+parent: Comparação
 has_children: false
 ---
 

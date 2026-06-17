@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Correlação de Spearman e Kendall
-nav_order: 5
-parent: Encontros
+nav_order: 3
+parent: Associação
 has_children: false
 ---
 

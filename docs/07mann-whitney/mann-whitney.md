@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Mann-Whitney e Wilcoxon
-nav_order: 9
-parent: Encontros
+nav_order: 2
+parent: Comparação
 has_children: false
 ---
 

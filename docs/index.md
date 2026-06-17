@@ -14,7 +14,6 @@ Materiais didáticos de estatística aplicada a **dados conversacionais** em con
 
 - [Introdução](01introducao/introducao.html) — objetivos e estrutura do curso
 - [Visão geral dos materiais](materiais.html) — todos os 13 encontros em uma página
-- [Encontros](encontros.html) — índice navegável por bloco
 
 ## Destaques
 

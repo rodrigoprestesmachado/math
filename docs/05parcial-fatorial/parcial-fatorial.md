@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Correlação Parcial e Análise Fatorial
-nav_order: 7
-parent: Encontros
+nav_order: 5
+parent: Associação
 has_children: false
 ---
 

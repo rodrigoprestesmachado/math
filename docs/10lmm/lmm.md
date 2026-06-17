@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Modelos Lineares Mistos (LMM)
-nav_order: 12
-parent: Encontros
+nav_order: 5
+parent: Comparação
 has_children: false
 ---
 

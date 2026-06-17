@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Teste t (independente e pareado)
-nav_order: 8
-parent: Encontros
+nav_order: 1
+parent: Comparação
 has_children: false
 ---
 

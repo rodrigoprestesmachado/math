@@ -1,8 +1,8 @@
 ---
 layout: default
 title: ANOVA de uma via e Kruskal-Wallis
-nav_order: 10
-parent: Encontros
+nav_order: 3
+parent: Comparação
 has_children: false
 ---
 
