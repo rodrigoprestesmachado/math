@@ -89,24 +89,24 @@ O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das s
 
 **Aplicação simples: aplicando os passos a 5 estudantes**
 
-Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número de **mensagens** trocadas com o chatbot (X) e o número de **acertos** em uma lista de 10 exercícios (Y):
+Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número de **mensagens** trocadas com o chatbot (X) e o **escore composto no MAI** (Y) — o mesmo par de variáveis usado no exemplo Python mais abaixo:
 
-| Estudante | xᵢ (mensagens) | yᵢ (acertos) | xᵢ − x̄ | yᵢ − ȳ | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² | (yᵢ−ȳ)² |
+| Estudante | xᵢ (mensagens) | yᵢ (escore no MAI) | xᵢ − x̄ | yᵢ − ȳ | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² | (yᵢ−ȳ)² |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| A | 2 | 3 | −4 | −2 | 8 | 16 | 4 |
-| B | 4 | 4 | −2 | −1 | 2 | 4 | 1 |
-| C | 6 | 6 | 0 | 1 | 0 | 0 | 1 |
-| D | 8 | 5 | 2 | 0 | 0 | 4 | 0 |
-| E | 10 | 7 | 4 | 2 | 8 | 16 | 4 |
-| **Soma** | x̄ = 6 | ȳ = 5 | 0 | 0 | **18** | **40** | **10** |
+| A | 2 | 40 | −4 | −20 | 80 | 16 | 400 |
+| B | 4 | 50 | −2 | −10 | 20 | 4 | 100 |
+| C | 6 | 70 | 0 | 10 | 0 | 0 | 100 |
+| D | 8 | 60 | 2 | 0 | 0 | 4 | 0 |
+| E | 10 | 80 | 4 | 20 | 80 | 16 | 400 |
+| **Soma** | x̄ = 6 | ȳ = 60 | 0 | 0 | **180** | **40** | **1000** |
 
-1. **Médias** (passo 1): x̄ = (2+4+6+8+10) / 5 = 6 · ȳ = (3+4+6+5+7) / 5 = 5.
-2. **Numerador** (passos 2–3): soma da coluna (xᵢ−x̄)(yᵢ−ȳ) = 8+2+0+0+8 = **18**.
-3. **Denominador** (passo 4): √(40 × 10) = √400 = **20**.
-4. **Resultado** (passo 5): r = 18 / 20 = **0,90**.
+1. **Médias** (passo 1): x̄ = (2+4+6+8+10) / 5 = 6 · ȳ = (40+50+70+60+80) / 5 = 60.
+2. **Numerador** (passos 2–3): soma da coluna (xᵢ−x̄)(yᵢ−ȳ) = 80+20+0+0+80 = **180**.
+3. **Denominador** (passo 4): √(40 × 1000) = √40000 = **200**.
+4. **Resultado** (passo 5): r = 180 / 200 = **0,90**.
 
 {: .highlight }
-> **Interpretação:** *r* = 0,90 é uma correlação positiva **forte** (Cohen: \|r\| ≥ 0,50 → efeito grande). Nesses 5 estudantes fictícios, quem trocou mais mensagens com o chatbot tendeu claramente a acertar mais exercícios. No exemplo Python mais abaixo, `scipy.stats.pearsonr` faz exatamente essa conta — só que para os 10 estudantes do conjunto de dados completo.
+> **Interpretação:** *r* = 0,90 é uma correlação positiva **forte** (Cohen: \|r\| ≥ 0,50 → efeito grande). Nesses 5 estudantes fictícios, quem trocou mais mensagens com o chatbot tendeu claramente a ter maior escore no MAI. No exemplo Python mais abaixo, `scipy.stats.pearsonr` faz exatamente essa conta — só que para os 10 estudantes do conjunto de dados completo.
 
 ---
 

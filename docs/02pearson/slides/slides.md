@@ -102,19 +102,19 @@ O numerador soma o produto dos desvios (o quanto X e Y "andam juntos"); o denomi
 
 ## 🧩 Aplicação simples: r na mão
 
-<p class="small">Aplicando os passos acima a 5 estudantes fictícios · X = mensagens trocadas · Y = acertos em 10 exercícios</p>
+<p class="small">Aplicando os passos acima a 5 estudantes fictícios · X = mensagens trocadas · Y = escore no MAI</p>
 
 | Est. | xᵢ | yᵢ | xᵢ−x̄ | yᵢ−ȳ | produto |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| A | 2 | 3 | −4 | −2 | 8 |
-| B | 4 | 4 | −2 | −1 | 2 |
-| C | 6 | 6 | 0 | 1 | 0 |
-| D | 8 | 5 | 2 | 0 | 0 |
-| E | 10 | 7 | 4 | 2 | 8 |
+| A | 2 | 40 | −4 | −20 | 80 |
+| B | 4 | 50 | −2 | −10 | 20 |
+| C | 6 | 70 | 0 | 10 | 0 |
+| D | 8 | 60 | 2 | 0 | 0 |
+| E | 10 | 80 | 4 | 20 | 80 |
 
 <div class="destaque">
-x̄ = 6 · ȳ = 5 · Σ produto = 18 · Σ(xᵢ−x̄)² = 40 · Σ(yᵢ−ȳ)² = 10<br><br>
-<em>r</em> = 18 / √(40 × 10) = 18 / 20 = <strong>0,90</strong> → correlação positiva forte: quem trocou mais mensagens tendeu a acertar mais exercícios.
+x̄ = 6 · ȳ = 60 · Σ produto = 180 · Σ(xᵢ−x̄)² = 40 · Σ(yᵢ−ȳ)² = 1000<br><br>
+<em>r</em> = 180 / √(40 × 1000) = 180 / 200 = <strong>0,90</strong> → correlação positiva forte: quem trocou mais mensagens tendeu a ter maior escore no MAI.
 </div>
 
 ---
