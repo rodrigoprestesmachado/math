@@ -30,6 +30,8 @@
 - Ao plotar X × Y num scatter plot, os pontos formam uma **reta**: cada aumento de X gera um acréscimo **constante** em Y.
 - Pearson mede o quanto os pontos se aproximam dessa reta.
 
+--
+
 <div class="destaque">
 
 - Imagine agora que os dois atletas correm num trecho <strong>plano</strong>, lado a lado, em perfeita sincronia — A pista encontra uma <strong>colina</strong>. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz.
@@ -69,6 +71,8 @@ Em dados conversacionais: *quanto mais mensagens um estudante troca com o chatbo
 - ✅ A relação esperada é <strong>linear</strong> e os pontos, ao serem plotados, tendem a formar uma reta (não uma curva). Confira sempre com um scatter plot antes de calcular.
 - ✅ Cada variável, isoladamente, deve seguir uma <strong>distribuição normal</strong>: a maioria dos estudantes envia um número "médio" de mensagens, e cada vez menos estudantes enviam quantidades bem abaixo ou bem acima dessa média. O teste de <strong>Shapiro-Wilk</strong> verifica isso.
 - ❌ Não usar com dados <strong>ordinais</strong>, como uma escala Likert de 1 (discordo totalmente) a 5 (concordo totalmente). Nesses casos, use Spearman.
+
+--
 
 <div class="destaque">
 Os números de 1 a 5 indicam apenas <strong>ordem</strong> (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1.<br><br>

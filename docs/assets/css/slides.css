@@ -1,5 +1,11 @@
 /* Tema roxo para Reveal.js — math.rpmhub.dev */
 .reveal {
+  /* Fonte base menor (padrão do tema é 42px) e menos margem entre blocos,
+     para caber mais conteúdo por slide sem parecer gigante */
+  --r-main-font-size: 30px;
+  --r-heading2-size: 1.35em;
+  --r-heading3-size: 1.1em;
+  --r-block-margin: 14px;
   font-family: 'Inter', -apple-system, sans-serif;
   color: #e0d4f8;
   background: #0f0520;
@@ -15,6 +21,24 @@
 
 .reveal .slides section {
   text-align: left;
+}
+
+.reveal ul,
+.reveal ol {
+  line-height: 1.4;
+}
+
+.reveal li {
+  margin-bottom: 0.5em;
+}
+
+.reveal li:last-child {
+  margin-bottom: 0;
+}
+
+.reveal li > ul,
+.reveal li > ol {
+  margin-top: 0.4em;
 }
 
 .reveal .title-slide {

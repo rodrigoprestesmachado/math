@@ -103,6 +103,7 @@ def _get_output():
 
   async function runCode(btn) {
     var runner = btn.closest('.python-runner');
+    hydrateRunner(runner); // garante o decode do data-code mesmo se o MutationObserver ainda não rodou
     var ta     = runner.querySelector('.code-input');
     var output = runner.querySelector('.code-output');
     var code   = ta.value;
@@ -159,28 +160,46 @@ def _get_output():
     }
   }
 
-  function attachHandlers() {
-    document.querySelectorAll('.python-runner').forEach(function (runner) {
-      var ta  = runner.querySelector('.code-input');
-      var btn = runner.querySelector('.run-btn');
-
-      // O código está em base64 no data-code — decodifica e popula o textarea
-      if (ta && runner.hasAttribute('data-code')) {
-        ta.value = decodeB64(runner.getAttribute('data-code'));
-        runner.removeAttribute('data-code');
-      }
-
-      if (btn) {
-        btn.addEventListener('click', function () { runCode(btn); });
-      }
-    });
+  // O código está em base64 no data-code — decodifica e popula o textarea.
+  // Idempotente: só age se o atributo ainda existir, depois o remove.
+  function hydrateRunner(runner) {
+    var ta = runner.querySelector('.code-input');
+    if (ta && runner.hasAttribute('data-code')) {
+      ta.value = decodeB64(runner.getAttribute('data-code'));
+      runner.removeAttribute('data-code');
+    }
   }
+
+  function attachHandlers(root) {
+    (root || document).querySelectorAll('.python-runner').forEach(hydrateRunner);
+  }
+
+  // Delegação de evento no document: funciona mesmo para runners inseridos
+  // depois do carregamento inicial (ex.: slides Reveal.js, cujo data-markdown
+  // busca e renderiza o .md de forma assíncrona, depois deste script já ter rodado).
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target.closest && ev.target.closest('.run-btn');
+    if (btn) runCode(btn);
+  });
+
+  // Observa inserções dinâmicas de .python-runner no DOM (ex.: RevealMarkdown)
+  // e decodifica o data-code assim que o elemento aparecer.
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      m.addedNodes.forEach(function (node) {
+        if (node.nodeType !== 1) return;
+        if (node.matches && node.matches('.python-runner')) hydrateRunner(node);
+        if (node.querySelectorAll) node.querySelectorAll('.python-runner').forEach(hydrateRunner);
+      });
+    });
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
 
   // Funciona quando o script carrega via <head defer> (readyState = 'interactive')
   // ou quando é injetado no body (readyState = 'complete')
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', attachHandlers);
+    document.addEventListener('DOMContentLoaded', function () { attachHandlers(document); });
   } else {
-    attachHandlers();
+    attachHandlers(document);
   }
 })();
