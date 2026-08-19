@@ -12,7 +12,46 @@
 
 ## 🍊 Metáfora
 
-Pense em dois atletas correndo numa pista lado a lado. Quando um acelera, o outro também acelera na mesma proporção; quando um desacelera, o outro acompanha. Isso é **r = +1**: movem-se em perfeita sincronia na mesma direção. Se um acelera e o outro desacelera exatamente na mesma medida, temos **r = −1**. Se cada um faz o que quer, independentemente do outro, **r ≈ 0**. Pearson mede essa sincronia — mas *apenas quando a pista é reta*.
+<p class="small">Pense em dois atletas correndo numa pista lado a lado.</p>
+
+<p class="small">
+
+- Quando um acelera, o outro acelera na mesma proporção; quando desacelera, o outro acompanha → **r = +1**.
+- Quando um acelera e o outro desacelera na mesma medida → **r = −1**.
+- Quando cada um faz o que quer, independentemente do outro → **r ≈ 0**.
+- Pearson mede essa sincronia, mas *apenas quando a pista é reta*.
+
+</p>
+
+---
+
+## 📈 O que é uma "pista reta"?
+
+- Ao plotar X × Y num scatter plot, os pontos formam uma **reta**: cada aumento de X gera um acréscimo **constante** em Y.
+- Pearson mede o quanto os pontos se aproximam dessa reta.
+
+<div class="destaque">
+
+- Imagine agora que os dois atletas correm num trecho <strong>plano</strong>, lado a lado, em perfeita sincronia — A pista encontra uma <strong>colina</strong>. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz.
+- Resultado: o padrão muda de comportamento ao longo do percurso (uma reta, depois uma subida), ou seja, não existe uma única reta que descreva bem todo o trajeto. Dependendo do tamanho da subida em relação ao trecho plano, <em>r</em> pode cair bastante, chegando perto de 0 mesmo havendo um padrão bem claro no gráfico.
+
+</div>
+
+<p class="small">Por isso: sempre olhe o scatter plot antes de confiar no valor de <em>r</em>.</p>
+
+---
+
+## 💬 Exemplo em dados conversacionais
+
+Cruzamos duas fontes por estudante: o número de **mensagens trocadas** no chat, extraído dos logs de um chatbot baseado em LLM, e o **escore composto em uma escala de metacognição** (ex.: Metacognitive Awareness Inventory), aplicada separadamente como questionário.
+
+- **Pergunta:** estudantes que trocam mais mensagens têm maior consciência metacognitiva?
+- **X:** número de mensagens · **Y:** escore composto no MAI.
+- Antes de calcular *r*, plote um scatter plot (cada estudante vira um ponto no gráfico) e observe: os pontos sobem formando algo parecido com uma reta?
+
+<div class="destaque">
+Outras variáveis conversacionais que também podem ser correlacionadas: tempo ativo no chat × nota final, número de mensagens × acertos em exercícios, latência média de resposta × duração da sessão.
+</div>
 
 ---
 
@@ -20,43 +59,35 @@ Pense em dois atletas correndo numa pista lado a lado. Quando um acelera, o outr
 
 Mede a **força** e a **direção** de uma relação *linear* entre duas variáveis numéricas contínuas. O coeficiente *r* vai de −1 a +1.
 
-Em dados conversacionais: *quanto maior o número de turnos em uma sessão, maior o escore de compreensão do estudante?*
+Em dados conversacionais: *quanto mais mensagens um estudante troca com o chatbot, maior o seu escore numa escala de metacognição?*
 
 ---
 
 ## 📋 Quando usar
 
 - ✅ Ambas as variáveis são contínuas e numéricas.
-- ✅ A relação esperada é <strong>linear</strong> — verificar com scatter plot antes de calcular.
-- ✅ Cada variável segue aproximadamente distribuição normal (Shapiro-Wilk).
-- ❌ Não usar com dados ordinais (Likert) — use Spearman.
+- ✅ A relação esperada é <strong>linear</strong> e os pontos, ao serem plotados, tendem a formar uma reta (não uma curva). Confira sempre com um scatter plot antes de calcular.
+- ✅ Cada variável, isoladamente, deve seguir uma <strong>distribuição normal</strong>: a maioria dos estudantes envia um número "médio" de mensagens, e cada vez menos estudantes enviam quantidades bem abaixo ou bem acima dessa média. O teste de <strong>Shapiro-Wilk</strong> verifica isso.
+- ❌ Não usar com dados <strong>ordinais</strong>, como uma escala Likert de 1 (discordo totalmente) a 5 (concordo totalmente). Nesses casos, use Spearman.
+
+<div class="destaque">
+Os números de 1 a 5 indicam apenas <strong>ordem</strong> (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1.<br><br>
+O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser um salto de opinião muito maior do que sair de "concordo" (4) para "concordo totalmente" (5), mas, Pearson trataria os dois saltos como idênticos (ambos valem 1). Nesse caso, podemos usar <strong>Spearman</strong>, que veremos nas próximas seções.
+</div>
 
 ---
 
+
+
 ## 🐍 Exemplo Python
 
-```python
-import pandas as pd
-from scipy import stats
-import matplotlib.pyplot as plt
-
-df = pd.DataFrame({
-    'turnos':      [4,7,3,9,5,11,6,8,2,10],
-    'escore_comp': [52,71,48,80,60,85,66,75,40,82]
-})
-
-# Passo 1: sempre visualize antes
-df.plot.scatter(x='turnos', y='escore_comp', color='#c792ea',
-               title='Turnos × Escore de Compreensão')
-plt.show()
-
-# Passo 2: calcular
-r, p = stats.pearsonr(df['turnos'], df['escore_comp'])
-print(f"r = {r:.3f}, p = {p:.4f}")
-```
-
-<div class="destaque">
-Código <strong>executável</strong> na página do encontro — clique em <strong>▶ Executar</strong>.
+<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwppbXBvcnQgbWF0cGxvdGxpYi5weXBsb3QgYXMgcGx0CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAnbWVuc2FnZW5zJzogWzQsNywzLDksNSwxMSw2LDgsMiwxMF0sCiAgICAnbWFpX3Njb3JlJzogWzUyLDcxLDQ4LDgwLDYwLDg1LDY2LDc1LDQwLDgyXQp9KQoKIyBQYXNzbyAxOiBzZW1wcmUgdmlzdWFsaXplIGFudGVzCmRmLnBsb3Quc2NhdHRlcih4PSdtZW5zYWdlbnMnLCB5PSdtYWlfc2NvcmUnLCBjb2xvcj0nI2M3OTJlYScsCiAgICAgICAgICAgICAgIHRpdGxlPSdNZW5zYWdlbnMgw5cgRXNjb3JlIGNvbXBvc3RvIG5vIE1BSScpCnBsdC5zaG93KCkKCiMgUGFzc28gMjogY2FsY3VsYXIKciwgcCA9IHN0YXRzLnBlYXJzb25yKGRmWydtZW5zYWdlbnMnXSwgZGZbJ21haV9zY29yZSddKQpwcmludChmInIgPSB7cjouM2Z9LCBwID0ge3A6LjRmfSIp" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false"></textarea>
+  <pre class="code-output"></pre>
 </div>
 
 ---

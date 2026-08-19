@@ -27,7 +27,10 @@ Relação linear entre variáveis contínuas · coeficiente *r*
 >
 > Dois atletas correm lado a lado numa pista. Quando um acelera, o outro acelera na mesma proporção; quando freia, o outro freia também. Isso é **r = +1**: movimento em perfeita sincronia, na mesma direção. Se um acelera enquanto o outro freia (na mesma medida), temos **r = −1**. Se cada um corre no seu ritmo, sem seguir o outro, **r ≈ 0**.
 >
-> Pearson quantifica essa sincronia, mas *só enquanto a pista for reta*. Em relações curvas (por exemplo, poucos turnos *e* muitos turnos levam a escores baixos), o coeficiente pode subestimar ou ocultar o padrão.
+> Pearson quantifica essa sincronia, mas *só enquanto a pista for reta*.
+
+{: .highlight }
+> **E se a pista não for reta?** Imagine que os dois atletas correm num trecho plano, lado a lado, em perfeita sincronia — de repente, a pista encontra uma colina. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz. O padrão muda de comportamento ao longo do percurso (uma reta, depois uma subida): não existe uma única reta que descreva bem todo o trajeto. Dependendo do tamanho da subida em relação ao trecho plano, *r* pode cair bastante, chegando perto de 0 mesmo havendo um padrão bem claro no gráfico.
 
 ---
 
@@ -50,7 +53,10 @@ Em termos de hipótese:
 | **H₀** | Não há relação linear entre as variáveis (r = 0 na população). |
 | **H₁** | Existe relação linear (r ≠ 0). |
 
-Em dados conversacionais, um **turno** é cada intervenção no diálogo, por exemplo uma mensagem do estudante ou do chatbot. A pergunta típica é: *quanto maior o número de turnos em uma sessão, maior o escore de compreensão do estudante?* Pearson responde se os pontos tendem a subir numa linha reta, não se um causa o outro.
+Em dados conversacionais, um exemplo típico cruza duas fontes por estudante: o número de **mensagens trocadas** no chat, extraído dos logs de um chatbot baseado em LLM, e o **escore composto numa escala de metacognição** (ex.: Metacognitive Awareness Inventory — MAI), aplicada separadamente como questionário. A pergunta é: *quanto mais mensagens um estudante troca com o chatbot, maior o seu escore no MAI?* Pearson responde se os pontos tendem a subir numa linha reta, não se um causa o outro.
+
+{: .highlight }
+> **Por que usar o escore composto, e não um item isolado do MAI?** O MAI é respondido em itens de escala Likert, que são ordinais. Mas a soma (ou média) de muitos itens ordinais se aproxima de uma distribuição contínua, por isso é aceitável tratá-la como quase-contínua e usar Pearson nesse nível — diferente de correlacionar diretamente com um único item Likert.
 
 ---
 
@@ -74,13 +80,13 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 
 **Use Pearson quando:**
 
-- ✅ Ambas as variáveis são **contínuas** e numéricas (turnos, escores, tempo em segundos).
-- ✅ A relação esperada é **linear**; confira sempre com um scatter plot antes de calcular.
-- ✅ Cada variável segue aproximadamente distribuição normal (teste de Shapiro Wilk).
+- ✅ Ambas as variáveis são **contínuas** e numéricas (mensagens, escores compostos, tempo em segundos).
+- ✅ A relação esperada é **linear**: os pontos, ao serem plotados, tendem a formar uma reta (não uma curva). Confira sempre com um scatter plot antes de calcular.
+- ✅ Cada variável, isoladamente, deve seguir uma distribuição aproximadamente normal (teste de Shapiro Wilk): a maioria dos estudantes fica perto de um valor "médio", e cada vez menos estudantes aparecem conforme os valores se afastam dessa média.
 
 **Exemplos em logs educacionais (learning analytics):**
 
-- *Turnos por sessão × escore de compreensão:* sessões com mais interações tendem a ter escores maiores?
+- *Número de mensagens × escore composto no MAI:* estudantes que trocam mais mensagens com o chatbot têm maior consciência metacognitiva?
 - *Tempo ativo no chatbot × nota na avaliação:* quem permanece mais tempo na plataforma obtém notas mais altas?
 - *Número de mensagens × acertos em exercícios:* mais mensagens trocadas se associam a mais respostas certas?
 - *Latência média de resposta × tempo total de sessão:* respostas mais rápidas acompanham sessões mais longas?
@@ -88,10 +94,13 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 
 **Evite Pearson quando:**
 
-- ❌ Os dados são **ordinais** (escala Likert) → use [Spearman](../03spearman/spearman.html).
+- ❌ Os dados são **ordinais**, como um item isolado de escala Likert (1 a 5) → use [Spearman](../03spearman/spearman.html).
 - ❌ Há **outliers extremos**: um único ponto pode distorcer *r*.
 - ❌ A nuvem de pontos é claramente **curvilínea** → Pearson não captura bem o padrão.
 - ❌ Você quer afirmar **causalidade**: correlação só descreve associação.
+
+{: .highlight }
+> **Por que evitar Pearson com um item Likert isolado?** Os números de 1 a 5 indicam apenas ordem (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1. Na prática, para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser um salto de opinião muito maior do que sair de "concordo" (4) para "concordo totalmente" (5) — mas Pearson trataria os dois saltos como idênticos. Spearman compara apenas o *ranking* das respostas, por isso não sofre com esse problema.
 
 **Quando evitar em logs educacionais (learning analytics):**
 
@@ -115,24 +124,24 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 
 ## 📖 Como ler o resultado
 
-Suponha que o código abaixo retorne `r = 0.87, p = 0.0003` com *n* = 10 sessões:
+Suponha que o código abaixo retorne `r = 0.87, p = 0.0003` com *n* = 10 estudantes:
 
-- **r = 0,87** → relação linear **forte e positiva**: sessões com mais turnos tendem a ter escores maiores.
+- **r = 0,87** → relação linear **forte e positiva**: estudantes que trocam mais mensagens tendem a ter escore composto maior no MAI.
 - **p < .05** → rejeitamos H₀: a associação linear observada é improvável se não houvesse relação na população.
 - **Cohen** → \|0,87\| ≥ 0,50 → tamanho de efeito **grande** (embora com *n* pequeno a estimativa seja instável).
 
 {: .highlight }
-> **Correlação ≠ causalidade.** Mais turnos podem acompanhar maior compreensão, ou estudantes mais engajados simplesmente conversam mais *e* aprendem mais. Outras variáveis (motivação, dificuldade da tarefa) podem explicar ambos.
+> **Correlação ≠ causalidade.** Mais mensagens podem acompanhar maior consciência metacognitiva, ou estudantes mais metacognitivos simplesmente conversam mais *e* refletem mais sobre o próprio aprendizado. Outras variáveis (motivação, dificuldade da tarefa) podem explicar ambos.
 
 ---
 
 ## 🐍 Exemplo Python
 
-**Contexto:** verificar se o número de turnos por sessão se associa ao escore de compreensão.
+**Contexto:** verificar se o número de mensagens trocadas com o chatbot se associa ao escore composto no MAI.
 
 O código segue o passo a passo: primeiro o gráfico, depois o cálculo. Execute e compare o scatter plot com o valor de *r*.
 
-<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwppbXBvcnQgbWF0cGxvdGxpYi5weXBsb3QgYXMgcGx0CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAndHVybm9zJzogICAgICBbNCw3LDMsOSw1LDExLDYsOCwyLDEwXSwKICAgICdlc2NvcmVfY29tcCc6IFs1Miw3MSw0OCw4MCw2MCw4NSw2Niw3NSw0MCw4Ml0KfSkKCiMgUGFzc28gMTogc2VtcHJlIHZpc3VhbGl6ZSBhbnRlcwpkZi5wbG90LnNjYXR0ZXIoeD0ndHVybm9zJywgeT0nZXNjb3JlX2NvbXAnLCBjb2xvcj0nI2M3OTJlYScsCiAgICAgICAgICAgICAgIHRpdGxlPSdUdXJub3Mgw5cgRXNjb3JlIGRlIENvbXByZWVuc8OjbycpCnBsdC5zaG93KCkKCiMgUGFzc28gMjogY2FsY3VsYXIKciwgcCA9IHN0YXRzLnBlYXJzb25yKGRmWyd0dXJub3MnXSwgZGZbJ2VzY29yZV9jb21wJ10pCnByaW50KGYiciA9IHtyOi4zZn0sIHAgPSB7cDouNGZ9Iik=" markdown="0">
+<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwppbXBvcnQgbWF0cGxvdGxpYi5weXBsb3QgYXMgcGx0CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAnbWVuc2FnZW5zJzogWzQsNywzLDksNSwxMSw2LDgsMiwxMF0sCiAgICAnbWFpX3Njb3JlJzogWzUyLDcxLDQ4LDgwLDYwLDg1LDY2LDc1LDQwLDgyXQp9KQoKIyBQYXNzbyAxOiBzZW1wcmUgdmlzdWFsaXplIGFudGVzCmRmLnBsb3Quc2NhdHRlcih4PSdtZW5zYWdlbnMnLCB5PSdtYWlfc2NvcmUnLCBjb2xvcj0nI2M3OTJlYScsCiAgICAgICAgICAgICAgIHRpdGxlPSdNZW5zYWdlbnMgw5cgRXNjb3JlIGNvbXBvc3RvIG5vIE1BSScpCnBsdC5zaG93KCkKCiMgUGFzc28gMjogY2FsY3VsYXIKciwgcCA9IHN0YXRzLnBlYXJzb25yKGRmWydtZW5zYWdlbnMnXSwgZGZbJ21haV9zY29yZSddKQpwcmludChmInIgPSB7cjouM2Z9LCBwID0ge3A6LjRmfSIp" markdown="0">
   <div class="runner-toolbar">
     <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
     <button type="button" class="run-btn">▶ Executar</button>
