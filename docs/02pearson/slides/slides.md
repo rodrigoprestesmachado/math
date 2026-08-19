@@ -65,6 +65,60 @@ Em dados conversacionais: *quanto mais mensagens um estudante troca com o chatbo
 
 ---
 
+## 🧮 Fórmula
+
+<p class="small">Como os atletas da metáfora: cada um se afasta da própria média, e <em>r</em> mede se isso acontece junto.</p>
+
+<center>
+<table style="border-collapse:collapse; font-family: Georgia, 'Times New Roman', serif; font-size:1.3em; margin:8px auto;">
+<tr>
+<td rowspan="2" style="padding-right:12px; vertical-align:middle;"><em>r</em> =</td>
+<td style="text-align:center; padding:2px 12px; border-bottom:2px solid currentColor;">Σ (xᵢ − x̄)(yᵢ − ȳ)</td>
+</tr>
+<tr>
+<td style="text-align:center; padding:2px 12px;">√[ Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)² ]</td>
+</tr>
+</table>
+</center>
+
+<div class="destaque">
+<em>xᵢ, yᵢ</em>: valores de X e Y de cada estudante · <em>x̄, ȳ</em>: médias de X e de Y · Σ: soma para todos os estudantes · √: raiz quadrada.<br><br>
+O numerador soma o produto dos desvios (o quanto X e Y "andam juntos"); o denominador normaliza esse valor pela dispersão de cada variável — por isso <em>r</em> fica sempre entre −1 e +1.
+</div>
+
+--
+
+## 🪜 Passo a passo do cálculo
+
+<p class="small">Como chegar de X e Y até o valor de <em>r</em>:</p>
+
+1. Calcule as médias x̄ e ȳ.
+2. Para cada estudante, calcule os desvios (xᵢ−x̄) e (yᵢ−ȳ).
+3. Multiplique os dois desvios e some tudo → **numerador**.
+4. Some os desvios² de cada variável, multiplique os totais e tire a raiz → **denominador**.
+5. **r** = numerador / denominador.
+
+--
+
+## 🧩 Aplicação simples: r na mão
+
+<p class="small">Aplicando os passos acima a 5 estudantes fictícios · X = mensagens trocadas · Y = acertos em 10 exercícios</p>
+
+| Est. | xᵢ | yᵢ | xᵢ−x̄ | yᵢ−ȳ | produto |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| A | 2 | 3 | −4 | −2 | 8 |
+| B | 4 | 4 | −2 | −1 | 2 |
+| C | 6 | 6 | 0 | 1 | 0 |
+| D | 8 | 5 | 2 | 0 | 0 |
+| E | 10 | 7 | 4 | 2 | 8 |
+
+<div class="destaque">
+x̄ = 6 · ȳ = 5 · Σ produto = 18 · Σ(xᵢ−x̄)² = 40 · Σ(yᵢ−ȳ)² = 10<br><br>
+<em>r</em> = 18 / √(40 × 10) = 18 / 20 = <strong>0,90</strong> → correlação positiva forte: quem trocou mais mensagens tendeu a acertar mais exercícios.
+</div>
+
+---
+
 ## 📋 Quando usar
 
 - ✅ Ambas as variáveis são contínuas e numéricas.

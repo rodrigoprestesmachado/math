@@ -60,6 +60,56 @@ Em dados conversacionais, um exemplo típico cruza duas fontes por estudante: o 
 
 ---
 
+## 🧮 Fórmula
+
+O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das suas próprias médias — como os dois atletas da metáfora inicial, cada um correndo ao redor da própria média. Quando os dois se afastam **na mesma direção** (ambos acima da média, ou ambos abaixo), o numerador cresce e *r* fica positivo; quando se afastam em direções opostas, o numerador diminui e *r* fica negativo.
+
+<center>
+<table style="border-collapse:collapse; font-family: Georgia, 'Times New Roman', serif; font-size:1.3em; margin:8px auto;">
+<tr>
+<td rowspan="2" style="padding-right:12px; vertical-align:middle;"><em>r</em> =</td>
+<td style="text-align:center; padding:2px 12px; border-bottom:2px solid currentColor;">Σ (xᵢ − x̄)(yᵢ − ȳ)</td>
+</tr>
+<tr>
+<td style="text-align:center; padding:2px 12px;">√[ Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)² ]</td>
+</tr>
+</table>
+</center>
+
+{: .highlight }
+> **Lendo a fórmula:** *xᵢ* e *yᵢ* são os valores de X e Y de cada estudante; *x̄* e *ȳ* são as médias de X e de Y; Σ soma o resultado para todos os estudantes; √ é a raiz quadrada. O numerador soma o produto dos desvios de cada par — o quanto X e Y "andam juntos"; o denominador usa a dispersão de cada variável para normalizar esse valor, o que garante que *r* fique sempre entre −1 e +1.
+
+**Como *r* é calculado, passo a passo:**
+
+1. Calcule as médias, x̄ e ȳ.
+2. Para cada estudante, calcule os desvios: xᵢ − x̄ e yᵢ − ȳ.
+3. Multiplique os dois desvios de cada estudante e some todos os resultados → **numerador**.
+4. Eleve cada desvio ao quadrado, some cada coluna separadamente, multiplique os dois totais e tire a raiz quadrada → **denominador**.
+5. Divida o numerador pelo denominador → **r**.
+
+**Aplicação simples: aplicando os passos a 5 estudantes**
+
+Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número de **mensagens** trocadas com o chatbot (X) e o número de **acertos** em uma lista de 10 exercícios (Y):
+
+| Estudante | xᵢ (mensagens) | yᵢ (acertos) | xᵢ − x̄ | yᵢ − ȳ | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² | (yᵢ−ȳ)² |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| A | 2 | 3 | −4 | −2 | 8 | 16 | 4 |
+| B | 4 | 4 | −2 | −1 | 2 | 4 | 1 |
+| C | 6 | 6 | 0 | 1 | 0 | 0 | 1 |
+| D | 8 | 5 | 2 | 0 | 0 | 4 | 0 |
+| E | 10 | 7 | 4 | 2 | 8 | 16 | 4 |
+| **Soma** | x̄ = 6 | ȳ = 5 | 0 | 0 | **18** | **40** | **10** |
+
+1. **Médias** (passo 1): x̄ = (2+4+6+8+10) / 5 = 6 · ȳ = (3+4+6+5+7) / 5 = 5.
+2. **Numerador** (passos 2–3): soma da coluna (xᵢ−x̄)(yᵢ−ȳ) = 8+2+0+0+8 = **18**.
+3. **Denominador** (passo 4): √(40 × 10) = √400 = **20**.
+4. **Resultado** (passo 5): r = 18 / 20 = **0,90**.
+
+{: .highlight }
+> **Interpretação:** *r* = 0,90 é uma correlação positiva **forte** (Cohen: \|r\| ≥ 0,50 → efeito grande). Nesses 5 estudantes fictícios, quem trocou mais mensagens com o chatbot tendeu claramente a acertar mais exercícios. No exemplo Python mais abaixo, `scipy.stats.pearsonr` faz exatamente essa conta — só que para os 10 estudantes do conjunto de dados completo.
+
+---
+
 ## 🔢 O que significa r?
 
 | Valor de *r* | Direção | Interpretação intuitiva |
