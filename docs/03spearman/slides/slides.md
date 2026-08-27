@@ -109,13 +109,34 @@ Quanto mais parecidos os dois rankings, menores as diferenças <em>dᵢ</em>, e 
 
 ## 🐍 Exemplo Python: Spearman
 
-<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZAppbXBvcnQgbnVtcHkgYXMgbnAKZnJvbSBzY2lweSBpbXBvcnQgc3RhdHMKaW1wb3J0IG1hdHBsb3RsaWIucHlwbG90IGFzIHBsdAoKZGYgPSBwZC5EYXRhRnJhbWUoewogICAgJ3NhdGlzZmFjYW8nOiBbMiwgNCwgMSwgNSwgMywgNSwgNCwgMiwgMywgNV0sCiAgICAnc2Vzc29lcyc6ICAgIFszLCA4LCAxLCAxMiwgNSwgMTEsIDksIDIsIDQsIDEzXQp9KQoKIyBQYXNzbyAxOiBjb252ZXJ0ZXIgZW0gcG9zdG9zIGUgdmlzdWFsaXphcgpkZlsncG9zdG9fc2F0J10gPSBkZlsnc2F0aXNmYWNhbyddLnJhbmsoKQpkZlsncG9zdG9fc2VzJ10gPSBkZlsnc2Vzc29lcyddLnJhbmsoKQpkZi5wbG90LnNjYXR0ZXIoeD0ncG9zdG9fc2F0JywgeT0ncG9zdG9fc2VzJywgY29sb3I9JyNjNzkyZWEnLAogICAgICAgICAgICAgICAgdGl0bGU9J1Bvc3Rvczogc2F0aXNmYWNhbyB4IHNlc3NvZXMnKQpwbHQueGxhYmVsKCdQb3N0byBkYSBzYXRpc2ZhY2FvJykKcGx0LnlsYWJlbCgnUG9zdG8gZGFzIHNlc3NvZXMnKQpwbHQuc2hvdygpCgojIFBhc3NvIDI6IGNhbGN1bGFyIHJobyBkZSBTcGVhcm1hbgpyaG8sIHAgPSBzdGF0cy5zcGVhcm1hbnIoZGZbJ3NhdGlzZmFjYW8nXSwgZGZbJ3Nlc3NvZXMnXSkKcHJpbnQoZiJTcGVhcm1hbiByaG8gPSB7cmhvOi4zZn0sIHAgPSB7cDouNGZ9IikKCiMgSW50ZXJ2YWxvIGRlIGNvbmZpYW5jYSBkZSA5NSUgcGFyYSByaG8gdmlhIHRyYW5zZm9ybWFjYW8gZGUgRmlzaGVyCm4gPSBsZW4oZGYpCnogPSBucC5hcmN0YW5oKHJobykKc2UgPSAxLjAgLyBucC5zcXJ0KG4gLSAzKQpjaV9sbywgY2lfaGkgPSBucC50YW5oKHogLSAxLjk2KnNlKSwgbnAudGFuaCh6ICsgMS45NipzZSkKcHJpbnQoZiJuID0ge259LCBJQyA5NSUgPSBbe2NpX2xvOi4yZn0sIHtjaV9oaTouMmZ9XSIpCg==" markdown="0">
-  <div class="runner-toolbar">
-    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
-    <button type="button" class="run-btn">▶ Executar</button>
-  </div>
-  <textarea class="code-input" spellcheck="false"></textarea>
-  <pre class="code-output"></pre>
+```python
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+df = pd.DataFrame({
+    'satisfacao': [2, 4, 1, 5, 3, 5, 4, 2, 3, 5],
+    'sessoes':    [3, 8, 1, 12, 5, 11, 9, 2, 4, 13]
+})
+
+# Passo 1: converter em postos
+df['posto_sat'] = df['satisfacao'].rank()
+df['posto_ses'] = df['sessoes'].rank()
+
+# Passo 2: calcular rho de Spearman
+rho, p = stats.spearmanr(df['satisfacao'], df['sessoes'])
+print(f"Spearman rho = {rho:.3f}, p = {p:.4f}")
+
+# Intervalo de confianca de 95% via transformacao de Fisher
+n = len(df)
+z = np.arctanh(rho)
+se = 1.0 / np.sqrt(n - 3)
+ci_lo, ci_hi = np.tanh(z - 1.96*se), np.tanh(z + 1.96*se)
+print(f"n = {n}, IC 95% = [{ci_lo:.2f}, {ci_hi:.2f}]")
+```
+
+<div class="destaque">
+Código <strong>executável</strong> na página do encontro, clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
@@ -196,13 +217,26 @@ Prefira Kendall com amostras pequenas (n &lt; 30) ou muitos empates: sua interpr
 
 ## 🐍 Exemplo Python: Kendall
 
-<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwoKZGYgPSBwZC5EYXRhRnJhbWUoewogICAgJ3NhdGlzZmFjYW8nOiBbMiwgNCwgMSwgNSwgMywgNSwgNCwgMiwgMywgNV0sCiAgICAnc2Vzc29lcyc6ICAgIFszLCA4LCAxLCAxMiwgNSwgMTEsIDksIDIsIDQsIDEzXQp9KQoKIyBLZW5kYWxsIHRhdTogcHJvcG9yY2FvIGRlIHBhcmVzIGNvbmNvcmRhbnRlcyBtZW5vcyBkaXNjb3JkYW50ZXMKdGF1LCBwID0gc3RhdHMua2VuZGFsbHRhdShkZlsnc2F0aXNmYWNhbyddLCBkZlsnc2Vzc29lcyddKQpwcmludChmIktlbmRhbGwgdGF1ID0ge3RhdTouM2Z9LCBwID0ge3A6LjRmfSIpCgpuID0gbGVuKGRmKQpwYXJlcyA9IG4gKiAobiAtIDEpIC8vIDIKcHJpbnQoZiJuID0ge259IGVzdHVkYW50ZXMsIHtwYXJlc30gcGFyZXMgcG9zc2l2ZWlzIikK" markdown="0">
-  <div class="runner-toolbar">
-    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
-    <button type="button" class="run-btn">▶ Executar</button>
-  </div>
-  <textarea class="code-input" spellcheck="false"></textarea>
-  <pre class="code-output"></pre>
+```python
+import pandas as pd
+from scipy import stats
+
+df = pd.DataFrame({
+    'satisfacao': [2, 4, 1, 5, 3, 5, 4, 2, 3, 5],
+    'sessoes':    [3, 8, 1, 12, 5, 11, 9, 2, 4, 13]
+})
+
+# Kendall tau: proporcao de pares concordantes menos discordantes
+tau, p = stats.kendalltau(df['satisfacao'], df['sessoes'])
+print(f"Kendall tau = {tau:.3f}, p = {p:.4f}")
+
+n = len(df)
+pares = n * (n - 1) // 2
+print(f"n = {n} estudantes, {pares} pares possiveis")
+```
+
+<div class="destaque">
+Código <strong>executável</strong> na página do encontro, clique em <strong>▶ Executar</strong>.
 </div>
 
 ---

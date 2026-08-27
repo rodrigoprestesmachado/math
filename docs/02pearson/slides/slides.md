@@ -187,13 +187,25 @@ Aproximadamente 68% dos dados ficam a até 1 desvio padrão da média, 95% a at�
 
 ## 🐍 Exemplo Python: Shapiro-Wilk
 
-<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwoKZGYgPSBwZC5EYXRhRnJhbWUoewogICAgJ21lbnNhZ2Vucyc6IFs0LCA3LCAzLCA5LCA1LCAxMSwgNiwgOCwgMiwgMTBdLAogICAgJ21haV9zY29yZSc6IFs1MiwgNzEsIDQ4LCA4MCwgNjAsIDg1LCA2NiwgNzUsIDQwLCA4Ml0KfSkKCiMgSDA6IG9zIGRhZG9zIHNlZ3VlbSBkaXN0cmlidWljYW8gbm9ybWFsCnN0YXRfbSwgcF9tID0gc3RhdHMuc2hhcGlybyhkZlsnbWVuc2FnZW5zJ10pCnByaW50KGYiTWVuc2FnZW5zOiBXID0ge3N0YXRfbTouM2Z9LCBwID0ge3BfbTouNGZ9IikKCnN0YXRfeSwgcF95ID0gc3RhdHMuc2hhcGlybyhkZlsnbWFpX3Njb3JlJ10pCnByaW50KGYiRXNjb3JlIE1BSTogVyA9IHtzdGF0X3k6LjNmfSwgcCA9IHtwX3k6LjRmfSIpCg==" markdown="0">
-  <div class="runner-toolbar">
-    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
-    <button type="button" class="run-btn">▶ Executar</button>
-  </div>
-  <textarea class="code-input" spellcheck="false"></textarea>
-  <pre class="code-output"></pre>
+```python
+import pandas as pd
+from scipy import stats
+
+df = pd.DataFrame({
+    'mensagens': [4, 7, 3, 9, 5, 11, 6, 8, 2, 10],
+    'mai_score': [52, 71, 48, 80, 60, 85, 66, 75, 40, 82]
+})
+
+# H0: os dados seguem distribuicao normal
+stat_m, p_m = stats.shapiro(df['mensagens'])
+print(f"Mensagens: W = {stat_m:.3f}, p = {p_m:.4f}")
+
+stat_y, p_y = stats.shapiro(df['mai_score'])
+print(f"Escore MAI: W = {stat_y:.3f}, p = {p_y:.4f}")
+```
+
+<div class="destaque">
+Código <strong>executável</strong> na página do encontro, clique em <strong>▶ Executar</strong>.
 </div>
 
 --
@@ -231,13 +243,28 @@ O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser u
 
 ## 🐍 Exemplo Python: Pearson
 
-<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwppbXBvcnQgbWF0cGxvdGxpYi5weXBsb3QgYXMgcGx0CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAnbWVuc2FnZW5zJzogWzQsNywzLDksNSwxMSw2LDgsMiwxMF0sCiAgICAnbWFpX3Njb3JlJzogWzUyLDcxLDQ4LDgwLDYwLDg1LDY2LDc1LDQwLDgyXQp9KQoKIyBQYXNzbyAxOiBzZW1wcmUgdmlzdWFsaXplIGFudGVzCmRmLnBsb3Quc2NhdHRlcih4PSdtZW5zYWdlbnMnLCB5PSdtYWlfc2NvcmUnLCBjb2xvcj0nI2M3OTJlYScsCiAgICAgICAgICAgICAgIHRpdGxlPSdNZW5zYWdlbnMgw5cgRXNjb3JlIGNvbXBvc3RvIG5vIE1BSScpCnBsdC5zaG93KCkKCiMgUGFzc28gMjogY2FsY3VsYXIKciwgcCA9IHN0YXRzLnBlYXJzb25yKGRmWydtZW5zYWdlbnMnXSwgZGZbJ21haV9zY29yZSddKQpwcmludChmInIgPSB7cjouM2Z9LCBwID0ge3A6LjRmfSIp" markdown="0">
-  <div class="runner-toolbar">
-    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
-    <button type="button" class="run-btn">▶ Executar</button>
-  </div>
-  <textarea class="code-input" spellcheck="false"></textarea>
-  <pre class="code-output"></pre>
+```python
+import pandas as pd
+from scipy import stats
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    'mensagens': [4, 7, 3, 9, 5, 11, 6, 8, 2, 10],
+    'mai_score': [52, 71, 48, 80, 60, 85, 66, 75, 40, 82]
+})
+
+# Passo 1: sempre visualize antes
+df.plot.scatter(x='mensagens', y='mai_score', color='#c792ea',
+                 title='Mensagens x Escore composto no MAI')
+plt.show()
+
+# Passo 2: calcular
+r, p = stats.pearsonr(df['mensagens'], df['mai_score'])
+print(f"r = {r:.3f}, p = {p:.4f}")
+```
+
+<div class="destaque">
+Código <strong>executável</strong> na página do encontro, clique em <strong>▶ Executar</strong>.
 </div>
 
 ---
