@@ -30,7 +30,7 @@ Relação linear entre variáveis contínuas · coeficiente *r*
 > Pearson quantifica essa sincronia, mas *só enquanto a pista for reta*.
 
 {: .highlight }
-> **E se a pista não for reta?** Imagine que os dois atletas correm num trecho plano, lado a lado, em perfeita sincronia — de repente, a pista encontra uma colina. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz. O padrão muda de comportamento ao longo do percurso (uma reta, depois uma subida): não existe uma única reta que descreva bem todo o trajeto. Dependendo do tamanho da subida em relação ao trecho plano, *r* pode cair bastante, chegando perto de 0 mesmo havendo um padrão bem claro no gráfico.
+> **E se a pista não for reta?** Imagine que os dois atletas correm num trecho plano, lado a lado, em perfeita sincronia. De repente, a pista encontra uma colina. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz. O padrão muda de comportamento ao longo do percurso (uma reta, depois uma subida): não existe uma única reta que descreva bem todo o trajeto. Dependendo do tamanho da subida em relação ao trecho plano, *r* pode cair bastante, chegando perto de 0 mesmo havendo um padrão bem claro no gráfico.
 
 ---
 
@@ -53,16 +53,16 @@ Em termos de hipótese:
 | **H₀** | Não há relação linear entre as variáveis (r = 0 na população). |
 | **H₁** | Existe relação linear (r ≠ 0). |
 
-Em dados conversacionais, um exemplo típico cruza duas fontes por estudante: o número de **mensagens trocadas** no chat, extraído dos logs de um chatbot baseado em LLM, e o **escore composto numa escala de metacognição** (ex.: Metacognitive Awareness Inventory — MAI), aplicada separadamente como questionário. A pergunta é: *quanto mais mensagens um estudante troca com o chatbot, maior o seu escore no MAI?* Pearson responde se os pontos tendem a subir numa linha reta, não se um causa o outro.
+Em dados conversacionais, um exemplo típico cruza duas fontes por estudante: o número de **mensagens trocadas** no chat, extraído dos logs de um chatbot baseado em LLM, e o **escore composto numa escala de metacognição** (ex.: Metacognitive Awareness Inventory, ou MAI), aplicada separadamente como questionário. A pergunta é: *quanto mais mensagens um estudante troca com o chatbot, maior o seu escore no MAI?* Pearson responde se os pontos tendem a subir numa linha reta, não se um causa o outro.
 
 {: .highlight }
-> **Por que usar o escore composto, e não um item isolado do MAI?** O MAI é respondido em itens de escala Likert, que são ordinais. Mas a soma (ou média) de muitos itens ordinais se aproxima de uma distribuição contínua, por isso é aceitável tratá-la como quase-contínua e usar Pearson nesse nível — diferente de correlacionar diretamente com um único item Likert.
+> **Por que usar o escore composto, e não um item isolado do MAI?** O MAI é respondido em itens de escala Likert, que são ordinais. Mas a soma (ou média) de muitos itens ordinais se aproxima de uma distribuição contínua, por isso é aceitável tratá-la como quase-contínua e usar Pearson nesse nível, diferente de correlacionar diretamente com um único item Likert.
 
 ---
 
 ## 🧮 Fórmula
 
-O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das suas próprias médias — como os dois atletas da metáfora inicial, cada um correndo ao redor da própria média. Quando os dois se afastam **na mesma direção** (ambos acima da média, ou ambos abaixo), o numerador cresce e *r* fica positivo; quando se afastam em direções opostas, o numerador diminui e *r* fica negativo.
+O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das suas próprias médias, como os dois atletas da metáfora inicial, cada um correndo ao redor da própria média. Quando os dois se afastam **na mesma direção** (ambos acima da média, ou ambos abaixo), o numerador cresce e *r* fica positivo; quando se afastam em direções opostas, o numerador diminui e *r* fica negativo.
 
 <center>
 <table style="border-collapse:collapse; font-family: Georgia, 'Times New Roman', serif; font-size:1.3em; margin:8px auto;">
@@ -77,7 +77,7 @@ O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das s
 </center>
 
 {: .highlight }
-> **Lendo a fórmula:** *xᵢ* e *yᵢ* são os valores de X e Y de cada estudante; *x̄* e *ȳ* são as médias de X e de Y; Σ soma o resultado para todos os estudantes; √ é a raiz quadrada. O numerador soma o produto dos desvios de cada par — o quanto X e Y "andam juntos"; o denominador usa a dispersão de cada variável para normalizar esse valor, o que garante que *r* fique sempre entre −1 e +1.
+> **Lendo a fórmula:** *xᵢ* e *yᵢ* são os valores de X e Y de cada estudante; *x̄* e *ȳ* são as médias de X e de Y; Σ soma o resultado para todos os estudantes; √ é a raiz quadrada. O numerador soma o produto dos desvios de cada par, o quanto X e Y "andam juntos"; o denominador usa a dispersão de cada variável para normalizar esse valor, o que garante que *r* fique sempre entre −1 e +1.
 
 **Como *r* é calculado, passo a passo:**
 
@@ -89,7 +89,7 @@ O *r* de Pearson compara, estudante a estudante, o quanto X e Y se afastam das s
 
 **Aplicação simples: aplicando os passos a 5 estudantes**
 
-Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número de **mensagens** trocadas com o chatbot (X) e o **escore composto no MAI** (Y) — o mesmo par de variáveis usado no exemplo Python mais abaixo:
+Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número de **mensagens** trocadas com o chatbot (X) e o **escore composto no MAI** (Y), o mesmo par de variáveis usado no exemplo Python mais abaixo:
 
 | Estudante | xᵢ (mensagens) | yᵢ (escore no MAI) | xᵢ − x̄ | yᵢ − ȳ | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² | (yᵢ−ȳ)² |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -106,7 +106,7 @@ Para ver os passos acima em ação, seguem 5 estudantes fictícios com o número
 4. **Resultado** (passo 5): r = 180 / 200 = **0,90**.
 
 {: .highlight }
-> **Interpretação:** *r* = 0,90 é uma correlação positiva **forte** (Cohen: \|r\| ≥ 0,50 → efeito grande). Nesses 5 estudantes fictícios, quem trocou mais mensagens com o chatbot tendeu claramente a ter maior escore no MAI. No exemplo Python mais abaixo, `scipy.stats.pearsonr` faz exatamente essa conta — só que para os 10 estudantes do conjunto de dados completo.
+> **Interpretação:** *r* = 0,90 é uma correlação positiva **forte** (Cohen: \|r\| ≥ 0,50 → efeito grande). Nesses 5 estudantes fictícios, quem trocou mais mensagens com o chatbot tendeu claramente a ter maior escore no MAI. No exemplo Python mais abaixo, `scipy.stats.pearsonr` faz exatamente essa conta, só que para os 10 estudantes do conjunto de dados completo.
 
 ---
 
@@ -132,7 +132,12 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 
 - ✅ Ambas as variáveis são **contínuas** e numéricas (mensagens, escores compostos, tempo em segundos).
 - ✅ A relação esperada é **linear**: os pontos, ao serem plotados, tendem a formar uma reta (não uma curva). Confira sempre com um scatter plot antes de calcular.
-- ✅ Cada variável, isoladamente, deve seguir uma distribuição aproximadamente normal (teste de Shapiro Wilk): a maioria dos estudantes fica perto de um valor "médio", e cada vez menos estudantes aparecem conforme os valores se afastam dessa média.
+- ✅ Cada variável, isoladamente, deve seguir uma distribuição aproximadamente normal (teste de Shapiro-Wilk, explicado em detalhe mais abaixo): a maioria dos estudantes fica perto de um valor "médio", e cada vez menos estudantes aparecem conforme os valores se afastam dessa média.
+
+{: .highlight }
+> **O que é uma distribuição normal?** É o formato de sino da curva abaixo: simétrica em torno da média, com a maior concentração de estudantes perto do centro e cada vez menos estudantes conforme os valores se afastam da média, para os dois lados. Aproximadamente 68% dos dados ficam a até 1 desvio padrão da média, 95% a até 2 desvios padrão, e 99,7% a até 3 desvios padrão.
+>
+> <center><img src="../imgs/curva-gauss.png" alt="Curva de Gauss: distribuição normal em forma de sino, com marcações de 1, 2 e 3 desvios padrão em torno da média" width="80%"></center>
 
 **Exemplos em logs educacionais (learning analytics):**
 
@@ -150,7 +155,7 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 - ❌ Você quer afirmar **causalidade**: correlação só descreve associação.
 
 {: .highlight }
-> **Por que evitar Pearson com um item Likert isolado?** Os números de 1 a 5 indicam apenas ordem (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1. Na prática, para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser um salto de opinião muito maior do que sair de "concordo" (4) para "concordo totalmente" (5) — mas Pearson trataria os dois saltos como idênticos. Spearman compara apenas o *ranking* das respostas, por isso não sofre com esse problema.
+> **Por que evitar Pearson com um item Likert isolado?** Os números de 1 a 5 indicam apenas ordem (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1. Na prática, para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser um salto de opinião muito maior do que sair de "concordo" (4) para "concordo totalmente" (5), mas Pearson trataria os dois saltos como idênticos. Spearman compara apenas o *ranking* das respostas, por isso não sofre com esse problema.
 
 **Quando evitar em logs educacionais (learning analytics):**
 
@@ -159,6 +164,44 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 - *Um único estudante com centenas de mensagens × tempo de sessão:* outlier extremo pode inflar ou distorcer *r*.
 - *Uso do chatbot × nota final para inferir causalidade:* mais tempo na plataforma não prova que o chatbot produziu o aprendizado.
 - *Tempo de sessão com distribuição fortemente assimétrica (cauda longa):* normalidade comprometida → considere Spearman ou transformação dos dados.
+
+---
+
+## 🔔 Teste de Shapiro-Wilk
+
+O teste de Shapiro-Wilk verifica, de forma estatística, se uma amostra é compatível com uma distribuição normal, o formato de sino apresentado na seção anterior. É o teste de normalidade mais usado antes de aplicar Pearson.
+
+Em termos de hipótese:
+
+| | |
+|:--|:--|
+| **H₀** | Os dados vêm de uma população com distribuição normal. |
+| **H₁** | Os dados não vêm de uma população com distribuição normal. |
+
+**Como interpretar o resultado**, dado por uma estatística *W* e um valor *p*:
+
+- **p ≥ .05** → não rejeitamos H₀: os dados são compatíveis com a normalidade, Pearson pode ser aplicado.
+- **p < .05** → rejeitamos H₀: há evidência de que os dados não seguem distribuição normal, considere usar [Spearman](../03spearman/spearman.html) no lugar de Pearson.
+
+{: .highlight }
+> **Cuidado com amostras muito grandes.** Com muitos estudantes (centenas ou milhares), o teste de Shapiro-Wilk se torna extremamente sensível e pode rejeitar H₀ mesmo diante de desvios pequenos e pouco relevantes na prática. Por isso, nunca decida apenas pelo valor de *p*: observe também um histograma ou um gráfico QQ-plot dos dados antes de descartar Pearson.
+
+---
+
+## 🐍 Exemplo Python: Shapiro-Wilk
+
+**Contexto:** antes de calcular Pearson entre número de mensagens e escore no MAI, verificar se cada variável, isoladamente, é compatível com a distribuição normal.
+
+<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwoKZGYgPSBwZC5EYXRhRnJhbWUoewogICAgJ21lbnNhZ2Vucyc6IFs0LCA3LCAzLCA5LCA1LCAxMSwgNiwgOCwgMiwgMTBdLAogICAgJ21haV9zY29yZSc6IFs1MiwgNzEsIDQ4LCA4MCwgNjAsIDg1LCA2NiwgNzUsIDQwLCA4Ml0KfSkKCiMgSDA6IG9zIGRhZG9zIHNlZ3VlbSBkaXN0cmlidWljYW8gbm9ybWFsCnN0YXRfbSwgcF9tID0gc3RhdHMuc2hhcGlybyhkZlsnbWVuc2FnZW5zJ10pCnByaW50KGYiTWVuc2FnZW5zOiBXID0ge3N0YXRfbTouM2Z9LCBwID0ge3BfbTouNGZ9IikKCnN0YXRfeSwgcF95ID0gc3RhdHMuc2hhcGlybyhkZlsnbWFpX3Njb3JlJ10pCnByaW50KGYiRXNjb3JlIE1BSTogVyA9IHtzdGF0X3k6LjNmfSwgcCA9IHtwX3k6LjRmfSIpCg==" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável no navegador via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false"></textarea>
+  <pre class="code-output"></pre>
+</div>
+
+Com *n* = 10 estudantes, é comum que o teste de Shapiro-Wilk não rejeite H₀ (p ≥ .05) para as duas variáveis: nesse caso, o pressuposto de normalidade está atendido, e Pearson é uma escolha adequada.
 
 ---
 
@@ -185,7 +228,7 @@ Suponha que o código abaixo retorne `r = 0.87, p = 0.0003` com *n* = 10 estudan
 
 ---
 
-## 🐍 Exemplo Python
+## 🐍 Exemplo Python: Pearson
 
 **Contexto:** verificar se o número de mensagens trocadas com o chatbot se associa ao escore composto no MAI.
 
@@ -210,6 +253,7 @@ O código segue o passo a passo: primeiro o gráfico, depois o cálculo. Execute
 | **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8. |
 | **python** | McKinney, W. (2022). *Python for Data Analysis* (3ª ed.). O'Reilly. Cap. 13. |
 | **artigo** | Mukaka, M. M. (2012). A guide to appropriate use of correlation coefficient in medical research. *Malawi Medical Journal, 24*(3), 69 a 71. |
+| **normalidade** | Shapiro, S. S., & Wilk, M. B. (1965). An analysis of variance test for normality (complete samples). *Biometrika, 52*(3/4), 591 a 611. |
 | **web (PT)** | [Peixoto, *Introdução à Ciência de Dados*: Correlação](https://gcpeixoto.github.io/ICD/ipynb/12-correlacao.html). Scatter plots, interpretação de *r*, Pearson vs relações não lineares, `pearsonr()`. |
 | **web (PT)** | [Matos, *Estatística + R*: Correlação entre variáveis](https://ana-mat-br.github.io/correla%C3%A7%C3%A3o-entre-vari%C3%A1veis.html). Gráficos de dispersão, matriz de correlação, quando usar Pearson e Spearman. |
 | **web (EN)** | [OpenStax, *Introductory Statistics 2e*: cap. 12.2 e 12.3](https://openstax.org/books/introductory-statistics-2e/pages/12-2-scatter-plots). Scatter plots e coeficiente de correlação, gratuito, com exemplos educacionais. |

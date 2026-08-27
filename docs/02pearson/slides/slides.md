@@ -4,7 +4,7 @@
 
 ## Correlação de Pearson
 
-🔗 Bloco 1 — Associação
+🔗 Bloco 1: Associação
 
 <p class="small">scipy.stats.pearsonr · pandas DataFrame.corr(method='pearson')</p>
 
@@ -34,7 +34,7 @@
 
 <div class="destaque">
 
-- Imagine agora que os dois atletas correm num trecho <strong>plano</strong>, lado a lado, em perfeita sincronia — A pista encontra uma <strong>colina</strong>. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz.
+- Imagine agora que os dois atletas correm num trecho <strong>plano</strong>, lado a lado, em perfeita sincronia. A pista encontra uma <strong>colina</strong>. Na subida, um deles tem mais força e mantém o ritmo; o outro cansa e desacelera, e a sincronia que existia no plano se desfaz.
 - Resultado: o padrão muda de comportamento ao longo do percurso (uma reta, depois uma subida), ou seja, não existe uma única reta que descreva bem todo o trajeto. Dependendo do tamanho da subida em relação ao trecho plano, <em>r</em> pode cair bastante, chegando perto de 0 mesmo havendo um padrão bem claro no gráfico.
 
 </div>
@@ -83,7 +83,7 @@ Em dados conversacionais: *quanto mais mensagens um estudante troca com o chatbo
 
 <div class="destaque">
 <em>xᵢ, yᵢ</em>: valores de X e Y de cada estudante · <em>x̄, ȳ</em>: médias de X e de Y · Σ: soma para todos os estudantes · √: raiz quadrada.<br><br>
-O numerador soma o produto dos desvios (o quanto X e Y "andam juntos"); o denominador normaliza esse valor pela dispersão de cada variável — por isso <em>r</em> fica sempre entre −1 e +1.
+O numerador soma o produto dos desvios (o quanto X e Y "andam juntos"); o denominador normaliza esse valor pela dispersão de cada variável, por isso <em>r</em> fica sempre entre −1 e +1.
 </div>
 
 --
@@ -128,6 +128,47 @@ x̄ = 6 · ȳ = 60 · Σ produto = 180 · Σ(xᵢ−x̄)² = 40 · Σ(yᵢ−ȳ)
 
 --
 
+## 🔔 O que é uma distribuição normal?
+
+<p class="small">A curva de Gauss: simétrica, centrada na média, com caudas decrescentes.</p>
+
+<center><img src="../../imgs/curva-gauss.png" alt="Curva de Gauss: distribuição normal em forma de sino, com marcações de 1, 2 e 3 desvios padrão em torno da média" width="60%"></center>
+
+<div class="destaque">
+Aproximadamente 68% dos dados ficam a até 1 desvio padrão da média, 95% a até 2 desvios padrão, e 99,7% a até 3 desvios padrão.
+</div>
+
+--
+
+## 🔔 Teste de Shapiro-Wilk
+
+<p class="small">O teste de normalidade mais usado antes de aplicar Pearson.</p>
+
+<div class="destaque">
+<strong>H₀:</strong> os dados vêm de uma população com distribuição normal.<br>
+<strong>H₁:</strong> os dados não vêm de uma população com distribuição normal.
+</div>
+
+- **p ≥ .05** → não rejeitamos H₀: dados compatíveis com normalidade, Pearson pode ser aplicado.
+- **p &lt; .05** → rejeitamos H₀: evidência de não normalidade, considere Spearman.
+
+<p class="small">Cuidado: em amostras muito grandes, o teste pode rejeitar H₀ por desvios triviais. Sempre olhe também um histograma ou QQ-plot.</p>
+
+--
+
+## 🐍 Exemplo Python: Shapiro-Wilk
+
+<div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwoKZGYgPSBwZC5EYXRhRnJhbWUoewogICAgJ21lbnNhZ2Vucyc6IFs0LCA3LCAzLCA5LCA1LCAxMSwgNiwgOCwgMiwgMTBdLAogICAgJ21haV9zY29yZSc6IFs1MiwgNzEsIDQ4LCA4MCwgNjAsIDg1LCA2NiwgNzUsIDQwLCA4Ml0KfSkKCiMgSDA6IG9zIGRhZG9zIHNlZ3VlbSBkaXN0cmlidWljYW8gbm9ybWFsCnN0YXRfbSwgcF9tID0gc3RhdHMuc2hhcGlybyhkZlsnbWVuc2FnZW5zJ10pCnByaW50KGYiTWVuc2FnZW5zOiBXID0ge3N0YXRfbTouM2Z9LCBwID0ge3BfbTouNGZ9IikKCnN0YXRfeSwgcF95ID0gc3RhdHMuc2hhcGlybyhkZlsnbWFpX3Njb3JlJ10pCnByaW50KGYiRXNjb3JlIE1BSTogVyA9IHtzdGF0X3k6LjNmfSwgcCA9IHtwX3k6LjRmfSIpCg==" markdown="0">
+  <div class="runner-toolbar">
+    <span class="runner-label">🐍 Python executável via <a href="https://pyodide.org" target="_blank">Pyodide</a></span>
+    <button type="button" class="run-btn">▶ Executar</button>
+  </div>
+  <textarea class="code-input" spellcheck="false"></textarea>
+  <pre class="code-output"></pre>
+</div>
+
+--
+
 <div class="destaque">
 Os números de 1 a 5 indicam apenas <strong>ordem</strong> (5 é mais concordância que 4), não uma régua com espaçamento igual entre eles. Pearson, porém, calcula a distância matemática entre os números como se 5 − 4 valesse exatamente o mesmo que 2 − 1.<br><br>
 O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser um salto de opinião muito maior do que sair de "concordo" (4) para "concordo totalmente" (5), mas, Pearson trataria os dois saltos como idênticos (ambos valem 1). Nesse caso, podemos usar <strong>Spearman</strong>, que veremos nas próximas seções.
@@ -137,7 +178,7 @@ O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser u
 
 
 
-## 🐍 Exemplo Python
+## 🐍 Exemplo Python: Pearson
 
 <div class="python-runner" data-code="aW1wb3J0IHBhbmRhcyBhcyBwZApmcm9tIHNjaXB5IGltcG9ydCBzdGF0cwppbXBvcnQgbWF0cGxvdGxpYi5weXBsb3QgYXMgcGx0CgpkZiA9IHBkLkRhdGFGcmFtZSh7CiAgICAnbWVuc2FnZW5zJzogWzQsNywzLDksNSwxMSw2LDgsMiwxMF0sCiAgICAnbWFpX3Njb3JlJzogWzUyLDcxLDQ4LDgwLDYwLDg1LDY2LDc1LDQwLDgyXQp9KQoKIyBQYXNzbyAxOiBzZW1wcmUgdmlzdWFsaXplIGFudGVzCmRmLnBsb3Quc2NhdHRlcih4PSdtZW5zYWdlbnMnLCB5PSdtYWlfc2NvcmUnLCBjb2xvcj0nI2M3OTJlYScsCiAgICAgICAgICAgICAgIHRpdGxlPSdNZW5zYWdlbnMgw5cgRXNjb3JlIGNvbXBvc3RvIG5vIE1BSScpCnBsdC5zaG93KCkKCiMgUGFzc28gMjogY2FsY3VsYXIKciwgcCA9IHN0YXRzLnBlYXJzb25yKGRmWydtZW5zYWdlbnMnXSwgZGZbJ21haV9zY29yZSddKQpwcmludChmInIgPSB7cjouM2Z9LCBwID0ge3A6LjRmfSIp" markdown="0">
   <div class="runner-toolbar">
@@ -155,6 +196,7 @@ O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser u
 - **clássico:** Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Lawrence Erlbaum.
 - **didático:** Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8.
 - **python:** McKinney, W. (2022). *Python for Data Analysis* (3ª ed.). O'Reilly. Cap. 13.
+- **normalidade:** Shapiro, S. S., & Wilk, M. B. (1965). An analysis of variance test for normality (complete samples). *Biometrika, 52*(3/4), 591 a 611.
 
 ---
 
