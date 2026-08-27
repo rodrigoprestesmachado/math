@@ -36,6 +36,8 @@ Alternativas **não paramétricas** a Pearson: não exigem normalidade nem rela�
 Exemplo: *a satisfação do estudante com o chatbot (escala 1 a 5) está associada à quantidade de sessões voluntárias?*
 
 <div class="destaque">
+<strong>Escala de satisfação:</strong> item único adaptado da EUCS (Doll &amp; Torkzadeh, 1988), ex.: "No geral, estou satisfeito(a) com o chatbot" (1 = discordo totalmente, 5 = concordo totalmente).<br><br>
+<strong>Sessão voluntária:</strong> sessão iniciada por decisão própria do estudante, sem exigência da disciplina.<br><br>
 <strong>H₀:</strong> não há relação monotônica (ρ = 0) · <strong>H₁:</strong> existe relação monotônica (ρ ≠ 0).
 </div>
 
@@ -209,6 +211,7 @@ Prefira Kendall com amostras pequenas (n &lt; 30) ou muitos empates: sua interpr
 
 - **seminal (Spearman):** Spearman, C. (1904). The proof and measurement of association between two things. *American Journal of Psychology, 15*(1), 72 a 101.
 - **seminal (Kendall):** Kendall, M. G. (1938). A new measure of rank correlation. *Biometrika, 30*(1/2), 81 a 93.
+- **escala de satisfação:** Doll, W. J., & Torkzadeh, G. (1988). The measurement of end-user computing satisfaction. *MIS Quarterly, 12*(2), 259 a 274.
 - **didático:** Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8.
 - **python:** Vallat, R. (2018). Pingouin: statistics in Python. *Journal of Open Source Software, 3*(31), 1026.
 

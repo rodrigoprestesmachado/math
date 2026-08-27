@@ -38,6 +38,12 @@ Spearman e Kendall são alternativas **não paramétricas** a Pearson: não exig
 
 Exemplo em learning analytics: *a satisfação do estudante com o chatbot (escala Likert de 1 a 5) está associada à quantidade de sessões voluntárias realizadas?*
 
+{: .highlight }
+> **Qual escala de satisfação usar?** Em vez de perguntar "você está satisfeito?" de forma genérica, é melhor aplicar um item validado. Um exemplo simples e amplamente usado é adaptar um item da escala **End-User Computing Satisfaction** (EUCS, Doll & Torkzadeh, 1988): *"No geral, estou satisfeito(a) com o chatbot"*, com resposta em escala Likert de 1 (discordo totalmente) a 5 (concordo totalmente). Como é um único item ordinal, e não um escore composto de vários itens, ele permanece ordinal, e por isso Spearman (não Pearson) é a escolha adequada aqui.
+
+{: .highlight }
+> **O que é uma sessão voluntária?** É uma sessão de uso do chatbot iniciada por decisão própria do estudante, sem que a disciplina exija aquele número mínimo de interações. Ela mede engajamento espontâneo: quanto mais satisfeito o estudante estiver com a ferramenta, maior a tendência de procurá-la por conta própria, fora de qualquer tarefa obrigatória.
+
 Em termos de hipótese, para Spearman:
 
 | | |
@@ -288,6 +294,7 @@ Com 4 estudantes há 4 · 3 / 2 = **6 pares possíveis**:
 |:--|:--|
 | **seminal (Spearman)** | Spearman, C. (1904). The proof and measurement of association between two things. *American Journal of Psychology, 15*(1), 72 a 101. |
 | **seminal (Kendall)** | Kendall, M. G. (1938). A new measure of rank correlation. *Biometrika, 30*(1/2), 81 a 93. |
+| **escala de satisfação** | Doll, W. J., & Torkzadeh, G. (1988). The measurement of end-user computing satisfaction. *MIS Quarterly, 12*(2), 259 a 274. |
 | **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8. |
 | **python** | Vallat, R. (2018). Pingouin: statistics in Python. *Journal of Open Source Software, 3*(31), 1026. |
 | **aplicado** | Norman, G. (2010). Likert scales, levels of measurement and the "laws" of statistics. *Advances in Health Sciences Education, 15*, 625 a 632. |

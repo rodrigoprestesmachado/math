@@ -63,6 +63,11 @@ Mede a **força** e a **direção** de uma relação *linear* entre duas variáv
 
 Em dados conversacionais: *quanto mais mensagens um estudante troca com o chatbot, maior o seu escore numa escala de metacognição?*
 
+<div class="destaque">
+<strong>H₀:</strong> não há relação linear entre as variáveis (r = 0 na população).<br>
+<strong>H₁:</strong> existe relação linear (r ≠ 0).
+</div>
+
 ---
 
 ## 🧮 Fórmula
@@ -119,12 +124,36 @@ x̄ = 6 · ȳ = 60 · Σ produto = 180 · Σ(xᵢ−x̄)² = 40 · Σ(yᵢ−ȳ)
 
 ---
 
+## 🔢 O que significa r?
+
+| Valor de *r* | Direção | Interpretação intuitiva |
+|:-------------|:--------|:------------------------|
+| **+1** | positiva | Quanto mais X, mais Y, em linha reta perfeita. |
+| **0** | nenhuma | X e Y variam de forma independente. |
+| **−1** | negativa | Quanto mais X, menos Y, em linha reta perfeita. |
+| **entre 0 e ±1** | parcial | Há tendência, mas com dispersão em torno da reta. |
+
+<div class="destaque">
+O sinal (+ ou −) indica a <strong>direção</strong>; o valor absoluto |r| indica a <strong>força</strong> da relação.<br><br>
+<strong>Convenção de Cohen (1988):</strong> |r| &lt; 0,10 negligível · 0,10 a 0,29 pequeno · 0,30 a 0,49 médio · ≥ 0,50 grande.
+</div>
+
+---
+
 ## 📋 Quando usar
 
 - ✅ Ambas as variáveis são contínuas e numéricas.
 - ✅ A relação esperada é <strong>linear</strong> e os pontos, ao serem plotados, tendem a formar uma reta (não uma curva). Confira sempre com um scatter plot antes de calcular.
 - ✅ Cada variável, isoladamente, deve seguir uma <strong>distribuição normal</strong>: a maioria dos estudantes envia um número "médio" de mensagens, e cada vez menos estudantes enviam quantidades bem abaixo ou bem acima dessa média. O teste de <strong>Shapiro-Wilk</strong> verifica isso.
-- ❌ Não usar com dados <strong>ordinais</strong>, como uma escala Likert de 1 (discordo totalmente) a 5 (concordo totalmente). Nesses casos, use Spearman.
+
+--
+
+## 📋 Evite Pearson quando
+
+- ❌ Os dados são <strong>ordinais</strong>, como uma escala Likert de 1 a 5. Nesses casos, use Spearman.
+- ❌ Há <strong>outliers extremos</strong>: um único ponto pode distorcer *r*.
+- ❌ A nuvem de pontos é claramente <strong>curvilínea</strong>: Pearson não captura bem o padrão.
+- ❌ Você quer afirmar <strong>causalidade</strong>: correlação só descreve associação.
 
 --
 
@@ -176,7 +205,29 @@ O problema: para uma pessoa, sair de "discordo" (2) para "neutro" (3) pode ser u
 
 ---
 
+## 🪜 Passo a passo na prática
 
+1. **Visualize:** plote X × Y. A nuvem sobe, desce ou é um emaranhado?
+2. **Verifique pressupostos:** normalidade univariada (Shapiro-Wilk) e ausência de outliers gritantes.
+3. **Calcule:** `stats.pearsonr(x, y)` ou `df.corr(method='pearson')`.
+4. **Interprete:** leia *r* (direção e força) e *p* (evidência contra H₀).
+5. **Reporte:** informe *r*, *p*, *n* e, se possível, o scatter plot.
+
+---
+
+## 📖 Como ler o resultado
+
+<p class="small">Suponha que o código abaixo retorne r = 0.87, p = 0.0003, com n = 10 estudantes:</p>
+
+- **r = 0,87** → relação linear <strong>forte e positiva</strong>: estudantes que trocam mais mensagens tendem a ter escore composto maior no MAI.
+- **p &lt; .05** → rejeitamos H₀: a associação observada é improvável se não houvesse relação na população.
+- **Cohen** → |0,87| ≥ 0,50 → tamanho de efeito <strong>grande</strong> (com *n* pequeno, a estimativa ainda é instável).
+
+<div class="destaque">
+<strong>Correlação ≠ causalidade.</strong> Mais mensagens podem acompanhar maior consciência metacognitiva, ou estudantes mais metacognitivos simplesmente conversam mais e refletem mais sobre o próprio aprendizado.
+</div>
+
+---
 
 ## 🐍 Exemplo Python: Pearson
 
