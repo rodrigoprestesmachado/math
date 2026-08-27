@@ -12,12 +12,12 @@
 
 ## 🍊 Metáfora
 
-<p class="small">Um restaurante serve três pratos (factual, conceitual, procedimental) para três tipos de clientes (passivo, ativo, intensivo).</p>
+<p class="small">Um professor de programação separa os estudantes conforme o quanto usam o chatbot (pouco, médio, muito) e classifica as perguntas em três tipos (conceitual, depuração, trecho de código).</p>
 
 <p class="small">
 
-- Se o tipo de cliente não influenciasse o prato escolhido, esperaríamos a mesma proporção de pratos em cada grupo.
-- O qui-quadrado (χ²) compara essa distribuição **esperada** (sem relação) com o que foi **observado** de fato.
+- Se o quanto o estudante usa o chatbot não influenciasse o tipo de pergunta, esperaríamos a mesma proporção de tipos em cada grupo.
+- O qui-quadrado (χ²) compara essa distribuição **esperada** (sem relação) com o que foi **observado** de fato nos registros de conversa.
 - Quanto maior a diferença, maior o χ², e mais evidência de associação.
 
 </p>
@@ -34,7 +34,7 @@ O χ² cresce junto com o tamanho da amostra: com muitas observações, até uma
 
 Testa se duas variáveis **categóricas nominais** são **independentes**, organizadas numa **tabela de contingência**: linhas e colunas são categorias, cada célula conta quantos estudantes caem naquela combinação.
 
-Exemplo: *o tipo de pergunta ao chatbot varia conforme o perfil de uso do estudante?*
+Exemplo: *o tipo de pergunta ao chatbot varia conforme o quanto o estudante usa a ferramenta?*
 
 <div class="destaque">
 <strong>H₀:</strong> as duas variáveis são independentes (não há associação na população).<br>
@@ -79,9 +79,9 @@ Exemplo: *o tipo de pergunta ao chatbot varia conforme o perfil de uso do estuda
 
 ## 🧩 Aplicação simples: χ² na mão
 
-<p class="small">40 estudantes fictícios · nível (iniciante/avançado) × tipo de pergunta (factual/conceitual)</p>
+<p class="small">40 estudantes fictícios · nível (iniciante/avançado) × tipo de pergunta (conceitual/depuração)</p>
 
-| | Factual (O) | Conceitual (O) | Total |
+| | Conceitual (O) | Depuração (O) | Total |
 |:--|:-:|:-:|:-:|
 | **Iniciante** | 15 | 5 | 20 |
 | **Avançado** | 5 | 15 | 20 |
@@ -145,7 +145,7 @@ Todas as células esperam E = (20 × 20) / 40 = 10.<br><br>
 
 ## 📋 Exemplos em learning analytics
 
-- Tipo de pergunta × perfil de uso do chatbot.
+- Tipo de pergunta × quanto o estudante usa o chatbot.
 - Turno de uso × modalidade da disciplina.
 - Categoria de erro mais comum × turma.
 - Uso de um recurso opcional (sim/não) × aprovação (sim/não).
@@ -184,10 +184,10 @@ Todas as células esperam E = (20 × 20) / 40 = 10.<br><br>
 
 - **χ² = 18,203, p = 0,0011** → rejeitamos H₀: é pouco provável essa tabela sob independência.
 - **V = 0,301** → efeito <strong>médio a grande</strong>: a associação existe e tem magnitude relevante.
-- O tipo de pergunta varia de forma perceptível conforme o perfil de uso.
+- O tipo de pergunta varia de forma perceptível conforme o quanto o estudante usa o chatbot.
 
 <div class="destaque">
-<strong>Associação ≠ causalidade.</strong> Um perfil de uso intensivo pode levar a perguntas mais elaboradas, ou o contrário: estudantes que já perguntam melhor podem se engajar mais.
+<strong>Associação ≠ causalidade.</strong> Um uso mais intenso do chatbot pode levar a perguntas mais elaboradas, ou o contrário: estudantes que já perguntam melhor podem se engajar mais.
 </div>
 
 ---
@@ -202,8 +202,8 @@ from scipy.stats import chi2_contingency
 # Passo 1: montar a tabela de contingencia
 tabela = pd.DataFrame(
     [[30,15,10],[20,25,18],[10,20,35]],
-    index   = ['factual','conceitual','procedimental'],
-    columns = ['passivo','ativo','intensivo']
+    index   = ['conceitual','depuração','trecho de código'],
+    columns = ['pouco','médio','muito']
 )
 print(tabela, "\n")
 
