@@ -102,6 +102,12 @@ Para ver os passos acima em ação, seguem 40 estudantes fictícios, cruzando o 
 
 ---
 
+## 🎥 Sugestão de vídeo
+
+[Vídeo sugerido sobre qui-quadrado](https://www.youtube.com/watch?v=4QfHVbpAoSg)
+
+---
+
 ## 📐 V de Cramér
 
 O χ² diz apenas se a associação existe (significância). Para saber **quão forte** ela é, de um jeito que não infla sozinho conforme n cresce, usamos o V de Cramér, que reescala o χ² pelo tamanho da amostra e pelo formato da tabela:
