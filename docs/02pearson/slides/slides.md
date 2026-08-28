@@ -269,12 +269,25 @@ Código <strong>executável</strong> na página do encontro, clique em <strong>�
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
 
-- **clássico:** Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Lawrence Erlbaum.
-- **didático:** Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8.
-- **python:** McKinney, W. (2022). *Python for Data Analysis* (3ª ed.). O'Reilly. Cap. 13.
-- **normalidade:** Shapiro, S. S., & Wilk, M. B. (1965). An analysis of variance test for normality (complete samples). *Biometrika, 52*(3/4), 591 a 611.
+<p class="small">Disponíveis para consulta/e-book em <a href="https://ifrs.pergamum.com.br" target="_blank">ifrs.pergamum.com.br</a></p>
+
+- Martinez, E. Z. (2023). *Bioestatística para os cursos de graduação da área da saúde* (2ª ed.). São Paulo: Blucher. [e-book]
+- Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. [e-book]
+- Dancey, C. P. & Reidy, J. (2019). *Estatística sem matemática para psicologia* (7ª ed.). Porto Alegre: Penso. Cap. sobre correlação.
+
+--
+
+## 🌐 Referências · Recursos na Web
+
+- Estatística Fácil. [O que é: Índice de Correlação de Pearson](https://estatisticafacil.org/glossario/o-que-e-indice-de-correlacao-de-pearson/).
+- Psicometria Online. [Correlação de Pearson: o que é e como interpretar?](https://www.blog.psicometriaonline.com.br/o-que-e-correlacao-de-pearson).
+- SciPy Documentation. [scipy.stats.pearsonr](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html) — documentação oficial usada nos exemplos em Python.
+
+<div class="destaque">
+Busque outros títulos por "correlação", "estatística aplicada" ou "bioestatística" no catálogo do IFRS — vários trazem um capítulo dedicado a correlação e regressão linear.
+</div>
 
 ---
 

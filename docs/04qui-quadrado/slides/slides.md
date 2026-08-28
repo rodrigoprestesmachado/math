@@ -92,6 +92,12 @@ Todas as células esperam E = (20 × 20) / 40 = 10.<br><br>
 (O − E)²/E = 2,5 em cada célula → <em>χ²</em> = 2,5 × 4 = <strong>10,00</strong> (gl = 1) → suficiente para rejeitar H₀.
 </div>
 
+--
+
+## 🎥 Sugestão de vídeo
+
+[Vídeo sugerido sobre qui-quadrado](https://www.youtube.com/watch?v=4QfHVbpAoSg)
+
 ---
 
 # 📐 V de Cramér
@@ -149,6 +155,43 @@ Todas as células esperam E = (20 × 20) / 40 = 10.<br><br>
 - Turno de uso × modalidade da disciplina.
 - Categoria de erro mais comum × turma.
 - Uso de um recurso opcional (sim/não) × aprovação (sim/não).
+
+---
+
+# 💬 Pesquisa em Informática na Educação
+
+## 🔍 Perguntas de pesquisa: conversas estudante-chatbot
+
+<p class="small">Cada pergunta abaixo cruza duas variáveis categóricas extraídas de logs de conversa — exatamente o formato de tabela de contingência que χ² e V de Cramér exigem.</p>
+
+- A **intenção da mensagem** (pedir explicação, pedir código pronto, pedir depuração) está associada à **disciplina** (Programação I, Estruturas de Dados, Banco de Dados)?
+- O **nível de dependência do chatbot** (baixo/médio/alto, medido pela frequência de uso) está associado ao **desempenho final** (aprovado/reprovado)?
+- O **tom da interação** (cordial, neutro, frustrado) varia conforme o **momento do semestre** (início, meio, período de provas)?
+
+--
+
+## 🔍 Mais perguntas de pesquisa
+
+- Estudantes que **colam o código de erro literal** vs. os que **descrevem o problema com as próprias palavras** diferem quanto ao **curso/turma**?
+- A **categoria da primeira pergunta numa sessão** (conceito, sintaxe, lógica do algoritmo) está associada ao **período do curso** (iniciante/intermediário/avançado)?
+- O uso de **linguagem informal ou emojis** nas mensagens está associado à **faixa etária** ou ao **gênero** dos estudantes?
+- A **aceitação da resposta do chatbot sem questionar** (sim/não) está associada ao **tipo de pergunta feita** (conceitual/depuração/trecho de código)?
+
+<div class="destaque">
+Em todos os casos: <strong>H₀</strong> = as duas variáveis são independentes na população de estudantes; <strong>H₁</strong> = existe associação. χ² diz se a associação é estatisticamente detectável; V de Cramér diz se ela é grande o suficiente para importar pedagogicamente.
+</div>
+
+--
+
+## 🧩 Do dado bruto à tabela de contingência
+
+<p class="small">Exemplo de fluxo de análise para "intenção da mensagem × disciplina":</p>
+
+1. **Coletar** os logs de conversa (mensagem do estudante + metadados: disciplina, turma, timestamp).
+2. **Codificar** cada mensagem numa categoria de intenção (manual, por rubrica, ou com apoio de um classificador).
+3. **Cruzar** intenção × disciplina numa tabela de contingência (contagem de mensagens em cada célula).
+4. **Testar** com `chi2_contingency` e calcular V de Cramér.
+5. **Interpretar** à luz da prática: professores de disciplinas diferentes precisam ajustar como orientam o uso do chatbot?
 
 ---
 
@@ -225,13 +268,27 @@ Código <strong>executável</strong> na página do encontro, clique em <strong>�
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
 
-- **seminal:** Cramér, H. (1946). *Mathematical Methods of Statistics*. Princeton University Press.
-- **didático:** Agresti, A. (2013). *Categorical Data Analysis* (3ª ed.). Wiley.
-- **didático:** Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 19.
-- **tamanho efeito:** Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Cap. 7.
-- **teste exato:** Fisher, R. A. (1922). On the interpretation of χ² from contingency tables. *Journal of the Royal Statistical Society, 85*(1), 87 a 94.
+<p class="small">Disponíveis para consulta/e-book em <a href="https://ifrs.pergamum.com.br" target="_blank">ifrs.pergamum.com.br</a></p>
+
+- Giolo, S. R. (2017). *Introdução à análise de dados categóricos com aplicações*. São Paulo: Blucher. [e-book]
+- Martinez, E. Z. (2023). *Bioestatística para os cursos de graduação da área da saúde* (2ª ed.). São Paulo: Blucher. [e-book]
+- Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. [e-book]
+- Balbino, F. O. & Rosa, J. M. C. da. (2023). *Análise de dados categorizados e longitudinais*. Curitiba: InterSaberes. [e-book]
+
+--
+
+## 🌐 Referências · Recursos na Web
+
+- Tesify. (2026). [Teste Qui-Quadrado no SPSS: Guia Completo e APA 7](https://tesify.pt/teste-qui-quadrado-spss-2026-quando-usar-passo-a-passo-apa7/).
+- Estatística Fácil. [Tamanho de Efeito Para Qui-Quadrado (V de Cramér e Phi)](https://estatisticafacil.org/tamanho-de-efeito-para-qui-quadrado/).
+- Estatística Fácil. [O que é: Coeficiente de Cramer - Entenda sua Importância](https://estatisticafacil.org/glossario/o-que-e-coeficiente-de-cramer-importancia/).
+- [Vídeo sugerido sobre qui-quadrado](https://www.youtube.com/watch?v=4QfHVbpAoSg).
+
+<div class="destaque">
+Busque outros títulos por "qui-quadrado", "dados categóricos" ou "estatística aplicada" no catálogo do IFRS — vários têm capítulo dedicado a χ² e medidas de associação, incluindo dissertações do próprio Mestrado em Informática na Educação.
+</div>
 
 ---
 

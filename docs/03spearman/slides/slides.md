@@ -241,13 +241,25 @@ Código <strong>executável</strong> na página do encontro, clique em <strong>�
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
 
-- **seminal (Spearman):** Spearman, C. (1904). The proof and measurement of association between two things. *American Journal of Psychology, 15*(1), 72 a 101.
-- **seminal (Kendall):** Kendall, M. G. (1938). A new measure of rank correlation. *Biometrika, 30*(1/2), 81 a 93.
-- **escala de satisfação:** Doll, W. J., & Torkzadeh, G. (1988). The measurement of end-user computing satisfaction. *MIS Quarterly, 12*(2), 259 a 274.
-- **didático:** Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8.
-- **python:** Vallat, R. (2018). Pingouin: statistics in Python. *Journal of Open Source Software, 3*(31), 1026.
+<p class="small">Disponíveis para consulta/e-book em <a href="https://ifrs.pergamum.com.br" target="_blank">ifrs.pergamum.com.br</a></p>
+
+- Siegel, S. & Castellan Jr., N. J. (2006). *Estatística não-paramétrica para ciências do comportamento* (2ª ed.). Porto Alegre: Artmed/Penso. [e-book] — capítulos sobre postos, Spearman e Kendall.
+- Dancey, C. P. & Reidy, J. (2019). *Estatística sem matemática para psicologia* (7ª ed.). Porto Alegre: Penso.
+- Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. [e-book]
+
+--
+
+## 🌐 Referências · Recursos na Web
+
+- Estatística Fácil. [O que é: Teste de Correlação de Spearman](https://estatisticafacil.org/glossario/o-que-e-teste-de-correlacao-de-spearman/).
+- Psicometria Online. [Correlação tau de Kendall: o que é e como interpretar?](https://www.blog.psicometriaonline.com.br/o-que-e-correlacao-tau-de-kendall).
+- SciELO. [Análise de correlação em estudos clínicos e experimentais](https://www.scielo.br/j/jvb/a/YwjG3GsXpBFrZLQhFQG45Rb/?format=html&lang=pt).
+
+<div class="destaque">
+Busque outros títulos por "estatística não paramétrica", "correlação" ou "análise de dados categóricos" no catálogo do IFRS.
+</div>
 
 ---
 
