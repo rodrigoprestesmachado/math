@@ -167,6 +167,21 @@ O sinal (+ ou −) indica a **direção**; o valor absoluto \|r\| indica a **for
 
 ---
 
+## 🔍 Perguntas de pesquisa em Informática na Educação
+
+Em pesquisas de Informática na Educação que analisam **conversas de estudantes com chatbots**, Pearson serve para responder perguntas em que as duas variáveis são **numéricas contínuas** e a relação esperada é **linear**:
+
+- O **número de mensagens trocadas** com o chatbot está relacionado ao **escore composto numa escala de metacognição** (ex.: MAI)?
+- A **extensão média das mensagens do estudante** (em caracteres ou tokens) está relacionada à **nota final** na disciplina?
+- O **tempo total de sessão com o chatbot** está relacionado ao **número de exercícios corretos** entregues na semana?
+- A **latência média de resposta do chatbot** está relacionada à **duração média das sessões** do estudante?
+- O **número de perguntas de esclarecimento** feitas ao chatbot está relacionado ao **desempenho acumulado** ao longo do curso?
+
+{: .highlight }
+> **Antes de aplicar Pearson a essas perguntas:** confirme que ambas as variáveis são realmente contínuas (não faixas categorizadas), plote o scatter plot para verificar linearidade, e teste a normalidade de cada variável com Shapiro-Wilk, explicado na seção seguinte. Se alguma condição falhar, considere [Spearman](../03spearman/spearman.html).
+
+---
+
 ## 🔔 Teste de Shapiro-Wilk
 
 O teste de Shapiro-Wilk verifica, de forma estatística, se uma amostra é compatível com uma distribuição normal, o formato de sino apresentado na seção anterior. É o teste de normalidade mais usado antes de aplicar Pearson.
@@ -245,19 +260,27 @@ O código segue o passo a passo: primeiro o gráfico, depois o cálculo. Execute
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
+
+Disponíveis para consulta/e-book em [ifrs.pergamum.com.br](https://ifrs.pergamum.com.br).
 
 | | |
 |:--|:--|
-| **clássico** | Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Lawrence Erlbaum. |
-| **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8. |
-| **python** | McKinney, W. (2022). *Python for Data Analysis* (3ª ed.). O'Reilly. Cap. 13. |
-| **artigo** | Mukaka, M. M. (2012). A guide to appropriate use of correlation coefficient in medical research. *Malawi Medical Journal, 24*(3), 69 a 71. |
-| **normalidade** | Shapiro, S. S., & Wilk, M. B. (1965). An analysis of variance test for normality (complete samples). *Biometrika, 52*(3/4), 591 a 611. |
+| **e-book** | Martinez, E. Z. (2023). *Bioestatística para os cursos de graduação da área da saúde* (2ª ed.). São Paulo: Blucher. |
+| **e-book** | Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. |
+| **acervo** | Dancey, C. P., & Reidy, J. (2019). *Estatística sem matemática para psicologia* (7ª ed.). Porto Alegre: Penso. |
+
+## 🌐 Referências · Recursos na Web
+
+| | |
+|:--|:--|
+| **web (PT)** | Estatística Fácil. [O que é: Índice de Correlação de Pearson](https://estatisticafacil.org/glossario/o-que-e-indice-de-correlacao-de-pearson/). Definição, fórmula e limitações do coeficiente. |
+| **web (PT)** | Psicometria Online. [Correlação de Pearson: o que é e como interpretar?](https://www.blog.psicometriaonline.com.br/o-que-e-correlacao-de-pearson). Interpretação de *r* e do coeficiente de determinação. |
 | **web (PT)** | [Peixoto, *Introdução à Ciência de Dados*: Correlação](https://gcpeixoto.github.io/ICD/ipynb/12-correlacao.html). Scatter plots, interpretação de *r*, Pearson vs relações não lineares, `pearsonr()`. |
 | **web (PT)** | [Matos, *Estatística + R*: Correlação entre variáveis](https://ana-mat-br.github.io/correla%C3%A7%C3%A3o-entre-vari%C3%A1veis.html). Gráficos de dispersão, matriz de correlação, quando usar Pearson e Spearman. |
 | **web (EN)** | [OpenStax, *Introductory Statistics 2e*: cap. 12.2 e 12.3](https://openstax.org/books/introductory-statistics-2e/pages/12-2-scatter-plots). Scatter plots e coeficiente de correlação, gratuito, com exemplos educacionais. |
 | **web (EN)** | [Khan Academy: Correlation coefficient review](https://www.khanacademy.org/math/statistics-probability/describing-relationships-quantitative-data/scatterplots-and-correlation/a/correlation-coefficient-review). Interpretação visual de *r* e exercícios de associação gráfico × coeficiente. |
+| **documentação** | SciPy. [scipy.stats.pearsonr](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html). Documentação oficial usada nos exemplos em Python. |
 | **simulador** | [R Psychologist: Understanding Correlations](https://rpsychologist.com/correlation/). Ajuste *r* com slider, arraste pontos e observe o efeito de outliers na nuvem. |
 | **simulador** | [Art of Stat: Scatterplots & Correlation](https://istats.shinyapps.io/Association_Quantitative/). Mova ou remova pontos, sobreponha reta de tendência e teste a robustez de *r*. |
 | **simulador** | [Art of Stat: Guess the Correlation](https://istats.shinyapps.io/guesscorr/). Treine estimar *r* a partir de scatter plots gerados aleatoriamente. |

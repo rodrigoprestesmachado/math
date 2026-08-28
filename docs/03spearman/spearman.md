@@ -147,6 +147,21 @@ Usando os mesmos 5 estudantes fictícios do exemplo Python mais abaixo, com a **
 
 ---
 
+## 🔍 Perguntas de pesquisa em Informática na Educação
+
+Em pesquisas de Informática na Educação que analisam **conversas de estudantes com chatbots**, Spearman (e Kendall) servem para responder perguntas em que ao menos uma das variáveis é **ordinal**, ou em que a relação esperada é **monotônica**, mas não necessariamente linear:
+
+- A **satisfação do estudante com o chatbot** (Likert 1 a 5) está associada ao **número de sessões voluntárias** realizadas?
+- O **grau de complexidade linguística** das perguntas do estudante (escala ordinal: baixa/média/alta) está associado ao **ranking de desempenho** na turma?
+- A **posição no ranking de engajamento** (por número de interações) está associada à **posição no ranking de notas**?
+- O **grau de autonomia da pergunta** (escala ordinal: pede a resposta pronta → pede uma dica → tenta resolver e só confirma) está associado ao **tempo total de uso do chatbot**, que costuma ter distribuição assimétrica?
+- A **percepção de utilidade do chatbot** (Likert 1 a 5) está associada ao **número de mensagens enviadas por sessão**?
+
+{: .highlight }
+> **Por que não usar Pearson nessas perguntas?** Escalas Likert isoladas são ordinais, não intervalares, e variáveis como tempo de uso costumam ter distribuição assimétrica (cauda longa), violando a normalidade exigida por [Pearson](../02pearson/pearson.html). Spearman aproveita apenas a ordem dos valores, o que se ajusta melhor a esses casos; prefira Kendall quando a amostra for pequena (n < 30) ou houver muitos empates.
+
+---
+
 ## 🪜 Passo a passo na prática
 
 1. **Visualize:** plote X × Y (ou os postos de X × Y). A nuvem sobe, desce ou é um emaranhado sem padrão?
@@ -288,16 +303,25 @@ Com 4 estudantes há 4 · 3 / 2 = **6 pares possíveis**:
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
+
+Disponíveis para consulta/e-book em [ifrs.pergamum.com.br](https://ifrs.pergamum.com.br).
 
 | | |
 |:--|:--|
-| **seminal (Spearman)** | Spearman, C. (1904). The proof and measurement of association between two things. *American Journal of Psychology, 15*(1), 72 a 101. |
-| **seminal (Kendall)** | Kendall, M. G. (1938). A new measure of rank correlation. *Biometrika, 30*(1/2), 81 a 93. |
-| **escala de satisfação** | Doll, W. J., & Torkzadeh, G. (1988). The measurement of end-user computing satisfaction. *MIS Quarterly, 12*(2), 259 a 274. |
-| **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 8. |
-| **python** | Vallat, R. (2018). Pingouin: statistics in Python. *Journal of Open Source Software, 3*(31), 1026. |
-| **aplicado** | Norman, G. (2010). Likert scales, levels of measurement and the "laws" of statistics. *Advances in Health Sciences Education, 15*, 625 a 632. |
+| **e-book** | Siegel, S., & Castellan Jr., N. J. (2006). *Estatística não-paramétrica para ciências do comportamento* (2ª ed.). Porto Alegre: Artmed/Penso. Capítulos sobre postos, Spearman e Kendall. |
+| **acervo** | Dancey, C. P., & Reidy, J. (2019). *Estatística sem matemática para psicologia* (7ª ed.). Porto Alegre: Penso. |
+| **e-book** | Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. |
+
+## 🌐 Referências · Recursos na Web
+
+| | |
+|:--|:--|
+| **web (PT)** | Estatística Fácil. [O que é: Teste de Correlação de Spearman](https://estatisticafacil.org/glossario/o-que-e-teste-de-correlacao-de-spearman/). Definição, fórmula e cálculo passo a passo. |
+| **web (PT)** | Psicometria Online. [Correlação tau de Kendall: o que é e como interpretar?](https://www.blog.psicometriaonline.com.br/o-que-e-correlacao-tau-de-kendall). Diferenças entre Kendall e Spearman, tamanho de efeito. |
+| **web (PT)** | SciELO. [Análise de correlação em estudos clínicos e experimentais](https://www.scielo.br/j/jvb/a/YwjG3GsXpBFrZLQhFQG45Rb/?format=html&lang=pt). Comparação prática entre Spearman e Kendall Tau-b. |
+| **web (PT)** | [Matos, *Estatística + R*: Correlação entre variáveis](https://ana-mat-br.github.io/correla%C3%A7%C3%A3o-entre-vari%C3%A1veis.html). Spearman e Kendall com exemplos em R. |
+| **escala de satisfação** | Doll, W. J., & Torkzadeh, G. (1988). The measurement of end-user computing satisfaction. *MIS Quarterly, 12*(2), 259 a 274. Base do item usado na metáfora de satisfação com o chatbot. |
 
 ---
 

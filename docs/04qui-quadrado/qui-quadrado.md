@@ -176,6 +176,21 @@ O χ² diz apenas se a associação existe (significância). Para saber **quão 
 
 ---
 
+## 🔍 Perguntas de pesquisa em Informática na Educação
+
+Em pesquisas de Informática na Educação que analisam **conversas de estudantes com chatbots**, qui-quadrado e V de Cramér servem para responder perguntas em que as duas variáveis são **categóricas nominais**, extraídas dos logs de conversa ou de metadados da turma:
+
+- A **intenção da mensagem** (pedir explicação conceitual, pedir depuração, pedir código pronto) está associada à **disciplina** (Programação I, Estruturas de Dados, Banco de Dados)?
+- O **nível de dependência do chatbot** (baixo/médio/alto, medido pela frequência de uso) está associado ao **desempenho final** (aprovado/reprovado)?
+- O **tom da interação** (cordial, neutro, frustrado) varia conforme o **momento do semestre** (início, meio, período de provas)?
+- Estudantes que **colam o erro literal** vs. os que **descrevem o problema com as próprias palavras** diferem quanto à **turma**?
+- A **aceitação da resposta do chatbot sem questionar** (sim/não) está associada ao **tipo de pergunta feita** (conceitual/depuração/trecho de código)?
+
+{: .highlight }
+> **Fluxo de análise sugerido:** (1) colete os logs de conversa com seus metadados (disciplina, turma, timestamp); (2) codifique cada mensagem numa categoria (manual, por rubrica, ou com apoio de um classificador); (3) cruze as duas variáveis numa tabela de contingência; (4) calcule χ² e V de Cramér com `chi2_contingency`; (5) interprete à luz da prática pedagógica, sempre lembrando que χ² indica *se existe* associação e V indica *quão forte* ela é.
+
+---
+
 ## 📐 Teste exato de Fisher
 
 O teste exato de Fisher é uma alternativa ao qui-quadrado quando as frequências esperadas são baixas, o cenário mais comum em tabelas 2×2 com amostras pequenas ou com grupos bem desbalanceados. Em vez de uma aproximação estatística, ele calcula exatamente a probabilidade de observar uma tabela tão ou mais extrema que a observada, assumindo H₀ verdadeira.
@@ -237,17 +252,26 @@ O código monta a tabela de contingência, calcula χ² e *p*, e em seguida calc
 
 ---
 
-## 📚 Referências
+## 📚 Referências · Biblioteca Digital IFRS
+
+Disponíveis para consulta/e-book em [ifrs.pergamum.com.br](https://ifrs.pergamum.com.br).
 
 | | |
 |:--|:--|
-| **seminal** | Cramér, H. (1946). *Mathematical Methods of Statistics*. Princeton University Press. |
-| **didático** | Agresti, A. (2013). *Categorical Data Analysis* (3ª ed.). Wiley. |
-| **didático** | Field, A. (2024). *Discovering Statistics Using IBM SPSS Statistics* (6ª ed.). SAGE. Cap. 19. |
-| **tamanho efeito** | Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2ª ed.). Lawrence Erlbaum. Cap. 7. |
-| **crítico** | Kim, H. Y. (2017). Chi-squared test and Fisher's exact test. *Restorative Dentistry & Endodontics, 42*(2), 152 a 155. |
-| **teste exato** | Fisher, R. A. (1922). On the interpretation of χ² from contingency tables, and the calculation of P. *Journal of the Royal Statistical Society, 85*(1), 87 a 94. |
+| **e-book** | Giolo, S. R. (2017). *Introdução à análise de dados categóricos com aplicações*. São Paulo: Blucher. |
+| **e-book** | Balbino, F. O., & Rosa, J. M. C. da. (2023). *Análise de dados categorizados e longitudinais*. Curitiba: InterSaberes. |
+| **e-book** | Martinez, E. Z. (2023). *Bioestatística para os cursos de graduação da área da saúde* (2ª ed.). São Paulo: Blucher. Cap. sobre teste qui-quadrado de associação. |
+| **e-book** | Costa, G. G. de O. (2012). *Curso de Estatística inferencial e probabilidades: teoria e prática*. Rio de Janeiro: Atlas. |
+
+## 🌐 Referências · Recursos na Web
+
+| | |
+|:--|:--|
+| **web (PT)** | Estatística Fácil. [Tamanho de Efeito Para Qui-Quadrado](https://estatisticafacil.org/tamanho-de-efeito-para-qui-quadrado/). V de Cramér e coeficiente Phi, quando usar cada um. |
+| **web (PT)** | Estatística Fácil. [O que é: Coeficiente de Cramer](https://estatisticafacil.org/glossario/o-que-e-coeficiente-de-cramer-importancia/). Definição e fórmula do V de Cramér. |
+| **web (PT)** | Tesify. [Teste Qui-Quadrado no SPSS: Guia Completo e APA 7](https://tesify.pt/teste-qui-quadrado-spss-2026-quando-usar-passo-a-passo-apa7/). Quando usar, teste de Fisher, V de Cramér e formato de redação. |
 | **web (EN)** | [OpenStax, *Introductory Statistics 2e*: cap. 11.3](https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence). Teste de independência qui-quadrado, gratuito, com exemplos passo a passo. |
+| **crítico** | Kim, H. Y. (2017). Chi-squared test and Fisher's exact test. *Restorative Dentistry & Endodontics, 42*(2), 152 a 155. |
 | **simulador** | [Art of Stat: Chi-Square Test for Association](https://istats.shinyapps.io/ChisqTest/). Monte tabelas de contingência, ajuste frequências e observe o efeito no χ² e no p-valor. |
 
 ---
