@@ -58,10 +58,16 @@ Em termos de hipótese, para cada informação colocada na regra:
 >
 > Uma professora quer estimar a nota final antes da prova. Ela olha os logs do chatbot educacional da disciplina. Cada estudante vira um ponto num gráfico: na horizontal, o número de sessões com o chatbot; na vertical, a nota.
 >
-> Ela apoia uma régua na nuvem de pontos e a inclina até a soma dos erros, elevados ao quadrado, ficar a menor possível. O erro de cada estudante é a distância vertical entre a nota real e a nota que a régua previa. Erros grandes pesam mais, justamente porque entram ao quadrado. A régua que sobrevive a essa conta tem dois números. O ponto de partida é a nota esperada de quem nunca abriu o chatbot. A inclinação é quantos pontos cada sessão a mais vale.
+> A régua é reta, e os pontos não ficam em fila. Para cada estudante sobra um vão na vertical: a nota real fica alguns pontos acima ou abaixo da nota que a régua marca naquela quantidade de sessões. A professora inclina a régua, e a sobe ou desce, até esses vãos ficarem os menores possíveis no conjunto. Na posição escolhida, a régua tem dois números. O ponto de partida é a nota esperada de quem nunca abriu o chatbot. O outro é quantos pontos cada sessão a mais vale.
+
+<center>
+<img src="../imgs/regua-regressao.png" alt="Cinco estudantes no gráfico de sessões com o chatbot pela nota. A reta sobe 5 pontos por sessão, parte de 40, e traços verticais marcam o vão entre a nota real e a nota da régua." width="88%">
+</center>
+
+Os cinco pontos são os mesmos estudantes da conta que vem a seguir. A reta é a régua: nota esperada = 40 + 5 × sessões. O trecho tracejado prolonga a régua até quem nunca abriu o chatbot, no ponto de partida 40. Os traços verticais são o vão de cada pessoa: +10 significa que a nota ficou 10 pontos acima da régua; −10, que ficou 10 pontos abaixo.
 
 {: .highlight }
-> **Por que elevar o erro ao quadrado?** Um erro de 10 pontos pesa mais do que dois erros de 5: 10² = 100, e 5² + 5² = 50. A régua se inclina para não errar ninguém por muito. Essa conta se chama mínimos quadrados. O quanto a régua errou em cada estudante (nota real menos nota prevista) se chama resíduo.
+> **Por que o vão de 10 pesa mais?** No gráfico, A ficou 10 pontos acima da régua. B e D ficaram 5 pontos abaixo. 10² = 100, e 5² + 5² = 50: o vão grande pesa mais do que os dois vãos pequenos juntos. A professora soma os vãos depois de elevá-los ao quadrado, para a régua não deixar ninguém muito longe. Essa conta se chama mínimos quadrados. O vão (nota real menos a nota que a régua marcou) se chama resíduo.
 
 A professora percebe um segundo fato. Quem abre o chatbot com mais frequência também costuma refletir mais sobre o próprio estudo. A régua de uma informação só entrega ao chatbot pontos que em parte já vinham dessa reflexão.
 

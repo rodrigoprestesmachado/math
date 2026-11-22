@@ -44,14 +44,19 @@ O que se estima é um número que muda aos poucos: a nota, os minutos, os acerto
 <p class="small">
 
 - Cada estudante é um ponto: na horizontal, as sessões; na vertical, a nota.
-- Ela apoia uma régua na nuvem e a inclina até a soma dos erros verticais, elevados ao quadrado, ficar a menor possível.
-- O ponto de partida é a nota esperada de quem nunca abriu o chatbot.
-- A inclinação é quantos pontos cada sessão a mais vale.
+- A régua é reta e não passa por todos. Sobra um vão na vertical entre a nota real e a nota que a régua marca.
+- Ela inclina a régua até esses vãos ficarem os menores possíveis no conjunto.
+- Dois números ficam: o ponto de partida (quem nunca abriu o chatbot) e quantos pontos cada sessão a mais vale.
 
 </p>
 
+--
+
+<center><img src="../../imgs/regua-regressao.png" alt="Cinco estudantes, a reta da régua e o erro vertical de cada um" width="72%"></center>
+
 <div class="destaque">
-Um erro de 10 pesa mais do que dois erros de 5, porque 10² = 100 e 5² + 5² = 50. A régua evita errar alguém por muito. Essa conta se chama mínimos quadrados.
+A reta é a régua: 40 + 5 × sessões. O tracejado chega ao ponto de partida, 40. Cada traço vertical é o vão daquele estudante.<br><br>
+O vão de A vale 10. Os de B e D valem 5 cada. 10² = 100 e 5² + 5² = 50, então o vão grande pesa mais. Essa conta se chama mínimos quadrados.
 </div>
 
 --
