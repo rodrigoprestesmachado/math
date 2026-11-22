@@ -52,7 +52,7 @@ O que se estima é um número que muda aos poucos: a nota, os minutos, os acerto
 
 --
 
-<center><img src="../../imgs/regua-regressao.png" alt="Cinco estudantes, a reta da régua e o erro vertical de cada um" width="72%"></center>
+<center><img src="../../imgs/regua-regressao.png" alt="Cinco estudantes, a reta da régua e o vão vertical de cada um" width="68%"></center>
 
 <div class="destaque">
 A reta é a régua: 40 + 5 × sessões. O tracejado chega ao ponto de partida, 40. Cada traço vertical é o vão daquele estudante.<br><br>
@@ -115,9 +115,9 @@ Nota esperada = 40 + 5 × sessões. Alguém com 7 sessões: <strong>75</strong>.
 
 --
 
-## 🧩 O que a régua erra
+## 🧩 O vão de cada estudante
 
-| Est. | Nota real | Nota prevista | Erro |
+| Est. | Nota real | Nota prevista | Vão |
 |:-:|:-:|:-:|:-:|
 | A | 60 | 50 | +10 |
 | B | 55 | 60 | −5 |
@@ -175,7 +175,7 @@ Os três ficam abaixo de 5. Nesta turma, dá para ler o papel de cada informaç�
 
 - ✅ A resposta é um número que muda aos poucos: nota, minutos, acertos.
 - ✅ No gráfico, os pontos acompanham uma reta.
-- ✅ Os erros da régua têm tamanho parecido ao longo da reta. Eles não abrem um leque.
+- ✅ Os vãos têm tamanho parecido ao longo da reta. Eles não abrem um leque.
 
 --
 
