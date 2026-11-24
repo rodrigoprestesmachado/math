@@ -33,7 +33,7 @@ Estimar a nota com uma reta · `statsmodels.formula.api.ols()`
 <img src="../imgs/regua-regressao.png" alt="Cinco estudantes no gráfico de sessões com o chatbot pela nota. A reta sobe 5 pontos por sessão, parte de 40, e traços verticais marcam o vão entre a nota real e a nota da régua." width="88%">
 </center>
 
-Os cinco pontos são os mesmos estudantes da conta que vem a seguir. A reta é a régua: nota esperada = 40 + 5 × sessões. O trecho tracejado prolonga a régua até quem nunca abriu o chatbot, no ponto de partida 40. Os traços verticais são o vão de cada pessoa: +10 significa que a nota ficou 10 pontos acima da régua; −10, que ficou 10 pontos abaixo.
+Os cinco pontos são a turma da conta de mão, mais adiante. A fez 2 sessões e tirou 60. A regra que sai dessa turma é nota esperada = 40 + 5 × sessões. O 5 é o quanto a nota acompanha cada sessão a mais. A média das sessões é 6 e a média das notas é 70. A conta compara o afastamento de cada estudante dessas médias: a soma dos produtos é 200, e a soma dos afastamentos das sessões, ao quadrado, é 40. Então 200 / 40 = 5. O 40 da regra sai da mesma conta, 70 − 5 × 6: é a nota que a régua marca em zero sessões. A tabela da conta de mão abre esse 200 e esse 40, estudante por estudante. O trecho tracejado prolonga a régua até esse ponto. Os traços verticais são o vão de cada pessoa: +10 significa que a nota ficou 10 pontos acima da régua; −10, que ficou 10 pontos abaixo.
 
 {: .highlight }
 > **Por que o vão de 10 pesa mais?** No gráfico, A ficou 10 pontos acima da régua. B e D ficaram 5 pontos abaixo. 10² = 100, e 5² + 5² = 50: o vão grande pesa mais do que os dois vãos pequenos juntos. A professora soma os vãos depois de elevá-los ao quadrado, para a régua não deixar ninguém muito longe. Essa conta se chama mínimos quadrados. O vão (nota real menos a nota que a régua marcou) se chama resíduo.
@@ -46,7 +46,7 @@ A regressão com várias informações troca a régua por uma superfície e faz 
 <img src="../imgs/superficie-regressao.png" alt="Dez estudantes sobre uma superfície de sessões e metacognição pela nota. Uma linha laranja marca o corte com a metacognição parada em 66. Ao lado, o mesmo corte sobe cerca de 2,7 pontos por sessão, com o letramento em IA parado na média." width="96%">
 </center>
 
-À esquerda, a régua virou uma superfície. A nota esperada sobe com as sessões e também com a metacognição. O letramento em IA fica parado na média da turma, para o desenho caber em três eixos. A linha laranja é um corte dessa superfície, com a metacognição também parada, em 66. À direita, o mesmo corte visto de frente. Cada sessão a mais ainda acompanha cerca de 2,7 pontos. Os dez pontos são os estudantes da conta com várias informações, mais adiante.
+À esquerda, a régua virou uma superfície. A nota esperada sobe com as sessões e também com a metacognição. O letramento em IA fica parado na média da turma, para o desenho caber em três eixos. A linha laranja é um corte dessa superfície, com a metacognição também parada, em 66. À direita, o mesmo corte visto de frente. Cada sessão a mais ainda acompanha cerca de 2,7 pontos. Os dez pontos são outra turma fictícia, a da seção de várias informações. As letras recomeçam em A: lá, A fez 2 sessões e tirou 57.
 
 ---
 
@@ -122,7 +122,7 @@ A fatia da diferença entre as notas que a régua consegue acompanhar é o *R²*
 
 ## 🧩 Aplicação simples: a régua na mão
 
-Cinco estudantes fictícios usaram o chatbot educacional da disciplina. *x* é o número de sessões. *y* é a nota final.
+Esta é a turma dos cinco pontos da régua. *x* é o número de sessões. *y* é a nota final.
 
 | Estudante | xᵢ (sessões) | yᵢ (nota) | xᵢ − x̄ | yᵢ − ȳ | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² | (yᵢ−ȳ)² |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -171,7 +171,7 @@ O sinal dos pontos por sessão diz a direção. Positivo: mais sessões acompanh
 
 ## 📐 Várias informações ao mesmo tempo
 
-A mesma pergunta, agora com uma turma de 10 estudantes e mais duas informações, além das sessões:
+A mesma pergunta, agora com outra turma fictícia, de 10 estudantes, e mais duas informações, além das sessões:
 
 - **metacognição:** um escore de o quanto a pessoa percebe e organiza o próprio estudo;
 - **letramento em IA:** um escore de o quanto a pessoa já sabe usar esse tipo de ferramenta.
