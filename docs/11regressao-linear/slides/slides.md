@@ -12,26 +12,27 @@
 
 ## 🎯 Que problema ela resolve
 
-<p class="small">Se o estudante fizer mais uma sessão com o chatbot, quantos pontos a nota tende a subir? E que nota esperar de alguém que ainda não fez a prova?</p>
+<p class="small">Se o estudante fizer uma sessão a mais com o chatbot, quantos pontos a nota tende a subir? E que nota esperar de alguém que ainda não fez a prova?</p>
 
 <center>nota esperada = ponto de partida + pontos por sessão × sessões</center>
 
 <div class="destaque">
-O que se estima é um número que muda aos poucos: a nota, os minutos, os acertos. Pearson só diz se duas coisas sobem juntas. A regressão escreve a regra em pontos.
+Duas etapas: <strong>ajustar</strong> a regra com quem já tem sessões e nota, e <strong>usar</strong> a regra com quem ainda vai fazer a prova. A resposta é um número numa escala: nota, minutos, acertos.
 </div>
 
 --
 
 <div class="destaque">
-<strong>H₀:</strong> essa informação não muda a nota.<br>
-<strong>H₁:</strong> essa informação acrescenta pontos na nota.
+<strong>H₀:</strong> essa informação não ajuda a estimar a nota (os pontos que ela acrescenta são zero).<br>
+<strong>H₁:</strong> essa informação ajuda a estimar a nota (os pontos são diferentes de zero).
 </div>
 
 <p class="small">
 
+- Pearson diz se duas coisas sobem juntas. A regressão diz quantos pontos por sessão.
 - Uma informação só (as sessões): regressão linear simples.
-- Várias ao mesmo tempo: regressão linear múltipla. Cada número é o acréscimo que sobra entre estudantes parecidos nas outras.
-- "Engajou ou não" → regressão logística. "Quantas mensagens" → Poisson.
+- Várias ao mesmo tempo: regressão linear múltipla. Cada número compara estudantes iguais nas outras informações.
+- "Engajou ou não": regressão logística. "Quantas mensagens": Poisson.
 
 </p>
 
@@ -39,14 +40,15 @@ O que se estima é um número que muda aos poucos: a nota, os minutos, os acerto
 
 ## 🍊 Metáfora
 
-<p class="small">Uma professora quer estimar a nota antes da prova, olhando os logs do chatbot educacional.</p>
+<p class="small">Uma professora quer saber, antes da prova, que nota esperar de cada estudante. A pista: as sessões que cada um abriu no chatbot.</p>
 
 <p class="small">
 
-- Cada estudante é um ponto: na horizontal, as sessões; na vertical, a nota.
-- A régua é reta e não passa por todos. Sobra um vão na vertical entre a nota real e a nota que a régua marca.
-- Ela inclina a régua até esses vãos ficarem os menores possíveis no conjunto.
-- Dois números ficam: o ponto de partida (quem nunca abriu o chatbot) e quantos pontos cada sessão a mais vale.
+- Ela usa uma turma do semestre anterior. Cada estudante vira um ponto: sessões na horizontal, nota na vertical.
+- Apoia uma régua sobre o gráfico. Entre cada ponto e a régua sobra um **vão**: o quanto a régua errou a nota.
+- Ajusta a régua até os vãos, somados, ficarem os menores possíveis.
+- Ficam dois números: o **ponto de partida** (zero sessões) e os **pontos por sessão**.
+- Na turma atual, basta ler na régua a nota esperada.
 
 </p>
 
@@ -55,31 +57,43 @@ O que se estima é um número que muda aos poucos: a nota, os minutos, os acerto
 <center><img src="../../imgs/regua-regressao.png" alt="Cinco estudantes, a reta da régua e o vão vertical de cada um" width="68%"></center>
 
 <div class="destaque">
-A reta é a régua: 40 + 5 × sessões. O tracejado chega ao ponto de partida, 40. Cada traço vertical é o vão daquele estudante.<br><br>
-O vão de A vale 10. Os de B e D valem 5 cada. 10² = 100 e 5² + 5² = 50, então o vão grande pesa mais. Essa conta se chama mínimos quadrados.
+A régua: nota esperada = 40 + 5 × sessões. O tracejado prolonga a régua até o ponto de partida, 40.<br>
+A abriu 2 sessões: a régua marca 50 e A tirou 60, um vão de <strong>+10</strong>. C abriu 6: a régua marca 70 e C tirou 60, um vão de <strong>−10</strong>.
+</div>
+
+--
+
+## 🍊 Como somar os vãos?
+
+<p class="small">Somados como estão, eles se cancelam: +10 − 5 − 10 − 5 + 10 = 0. Parece que a régua acertou todo mundo, mas ela não acertou ninguém.</p>
+
+<div class="destaque">
+Elevando ao quadrado, nada se cancela: 100 + 25 + 100 + 25 + 100 = <strong>350</strong>. A melhor régua deixa essa soma a menor possível. Daí o nome <strong>mínimos quadrados</strong>.<br><br>
+O quadrado pesa mais os vãos grandes: um vão de 10 vira 100, e dois vãos de 5 viram 50. Em textos técnicos, o vão se chama <strong>resíduo</strong>.
 </div>
 
 --
 
 ## 🍊 E se outras coisas também pesam?
 
-<p class="small">Quem abre o chatbot mais vezes também costuma refletir mais sobre o próprio estudo. A régua de uma informação só entrega ao chatbot pontos que em parte já vinham dessa reflexão.</p>
+<p class="small">Quem mais usa o chatbot também costuma ter mais <strong>metacognição</strong> (perceber e organizar o próprio estudo) e mais <strong>letramento em IA</strong>. Parte dos pontos que a régua atribui às sessões pode vir dessas outras informações.</p>
 
 <div class="destaque">
-A conta com várias informações faz outra pergunta: entre estudantes com a mesma metacognição e o mesmo letramento em IA, quantos pontos uma sessão a mais ainda acrescenta?
+A nova pergunta: entre estudantes com a mesma metacognição e o mesmo letramento em IA, quantos pontos uma sessão a mais ainda acrescenta?<br><br>
+Com duas informações, a régua vira uma <strong>superfície</strong>. É a regressão linear múltipla.
 </div>
 
 --
 
 <center><img src="../../imgs/superficie-regressao.png" alt="A superfície no lugar da régua, e o corte com a metacognição parada em 66" width="92%"></center>
 
-<p class="small">O letramento fica parado na média. A linha laranja segura a metacognição em 66. Nesse corte, cada sessão ainda acompanha cerca de 2,7 pontos.</p>
+<p class="small">Outra turma, de 10 estudantes. O letramento em IA fica fixo na média (51), e a linha laranja fixa a metacognição em 66. Nesse corte, de 6 para 7 sessões, a nota esperada sobe cerca de 2,7 pontos. Com a metacognição fixa em outro valor, a linha sobe ou desce, mas a inclinação não muda.</p>
 
 ---
 
 ## 🧮 Fórmula
 
-<p class="small">Sessões (x) e nota (y), cada estudante afastado da própria média.</p>
+<p class="small">Para cada estudante, o quanto as sessões (x) e a nota (y) se afastam das médias da turma.</p>
 
 <center>
 <table style="border-collapse:collapse; font-family: Georgia, 'Times New Roman', serif; font-size:1.05em; margin:8px auto;">
@@ -96,16 +110,38 @@ A conta com várias informações faz outra pergunta: entre estudantes com a mes
 <center>ponto de partida = ȳ − (pontos por sessão) × x̄</center>
 
 <div class="destaque">
-<em>R²</em> é a fatia da diferença entre as notas que a régua consegue acompanhar. Perto de 1, a régua acompanha quase tudo. Perto de 0, a nota se espalha por outros motivos.
+Afastamentos com o mesmo sinal dão produto positivo: sessões e nota andam juntas, e a régua sobe. A melhor régua sempre passa pelo ponto médio da turma (x̄, ȳ).
+</div>
+
+--
+
+## 🧮 R²: o quanto a régua ajuda
+
+<p class="small">Compare a régua com uma régua horizontal na nota média, que dá a mesma nota para todo mundo.</p>
+
+<center>
+<table style="border-collapse:collapse; font-family: Georgia, 'Times New Roman', serif; font-size:1.05em; margin:8px auto;">
+<tr>
+<td rowspan="2" style="padding-right:12px; vertical-align:middle;"><em>R²</em> = 1 −</td>
+<td style="text-align:center; padding:2px 12px; border-bottom:2px solid currentColor;">Σ (vão de cada estudante)²</td>
+</tr>
+<tr>
+<td style="text-align:center; padding:2px 12px;">Σ (yᵢ − ȳ)²</td>
+</tr>
+</table>
+</center>
+
+<div class="destaque">
+Perto de 1: a régua inclinada acerta quase tudo o que a horizontal errava. Perto de 0: ela não é melhor do que dar a nota média para todo mundo.
 </div>
 
 ---
 
 ## 🧩 Cinco estudantes, na mão
 
-<p class="small">Sessões com o chatbot educacional e nota final. Médias: x̄ = 6 e ȳ = 70.</p>
+<p class="small">Médias: x̄ = 30 / 5 = 6 sessões e ȳ = 350 / 5 = 70 pontos.</p>
 
-| Est. | Sessões | Nota | Produto | (xᵢ−x̄)² |
+| Est. | Sessões | Nota | (xᵢ−x̄)(yᵢ−ȳ) | (xᵢ−x̄)² |
 |:-:|:-:|:-:|:-:|:-:|
 | A | 2 | 60 | 40 | 16 |
 | B | 4 | 55 | 30 | 4 |
@@ -116,14 +152,14 @@ A conta com várias informações faz outra pergunta: entre estudantes com a mes
 
 <div class="destaque">
 Pontos por sessão = 200 / 40 = <strong>5</strong>. Ponto de partida = 70 − 5 × 6 = <strong>40</strong>.<br>
-Nota esperada = 40 + 5 × sessões. Alguém com 7 sessões: <strong>75</strong>.
+Nota esperada = 40 + 5 × sessões. Um estudante novo, com 7 sessões: <strong>75</strong>.
 </div>
 
 --
 
 ## 🧩 O vão de cada estudante
 
-| Est. | Nota real | Nota prevista | Vão |
+| Est. | Nota real | Nota esperada | Vão |
 |:-:|:-:|:-:|:-:|
 | A | 60 | 50 | +10 |
 | B | 55 | 60 | −5 |
@@ -132,75 +168,75 @@ Nota esperada = 40 + 5 × sessões. Alguém com 7 sessões: <strong>75</strong>.
 | E | 100 | 90 | +10 |
 
 <div class="destaque">
-<em>R²</em> = 1 − 350/1350 ≈ <strong>0,74</strong>. Cerca de 74% da diferença entre as notas acompanha as sessões.<br><br>
-Com 5 estudantes, <em>p</em> = 0,061. A reta é visível, e o grupo é pequeno demais para cravar que, numa turma maior, cada sessão acrescentaria pontos.
+Vãos ao quadrado: 350 com a régua, 1350 com a régua horizontal na média. <em>R²</em> = 1 − 350/1350 ≈ <strong>0,74</strong>: a régua elimina cerca de 74% dos vãos ao quadrado.<br><br>
+Com 5 estudantes, <em>p</em> = 0,061, acima de 0,05. A régua sobe de forma clara, mas cinco estudantes são poucos para generalizar.
 </div>
 
 ---
 
 ## 🔢 Como ler 40, 5 e 0,74
 
-- **40**, o ponto de partida: a nota esperada se as sessões fossem zero. Ninguém aqui teve zero sessões, então o 40 é a régua prolongada.
-- **5**, os pontos por sessão: cada sessão a mais acompanha cerca de 5 pontos na nota.
-- **0,74**, o *R²*: cerca de 74% da diferença entre as notas acompanha a régua.
+- **40**, o ponto de partida: a nota esperada para zero sessões. Ninguém aqui teve zero sessões, então o 40 é a régua prolongada.
+- **5**, os pontos por sessão: a cada sessão a mais, a nota esperada sobe 5 pontos.
+- **0,74**, o *R²*: a régua elimina cerca de 74% dos vãos ao quadrado, comparada a dar 70 para todo mundo.
 
 <div class="destaque">
-A reta descreve o quanto a nota acompanha as sessões. Ela não mostra que o chatbot produziu a nota.
+A regra descreve o que vem junto. Ela não prova que o chatbot produziu a nota.
 </div>
 
 ---
 
 ## 📐 Várias informações, 10 estudantes
 
-<p class="small">A mesma pergunta, agora com sessões, metacognição e letramento em IA.</p>
+<p class="small">Sessões, metacognição e letramento em IA na mesma conta.</p>
 
 <div class="destaque">
-Só as sessões: cada sessão parece valer cerca de <strong>3,3 pontos</strong> (<em>R²</em> ≈ 0,90).<br><br>
-Com as três juntas: cerca de <strong>2,7</strong> pontos por sessão, <strong>0,29</strong> por ponto de metacognição, e <strong>0,06</strong> por ponto de letramento em IA (<em>p</em> ≈ 0,58).
+Só as sessões: cerca de <strong>3,3 pontos</strong> por sessão (<em>R²</em> ≈ 0,90).<br><br>
+Com as três juntas: cerca de <strong>2,7</strong> pontos por sessão (<em>p</em> = 0,001), <strong>0,29</strong> por ponto de metacognição (<em>p</em> = 0,016) e <strong>0,06</strong> por ponto de letramento em IA (<em>p</em> = 0,58).
 </div>
 
-<p class="small">O 3,3 cai para 2,7 porque a reflexão sobre o próprio estudo deixa de ser atribuída ao chatbot. É o acréscimo que sobra entre estudantes parecidos nas outras duas informações.</p>
+<p class="small">O 3,3 cai para 2,7 porque a conta agora separa o que acompanha as sessões do que acompanha a metacognição e, em menor parte, o letramento. Cada número compara estudantes iguais nas outras duas informações.</p>
 
 --
 
 ## 📐 O aviso do VIF
 
-<p class="small">VIF acima de 5: duas informações sobem juntas demais para separar o papel de cada uma. O "quantos pontos" fica misturado.</p>
+<p class="small">A conta só separa o papel de cada informação se elas não andarem sempre juntas. VIF perto de 1: tranquilo. Acima de 5: a informação se repete demais nas outras, e o número dela fica instável.</p>
 
 - Sessões: cerca de **3,5**
 - Metacognição: cerca de **1,5**
 - Letramento em IA: cerca de **2,9**
 
 <div class="destaque">
-Os três ficam abaixo de 5. Nesta turma, dá para ler o papel de cada informação em separado. O nome técnico da mistura, quando o VIF passa de 5, é multicolinearidade.
+Os três ficam abaixo de 5: dá para ler o papel de cada informação. Quando o VIF passa de 5, o nome técnico do problema é multicolinearidade.
 </div>
 
 ---
 
 ## 📋 Quando usar
 
-- ✅ A resposta é um número que muda aos poucos: nota, minutos, acertos.
-- ✅ No gráfico, os pontos acompanham uma reta.
-- ✅ Os vãos têm tamanho parecido ao longo da reta. Eles não abrem um leque.
+- ✅ A resposta é um número numa escala: nota, minutos, acertos.
+- ✅ No gráfico, a nuvem de pontos segue uma reta.
+- ✅ Os vãos têm tamanho parecido ao longo da régua. Eles não se abrem em leque.
 
 --
 
 ## 📋 Evite quando
 
-- ❌ A resposta é "sim ou não" (engajou ou não) → regressão logística.
-- ❌ A resposta é uma contagem, como quantas mensagens a pessoa enviou → Poisson.
+- ❌ A resposta é "sim ou não" (engajou ou não): regressão logística.
+- ❌ A resposta é uma contagem, como quantas mensagens a pessoa enviou: Poisson.
 - ❌ A nuvem faz uma curva, em vez de uma reta.
-- ❌ O VIF passa de 5: as informações estão grudadas.
+- ❌ O VIF passa de 5: as informações andam juntas demais.
 - ❌ Alguém quer concluir que o chatbot causou a nota.
 
 ---
 
 ## 🔍 Perguntas com chatbot educacional
 
-- Mais sessões acompanham uma nota mais alta? Quantos pontos por sessão?
-- Os minutos no chatbot estimam quantos exercícios a pessoa acerta?
-- Entre estudantes com a mesma metacognição, uma sessão a mais ainda acrescenta pontos?
-- O tamanho médio das mensagens estima a nota da atividade da semana?
+- Mais sessões vêm acompanhadas de nota mais alta? Quantos pontos por sessão?
+- Os minutos no chatbot ajudam a estimar quantos exercícios a pessoa acerta?
+- Entre estudantes com a mesma metacognição, uma sessão a mais ainda vem com pontos a mais?
+- O tamanho médio das mensagens ajuda a estimar a nota da atividade da semana?
 
 ---
 
@@ -208,10 +244,10 @@ Os três ficam abaixo de 5. Nesta turma, dá para ler o papel de cada informaç�
 
 - **5 estudantes:** 40 + 5 × sessões, *R²* = 0,74, *p* = 0,061.
 - **10, só sessões:** cerca de 3,3 pontos por sessão, *R²* = 0,90.
-- **10, três informações:** 2,7 por sessão (*p* = 0,001), 0,29 por ponto de metacognição (*p* = 0,016), 0,06 para letramento em IA (*p* = 0,58).
+- **10, três informações:** 2,7 por sessão (*p* = 0,001), 0,29 por ponto de metacognição (*p* = 0,016), 0,06 por ponto de letramento em IA (*p* = 0,58).
 
 <div class="destaque">
-Na tabela em inglês do <code>summary()</code>: <code>Intercept</code> é o ponto de partida, <code>coef</code> é quantos pontos, <code>P&gt;|t|</code> é o <em>p</em>, <code>R-squared</code> é o <em>R²</em>.
+Na tabela em inglês do <code>summary()</code>: <code>Intercept</code> é o ponto de partida, <code>coef</code> é o número de cada informação, <code>P&gt;|t|</code> é o <em>p</em>, <code>R-squared</code> é o <em>R²</em>.
 </div>
 
 ---
@@ -226,7 +262,7 @@ print(f"R² = {modelo.rsquared:.3f}")
 ```
 
 <div class="destaque">
-Código <strong>executável</strong> na página do encontro. O primeiro desenha a reta dos 5 estudantes. O segundo compara a conta só com sessões e a conta com as três informações, e imprime o VIF.
+Código <strong>executável</strong> na página do encontro. O primeiro desenha a régua dos 5 estudantes. O segundo compara a conta só com sessões e a conta com as três informações, e imprime o VIF.
 </div>
 
 ---
