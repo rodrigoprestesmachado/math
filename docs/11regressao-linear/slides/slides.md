@@ -69,6 +69,12 @@ O vão de A vale 10. Os de B e D valem 5 cada. 10² = 100 e 5² + 5² = 50, ent�
 A conta com várias informações faz outra pergunta: entre estudantes com a mesma metacognição e o mesmo letramento em IA, quantos pontos uma sessão a mais ainda acrescenta?
 </div>
 
+--
+
+<center><img src="../../imgs/superficie-regressao.png" alt="A superfície no lugar da régua, e o corte com a metacognição parada em 66" width="92%"></center>
+
+<p class="small">O letramento fica parado na média. A linha laranja segura a metacognição em 66. Nesse corte, cada sessão ainda acompanha cerca de 2,7 pontos.</p>
+
 ---
 
 ## 🧮 Fórmula

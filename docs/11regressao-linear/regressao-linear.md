@@ -21,37 +21,6 @@ Estimar a nota com uma reta · `statsmodels.formula.api.ols()`
 
 ---
 
-## 🎯 Para que serve
-
-A regressão linear responde a uma pergunta de sala de aula: *se o estudante fizer mais uma sessão com o chatbot, quantos pontos a nota tende a subir, e que nota esperar de alguém que ainda não fez a prova?*
-
-A resposta é uma regra simples:
-
-<center>nota esperada = ponto de partida + pontos por sessão × número de sessões</center>
-
-O ponto de partida é a nota que a regra estima para quem nunca abriu o chatbot. Os pontos por sessão dizem quanto a nota acompanha cada sessão a mais. Com essa regra dá para estimar a nota de um estudante novo, desde que a gente saiba quantas sessões ele fez.
-
-{: .highlight }
-> **O que a gente estima aqui é um número que muda aos poucos**, como a nota de uma prova, os minutos numa sessão ou os acertos numa lista de exercícios. Em textos técnicos, esse número aparece como desfecho numérico contínuo, e a informação usada para estimá-lo (as sessões, por exemplo) aparece como preditor.
-
-Três recortes situam este encontro entre os vizinhos do curso:
-
-- [Pearson](../02pearson/pearson.html) (encontro 2) mede se duas coisas sobem juntas. A regressão escreve a regra em pontos: quantos pontos a nota sobe a cada sessão a mais, e que nota esperar de alguém que ainda não apareceu nos dados.
-- **Uma informação só** (as sessões) é a regressão linear simples. **Várias ao mesmo tempo** (sessões, metacognição, letramento em IA) é a regressão linear múltipla. Cada número, nessa conta conjunta, é o acréscimo que sobra entre estudantes parecidos nas outras informações.
-- Quando a resposta deixa de ser um número como a nota, o método muda. "Engajou ou não engajou" é a [regressão logística](../12regressao-logistica/regressao-logistica.html). "Quantas mensagens a pessoa enviou" é a [regressão de Poisson](../13poisson/poisson.html).
-
-Em termos de hipótese, para cada informação colocada na regra:
-
-| | |
-|:--|:--|
-| **H₀** | Essa informação não muda a nota (os pontos que ela acrescenta são zero na turma toda). |
-| **H₁** | Essa informação acrescenta pontos na nota. |
-
-{: .highlight }
-> **A reta descreve o quanto a nota acompanha as sessões.** Um estudante que já domina o conteúdo pode abrir o chatbot com mais frequência e, ao mesmo tempo, tirar uma nota mais alta. A regra registra essa companhia. Ela não mostra que o chatbot produziu a nota.
-
----
-
 ## 🍊 Metáfora
 
 > **Imagine isso…**
@@ -72,6 +41,43 @@ Os cinco pontos são os mesmos estudantes da conta que vem a seguir. A reta é a
 A professora percebe um segundo fato. Quem abre o chatbot com mais frequência também costuma refletir mais sobre o próprio estudo. A régua de uma informação só entrega ao chatbot pontos que em parte já vinham dessa reflexão.
 
 A regressão com várias informações troca a régua por uma superfície e faz outra pergunta: entre estudantes com a mesma metacognição e o mesmo letramento em IA, quantos pontos uma sessão a mais ainda acrescenta?
+
+<center>
+<img src="../imgs/superficie-regressao.png" alt="Dez estudantes sobre uma superfície de sessões e metacognição pela nota. Uma linha laranja marca o corte com a metacognição parada em 66. Ao lado, o mesmo corte sobe cerca de 2,7 pontos por sessão, com o letramento em IA parado na média." width="96%">
+</center>
+
+À esquerda, a régua virou uma superfície. A nota esperada sobe com as sessões e também com a metacognição. O letramento em IA fica parado na média da turma, para o desenho caber em três eixos. A linha laranja é um corte dessa superfície, com a metacognição também parada, em 66. À direita, o mesmo corte visto de frente. Cada sessão a mais ainda acompanha cerca de 2,7 pontos. Os dez pontos são os estudantes da conta com várias informações, mais adiante.
+
+---
+
+## 🎯 Para que serve
+
+A régua da metáfora, e a superfície que entra no lugar dela, são a regressão linear. Ela responde a uma pergunta de sala de aula: *se o estudante fizer mais uma sessão com o chatbot, quantos pontos a nota tende a subir, e que nota esperar de alguém que ainda não fez a prova?*
+
+A resposta é uma regra simples:
+
+<center>nota esperada = ponto de partida + pontos por sessão × número de sessões</center>
+
+O ponto de partida é a nota que a regra estima para quem nunca abriu o chatbot. Os pontos por sessão dizem quanto a nota acompanha cada sessão a mais. Esses dois números saem de quem já tem as duas coisas registradas, as sessões e a nota: a conta mede o quanto a nota acompanha as sessões nesse grupo e devolve a regra. Um estudante que ainda vai fazer a prova já tem as sessões no log do chatbot. Com esse número na regra, dá para estimar a nota dele.
+
+{: .highlight }
+> **O que a gente estima aqui é um número que muda aos poucos**, como a nota de uma prova, os minutos numa sessão ou os acertos numa lista de exercícios. Em textos técnicos, esse número aparece como desfecho numérico contínuo, e a informação usada para estimá-lo (as sessões, por exemplo) aparece como preditor.
+
+Três recortes situam este encontro entre os vizinhos do curso:
+
+- [Pearson](../02pearson/pearson.html) (encontro 2) mede se duas coisas sobem juntas. A regressão escreve a regra em pontos: quantos pontos a nota sobe a cada sessão a mais, e que nota esperar de alguém que ainda não apareceu nos dados.
+- **Uma informação só** (as sessões) é a regressão linear simples. **Várias ao mesmo tempo** (sessões, metacognição, letramento em IA) é a regressão linear múltipla. Cada número, nessa conta conjunta, é o acréscimo que sobra entre estudantes parecidos nas outras informações.
+- Quando a resposta deixa de ser um número como a nota, o método muda. "Engajou ou não engajou" é a [regressão logística](../12regressao-logistica/regressao-logistica.html). "Quantas mensagens a pessoa enviou" é a [regressão de Poisson](../13poisson/poisson.html).
+
+Em termos de hipótese, para cada informação colocada na regra:
+
+| | |
+|:--|:--|
+| **H₀** | Essa informação não muda a nota (os pontos que ela acrescenta são zero na turma toda). |
+| **H₁** | Essa informação acrescenta pontos na nota. |
+
+{: .highlight }
+> **A reta descreve o quanto a nota acompanha as sessões.** Um estudante que já domina o conteúdo pode abrir o chatbot com mais frequência e, ao mesmo tempo, tirar uma nota mais alta. A regra registra essa companhia. Ela não mostra que o chatbot produziu a nota.
 
 ---
 
@@ -189,7 +195,7 @@ Com as três informações juntas, a regra fica, em números arredondados:
 
 <center>nota esperada ≈ 35 + 2,7 × sessões + 0,29 × metacognição + 0,06 × letramento em IA</center>
 
-- **Sessões: cerca de 2,7 pontos** (*p* = 0,001). É o que sobra entre estudantes parecidos em metacognição e em letramento em IA. O 3,3 da conta simples caiu para 2,7 porque a reflexão sobre o próprio estudo deixou de ser atribuída ao chatbot.
+- **Sessões: cerca de 2,7 pontos** (*p* = 0,001). É o que sobra entre estudantes parecidos em metacognição e em letramento em IA, a inclinação da linha laranja no corte da metáfora. O 3,3 da conta simples caiu para 2,7 porque a reflexão sobre o próprio estudo deixou de ser atribuída ao chatbot.
 - **Metacognição: cerca de 0,29 ponto** por ponto de escore (*p* = 0,016).
 - **Letramento em IA: cerca de 0,06 ponto** (*p* = 0,58). Nesse grupo, saber usar a ferramenta quase não move a nota, uma vez que sessões e metacognição já estão na conta.
 - ***R²* ≈ 0,97.** Cerca de 97% da diferença entre as notas acompanha as três informações juntas. Com 10 estudantes e três informações, um *R²* tão alto é típico de exemplo de aula. Numa turma real, e com um grupo pequeno, a estimativa ainda oscila bastante.
