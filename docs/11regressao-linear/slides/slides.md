@@ -73,6 +73,10 @@ Com duas informações, a régua vira uma <strong>superfície</strong> (uma folh
 
 --
 
+<iframe src="../plano-3d.html?tema=escuro" title="Superfície da regressão múltipla em 3D, com os 10 estudantes e os vãos" width="100%" height="700" style="border:none;"></iframe>
+
+--
+
 ## 🍊 Régua × superfície
 
 <p class="small">Se a metacognição fosse fixada em 50 ou 80, a linha laranja ficaria mais baixa ou mais alta, mas teria a <strong>mesma inclinação</strong>. Por isso um único número resume o papel das sessões.</p>

@@ -86,6 +86,12 @@ Para essa parte, a metáfora usa outra turma fictícia, de 10 estudantes, que te
 - A **linha laranja** é um corte da superfície com a metacognição fixa em 66, perto da média da turma. Ao longo dessa linha, só as sessões mudam.
 - **À direita**, a mesma linha laranja vista de frente. De 6 para 7 sessões, a nota esperada sobe cerca de **2,7 pontos**. Esse é o valor de uma sessão a mais entre estudantes com a mesma metacognição e o mesmo letramento em IA.
 
+**Agora, gire a superfície.** A animação abaixo mostra a mesma turma de 10 estudantes. Arraste o gráfico para girá-lo e passe o mouse sobre um ponto para ver os dados do estudante. Como o desenho só tem três eixos, uma das três informações fica fixa. Escolha qual em **Informação fixa** e mude o valor dela no controle deslizante, ou clique em **▶ Animar**. Com a opção **Ajustar os pontos** marcada, cada traço laranja é o vão do estudante na regra completa, com as três informações.
+
+<center>
+<iframe src="plano-3d.html" title="Superfície da regressão múltipla em 3D, com os 10 estudantes e os vãos" width="96%" height="720" style="border:none;"></iframe>
+</center>
+
 Se a metacognição fosse fixada em outro valor, como 50 ou 80, a linha laranja ficaria mais baixa ou mais alta, mas teria a mesma inclinação. Por isso um único número, 2,7 pontos por sessão, resume o papel das sessões.
 
 Nessa mesma turma, a régua que usa só as sessões dá cerca de **3,3 pontos por sessão**. A diferença entre 3,3 e 2,7 é a parte que a régua simples atribuía às sessões, mas que se explica pela metacognição e, em menor parte, pelo letramento em IA.

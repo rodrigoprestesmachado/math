@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regressão múltipla em 3D</title>
+<style>
+  :root {
+    --bg: #ffffff; --text: #0b0b0b; --text2: #52514e; --neutral: #f1f0ec;
+    --border: rgba(11,11,11,0.25); --radius: 8px; --g-height: 480px; --cubo: #000000;
+  }
+  :root.escuro {
+    --bg: #0f0520; --text: #e0d4f8; --text2: #9b80c4; --neutral: #1a1030;
+    --border: #3a1f6a; --g-height: 430px; --cubo: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 12px; background: var(--bg); color: var(--text);
+         font: 16px/1.5 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 0 0 8px; }
+  label { font-size: 14px; color: var(--text2); }
+  select, button { font: inherit; font-size: 14px; color: var(--text); background: transparent;
+                   border: 1px solid var(--border); border-radius: var(--radius); padding: 6px 10px; cursor: pointer; }
+  select option { color: #0b0b0b; }
+  input[type=range] { flex: 1; min-width: 150px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 4px; font-size: 12px; color: var(--text2); }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  #g { width: 100%; height: var(--g-height); }
+  #eq { font-size: 15px; margin-top: 8px; padding: 10px 12px; background: var(--neutral); border-radius: var(--radius); line-height: 1.6; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+<script>
+  if (new URLSearchParams(location.search).get('tema') === 'escuro') document.documentElement.classList.add('escuro');
+</script>
+</head>
+<body>
+<h2 class="sr-only">Gráfico 3D da regressão múltipla com os 10 estudantes, a superfície ajustada e os vãos, com escolha da informação fixa</h2>
+
+<div class="row">
+  <label for="fx">Informação fixa</label>
+  <select id="fx">
+    <option value="l">Letramento em IA</option>
+    <option value="m">Metacognição</option>
+    <option value="s">Sessões</option>
+  </select>
+  <input type="range" id="sl">
+  <span id="slOut" style="font-size:16px;font-weight:500;min-width:30px;">51</span>
+  <button id="play" type="button">&#9654; Animar</button>
+</div>
+<label style="display:flex;align-items:center;gap:8px;margin:0 0 8px;"><input type="checkbox" id="adj" checked> Ajustar os pontos para o valor fixo</label>
+<div class="legend">
+  <span><i class="sw" style="background:#2a78d6"></i>Superfície (nota esperada)</span>
+  <span><i class="sw" style="background:#6250d6;border-radius:50%"></i>Estudante (A a J)</span>
+  <span><i class="sw" style="background:#eb6834;height:3px"></i>Vão (distância até a superfície)</span>
+</div>
+<div id="g"></div>
+<div id="eq"></div>
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script>
+var D = {
+  nota: [57,63,64,68,81,75,79,84,88,88],
+  s:    [2,3,4,5,6,7,8,9,10,12],
+  m:    [48,70,55,62,80,58,74,66,85,60],
+  l:    [30,42,38,55,48,70,44,60,52,75]
+};
+var NM = 'ABCDEFGHIJ'.split('');
+var B0 = 35.182;
+var V = {
+  s: {n:'Sessões',          nl:'sessões',          c:2.6686, lo:2,  hi:12, gs:1, ref:7},
+  m: {n:'Metacognição',     nl:'metacognição',     c:0.2864, lo:45, hi:90, gs:5, ref:66},
+  l: {n:'Letramento em IA', nl:'letramento em IA', c:0.0596, lo:25, hi:80, gs:5, ref:51}
+};
+var css = getComputedStyle(document.documentElement);
+var txt = css.getPropertyValue('--text').trim() || '#222';
+var mut = css.getPropertyValue('--text2').trim() || '#666';
+var cubo = css.getPropertyValue('--cubo').trim() || '#000';
+var fx = document.getElementById('fx'), sl = document.getElementById('sl'), adj = document.getElementById('adj');
+var cam = {eye: {x:1.6, y:-1.7, z:0.9}};
+var timer = null;
+
+function fmt(v, d) { return v.toFixed(d === undefined ? 1 : d).replace('.', ','); }
+function others(f) { return ['s','m','l'].filter(function (k) { return k !== f; }); }
+function grid(k) { var a = []; for (var v = V[k].lo; v <= V[k].hi; v += V[k].gs) a.push(v); return a; }
+function plane(f, fv) {
+  var o = others(f), xs = grid(o[0]), ys = grid(o[1]);
+  return {x: xs, y: ys, z: ys.map(function (y) {
+    return xs.map(function (x) { return B0 + V[o[0]].c * x + V[o[1]].c * y + V[f].c * fv; });
+  })};
+}
+function ax(t, r) {
+  return {title: {text: t, font: {color: txt, size: 13}}, range: r, tickfont: {color: mut, size: 11},
+          gridcolor: cubo, zeroline: false, showline: true, linecolor: cubo, linewidth: 2,
+          showbackground: false};
+}
+function draw() {
+  var f = fx.value, o = others(f), fv = +sl.value, P = plane(f, fv), doAdj = adj.checked;
+  var px = [], py = [], pz = [], hv = [], sx = [], sy = [], sz = [];
+  for (var i = 0; i < 10; i++) {
+    var x = D[o[0]][i], y = D[o[1]][i];
+    var zp = B0 + V[o[0]].c * x + V[o[1]].c * y + V[f].c * fv;
+    var za = doAdj ? D.nota[i] - V[f].c * (D[f][i] - fv) : D.nota[i];
+    px.push(x); py.push(y); pz.push(za);
+    hv.push('Estudante ' + NM[i] + '<br>nota ' + D.nota[i] + ' · sessões ' + D.s[i] +
+            '<br>metacognição ' + D.m[i] + ' · letramento ' + D.l[i]);
+    sx.push(x, x, null); sy.push(y, y, null); sz.push(za, zp, null);
+  }
+  var data = [
+    {type:'surface', x:P.x, y:P.y, z:P.z, colorscale:[[0,'#b5d4f4'],[1,'#2a78d6']], cmin:50, cmax:100,
+     showscale:false, opacity:0.6, hoverinfo:'skip'},
+    {type:'scatter3d', mode:'lines', x:sx, y:sy, z:sz, line:{color:'#eb6834', width:5}, hoverinfo:'skip'},
+    {type:'scatter3d', mode:'markers+text', x:px, y:py, z:pz, text:NM, textposition:'top center',
+     textfont:{color:txt, size:12}, marker:{size:6, color:'#6250d6', line:{color:'#ffffff', width:1}},
+     hovertext:hv, hoverinfo:'text'}
+  ];
+  var layout = {
+    margin:{l:0, r:0, t:0, b:0}, paper_bgcolor:'rgba(0,0,0,0)', showlegend:false, uirevision:'k',
+    scene:{xaxis:ax(V[o[0]].n, [V[o[0]].lo, V[o[0]].hi]), yaxis:ax(V[o[1]].n, [V[o[1]].lo, V[o[1]].hi]),
+           zaxis:ax('Nota', [50, 100]), camera:cam, aspectmode:'manual', aspectratio:{x:1.2, y:1.2, z:0.9}}
+  };
+  Plotly.react('g', data, layout, {displayModeBar:false, responsive:true});
+  info();
+}
+function info() {
+  var f = fx.value, o = others(f), fv = +sl.value, b = B0 + V[f].c * fv;
+  document.getElementById('slOut').textContent = fv;
+  document.getElementById('eq').innerHTML =
+    'Fixa: <b>' + V[f].n + ' = ' + fv + '</b><br>nota esperada = ' + fmt(b) + ' + ' + fmt(V[o[0]].c, 2) + ' × ' +
+    V[o[0]].nl + ' + ' + fmt(V[o[1]].c, 2) + ' × ' + V[o[1]].nl +
+    '<br><span style="color:' + mut + ';font-size:13px;">' +
+    (adj.checked
+      ? 'Cada ponto é deslocado como se o estudante tivesse ' + V[f].nl + ' = ' + fv +
+        '. Assim, a distância vertical até a superfície é exatamente o vão do modelo (cerca de 4 pontos, no máximo). '
+      : 'Pontos nas notas reais: a distância até a superfície inclui também a diferença de ' + V[f].nl +
+        ' de cada estudante. ') +
+    'R² do modelo completo = 0,97.</span>';
+}
+function stop() { if (timer) { clearInterval(timer); timer = null; } }
+function setup() {
+  var f = fx.value;
+  sl.min = V[f].lo; sl.max = V[f].hi; sl.step = 1; sl.value = V[f].ref;
+  draw();
+}
+fx.onchange = function () { stop(); setup(); };
+sl.oninput = draw;
+adj.onchange = draw;
+document.getElementById('play').onclick = function () {
+  stop();
+  var f = fx.value, lo = V[f].lo, hi = V[f].hi, step = Math.max(1, (hi - lo) / 50), d = 1;
+  sl.value = lo; draw();
+  timer = setInterval(function () {
+    var v = +sl.value + d * step;
+    if (v >= hi) { v = hi; d = -1; }
+    if (v <= lo && d === -1) { v = lo; stop(); }
+    sl.value = v; draw();
+  }, 60);
+};
+setup();
+</script>
+</body>
+</html>
